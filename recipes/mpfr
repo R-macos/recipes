@@ -1,0 +1,5 @@
+Package: mpfr
+Version: 3.1.2
+Source.URL: http://www.mpfr.org/mpfr-current/mpfr-3.1.2.tar.bz2
+GPG.Key: 98C3739D
+Depends: gmp (>= 4.1.0)
