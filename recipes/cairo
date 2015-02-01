@@ -1,0 +1,4 @@
+Package: cairo
+Version: 1.14.0
+Source.URL: http://cairographics.org/releases/cairo-1.14.0.tar.xz
+Depends: freetype (>= 2.1.9), libpng, pixman (>= 0.30.0)
