@@ -76,10 +76,11 @@ tryCatch(system("mkdir -p build/src 2>/dev/null"), error=function(e) NULL)
 sink("build/Makefile")
 for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
+    srcdir <- if (length(pkg$d$Configure.subdir)) paste0("/",pkg$d$Configure.subdir[1L]) else ""
     if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,"/ ",pv,"-obj/ && cd ",pv,"-obj && ./configure ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ./configure ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     } else {
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ../src/",pv,"/configure ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ../src/",pv,srcdir,"/configure ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     }
     tar <- basename(pkg$src)
     cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && tar fxj ../",tar," && mv */* .)\n",sep='')
