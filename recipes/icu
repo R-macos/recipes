@@ -2,4 +2,4 @@ Package: icu
 Version: 54.1
 Source.URL: http://download.icu-project.org/files/icu4c/54.1/icu4c-54_1-src.tgz
 Configure: --disable-renaming
-Configure.subdir: sources
+Configure.subdir: source
