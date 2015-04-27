@@ -41,7 +41,7 @@ dependencies. Each library is built, packaged and installed.
 
  * `Source.URL:` URL of the soruce tar ball
 
- * `Speacial:` special recipe flags, curretnly only `in-sources` is
+ * `Special:` special recipe flags, curretnly only `in-sources` is
    supported which forces the build to be performed inside the
    sources.
 
