@@ -1,0 +1,4 @@
+Package: szip
+Version: 2.1
+Source.URL: http://www.hdfgroup.org/ftp/lib-external/szip/2.1/src/szip-2.1.tar.gz
+Configure: --prefix=/usr/local

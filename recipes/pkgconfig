@@ -1,0 +1,4 @@
+Package: pkgconfig
+Version: 0.28
+Source.URL: http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz
+Configure: --with-internal-glib
