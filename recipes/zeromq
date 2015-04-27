@@ -1,0 +1,5 @@
+Package: zeromq
+Version: 4.0.5
+Source.URL: http://download.zeromq.org/zeromq-4.0.5.tar.gz
+##: Due to a bug in ZMQ we have to force CC=C++ since it's trying to link C++ with C linker which fails
+Configure.darwin.13: CC=clang++ CXX=clang++
