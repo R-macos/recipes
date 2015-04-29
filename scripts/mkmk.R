@@ -76,6 +76,7 @@ tryCatch(system("mkdir -p build/src 2>/dev/null"), error=function(e) NULL)
 sink("build/Makefile")
 for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
+    dist <- if (length(pkg$d$Distribution.files)) pkg$d$Distribution.files else "usr"
     srcdir <- if (length(pkg$d$Configure.subdir)) paste0("/",pkg$d$Configure.subdir[1L]) else ""
     if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
         cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ./configure ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
@@ -85,7 +86,7 @@ for (pkg in pkgs) {
     tar <- basename(pkg$src)
     cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && tar fxj ../",tar," && mv */* .)\n",sep='')
     cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
-    cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tsudo chown -Rh 0:0 '$^/usr'\n\ttar fcz '$@' -C '$^' usr\n", sep='')
+    cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tsudo chown -Rh 0:0 '$^'\n\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
     cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo tar fxz '$^' -C / && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }

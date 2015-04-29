@@ -45,6 +45,10 @@ dependencies. Each library is built, packaged and installed.
    supported which forces the build to be performed inside the
    sources.
 
+ * `Distribution.files:` list of files (or directories) to include
+   in the final distribution tar ball. Defaults to `usr`.
+
+
 ### Building
 
 Currently the build steps are
