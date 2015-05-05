@@ -72,3 +72,11 @@ the recipes.
 Note: currently `pkgconfig` is not specifically listed in most recipes
 even though several of them use it, so it is advisable to use `make
 pkgconfig` before using `make all`.
+
+### Environment Variables
+
+The `mkmk.R` script will respect the following environment variables:
+
+ * `TAR` path to the `tar` program. Note that the build system assumes
+   a tar version that is smart enough to handle all common compression
+   formats (`gzip`, `bzip2`, `xz`) automatically.
