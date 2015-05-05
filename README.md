@@ -39,9 +39,11 @@ dependencies. Each library is built, packaged and installed.
 
  * `Version:` version of the package (required)
 
- * `Source.URL:` URL of the soruce tar ball
+ * `Source.URL:` URL of the soruce tar ball (required)
 
- * `Special:` special recipe flags, curretnly only `in-sources` is
+ * `Configure.subdir:` subdirectory containing the sources
+
+ * `Special:` special recipe flags, currently only `in-sources` is
    supported which forces the build to be performed inside the
    sources.
 
