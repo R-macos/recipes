@@ -1,3 +1,5 @@
 Package: proj
-Version: 4.9.1
-Source.URL: http://download.osgeo.org/proj/proj-4.9.1.tar.gz
+Version: 4.9.1-1
+Source.URL: http://spatial.nhh.no/R/rgdal/proj-4.9.1-1.tar.gz
+#: the official link is buggy, Roger Bivand was kind to make a fix available
+#Source.URL: http://download.osgeo.org/proj/proj-4.9.1.tar.gz
