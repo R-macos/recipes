@@ -1,4 +1,4 @@
 Package: tiff
-Version: 4.0.3
-Source.URL: ftp://ftp.remotesensing.org/pub/libtiff/tiff-4.0.3.tar.gz
+Version: 4.0.7
+Source.URL: http://download.osgeo.org/libtiff/tiff-4.0.7.tar.gz
 Depends: jpeg, xz

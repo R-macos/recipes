@@ -1,4 +1,4 @@
 Package: pcre
-Version: 8.36
-Source.URL: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.36.tar.bz2
+Version: 8.40
+Source.URL: ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.40.tar.bz2
 Configure: --enable-unicode-properties
