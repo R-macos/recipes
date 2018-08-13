@@ -1,5 +1,4 @@
 Package: hdf5
-Version: 1.8.14
-Source.URL: http://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.14.tar.bz2
-Depends: szip (>= 2.1)
-Configure: --prefix=/usr/local --enable-cxx
+Version: 1.10.0-1
+Source.URL: https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.0-patch1/src/hdf5-1.10.0-patch1.tar.bz2
+Configure: --prefix=/usr/local

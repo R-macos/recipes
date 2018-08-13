@@ -1,0 +1,6 @@
+Package: gdal
+Version: 2.1.3
+Depends: xz, proj
+Source.URL: http://download.osgeo.org/gdal/2.1.3/gdal-2.1.3.tar.xz
+Configure: --with-static-proj4=/usr/local/lib/libproj.a --with-liblzma
+Special: in-sources

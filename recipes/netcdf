@@ -1,5 +1,5 @@
 Package: netcdf
-Version: 4.3.3.1
-Source.URL: ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.3.3.1.tar.gz
-Configure: --enable-netcdf-4
-Depends: hdf5 (>= 1.8.8)
+Version: 4.4.1.1
+Depends: hdf5
+Source.URL: ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-4.4.1.1.tar.gz
+Configure: --enable-netcdf-4 --prefix=/usr/local
