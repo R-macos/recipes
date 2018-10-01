@@ -83,10 +83,11 @@ for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
     dist <- if (length(pkg$d$Distribution.files)) pkg$d$Distribution.files else "usr"
     srcdir <- if (length(pkg$d$Configure.subdir)) paste0("/",pkg$d$Configure.subdir[1L]) else ""
+    cfg.scr <- if (length(pkg$d$Configure.script)) pkg$d$Configure.script else "configure"
     if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ./configure ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ./",cfg.scr," ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     } else {
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ../src/",pv,srcdir,"/configure ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     }
     tar <- basename(pkg$src)
     cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* .)\n",sep='')
