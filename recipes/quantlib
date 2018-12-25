@@ -1,0 +1,4 @@
+Package: quantlib
+Version: 1.14
+Source.URL: https://github.com/shrektan/recipes/releases/download/quantlib-1.14-with-boost/quantlib-1.14-with-boost.tar.gz
+Configure: --with-boost-include=../src/quantlib-1.14/include --prefix=/usr/local/ --enable-intraday CXXFLAGS='-std=gnu++11 -O2 -stdlib=libc++ -mmacosx-version-min=10.9' DFLAGS='-stdlib=libc++ -mmacosx-version-min=10.9'
