@@ -1,0 +1,17 @@
+diff -Nru test_0.0/configure xx/configure
+--- test_0.0/configure	     1969-12-31 19:00:00.000000000 -0500
++++ xx/configure	     2019-03-14 14:22:40.000000000 -0400
+@@ -0,0 +1,13 @@
++#!/bin/sh
++
++src=`dirname $0`
++
++cat << EOF >> Makefile
++all:
++
++install:
++	echo Installing from $src to \$(DESTDIR)/usr/local/include/
++	mkdir -p \$(DESTDIR)/usr/local/include
++	cp -r $src/boost \$(DESTDIR)/usr/local/include/
++
++EOF
