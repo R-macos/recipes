@@ -48,10 +48,19 @@ dependencies. Each library is built, packaged and installed.
    sources.
 
  * `Distribution.files:` list of files (or directories) to include
-   in the final distribution tar ball. Defaults to `usr`.
+   in the final distribution tar ball. Defaults to `usr/local`.
+   This directive is intended only for restricting the content,
+   installation is only supported for content under `usr/local`
+   so no files outside that tree can be part of  the final
+   distribution.
 
  * `Configure.script:` name of the configure script to use,
    defaults to `configure`
+
+ * `Configure.driver:` optional, if set, specifies the executable
+   that will be called in order to process the configure script.
+   If not specified it is assumed that the configure script is
+   executable on its own.
 
 
 ### Building
@@ -61,6 +70,7 @@ Currently the build steps are
  * download source tar ball
  * unpack the tar ball
  * move the contents to a directory with fixed naming scheme
+ * if a `<recipe>.patch` file exists, it will be applied with -p1
  * create a build object directory
  * configure in the object directory using all the accumulated flags
    from the recipe

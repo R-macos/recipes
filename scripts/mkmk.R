@@ -1,8 +1,8 @@
 root <- getwd()
 
 f <- Sys.glob("recipes/*")
-bak <- grep("~$", f)
-if (length(bak)) f <- f[-bak]
+exclude <- grep("(\\.patch|~)$", f)
+if (length(exclude)) f <- f[-exclude]
 
 pkgs <- list()
 
@@ -28,7 +28,9 @@ for (fn in f) {
     } else package_version(ver)
     dep <- d$Depends
     dep <- if (length(dep) && any(nzchar(dep))) tools:::.get_requires_with_version_from_package_db(db, "Depends") else list()
-    pkgs[[pkg]] <- list(pkg=pkg, ver=ver, nver=nver, dep=dep, src=src, d=d)
+    patch <- file.path(root, paste0(fn, ".patch"))
+    if (!file.exists(patch)) patch <- c()
+    pkgs[[pkg]] <- list(pkg=pkg, ver=ver, nver=nver, dep=dep, src=src, d=d, patch=patch)
 }
 
 ok <- TRUE
@@ -81,19 +83,21 @@ cat("TAR='", TAR, "'\n\n", sep='')
 
 for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
-    dist <- if (length(pkg$d$Distribution.files)) pkg$d$Distribution.files else "usr"
+    dist <- if (length(pkg$d$Distribution.files)) pkg$d$Distribution.files else "usr/local"
     srcdir <- if (length(pkg$d$Configure.subdir)) paste0("/",pkg$d$Configure.subdir[1L]) else ""
     cfg.scr <- if (length(pkg$d$Configure.script)) pkg$d$Configure.script else "configure"
+    cfg.proc <- if (length(pkg$d$Configure.driver)) pkg$d$Configure.driver else ""
     if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ./",cfg.scr," ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ",cfg.proc," ./",cfg.scr," ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     } else {
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ",cfg.proc," ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && make -j12 && make install DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     }
     tar <- basename(pkg$src)
-    cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* .)\n",sep='')
+    do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
+    cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
     cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
     cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tsudo chown -Rh 0:0 '$^'\n\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
-    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo $(TAR) fxz '$^' -C / && touch '$@'\n",sep='')
+    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo $(TAR) fxz '$^' -C /usr/ --strip 1 && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
