@@ -13,6 +13,6 @@ diff -Nru test_0.0/configure xx/configure
 +	echo Installing from $src to \$(DESTDIR)/usr/local/boost-1.69.0
 +	mkdir -p \$(DESTDIR)/usr/local/boost-1.69.0
 +	./${src}/bootstrap.sh --prefix=\$(DESTDIR)/usr/local/boost-1.69.0
-+	./${src}/b2 install threading=multi,single link=shared,static -j12
++	./${src}/b2 install threading=multi,single link=static -j12
 +
 +EOF
