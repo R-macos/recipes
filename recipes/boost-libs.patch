@@ -12,7 +12,11 @@ diff -Nru test_0.0/configure xx/configure
 +install:
 +	echo Installing from $src to \$(DESTDIR)/usr/local/boost-1.69.0
 +	mkdir -p \$(DESTDIR)/usr/local/boost-1.69.0
-+	./${src}/bootstrap.sh --prefix=\$(DESTDIR)/usr/local/boost-1.69.0
-+	./${src}/b2 install threading=multi,single link=static -j12
++	echo Copy files from source
++	cp -r ${src}/. .
++	./bootstrap.sh --prefix=\$(DESTDIR)/usr/local/boost-1.69.0 --without-icu
++	./b2 clean
++	./b2 headers
++	./b2 threading=multi,single link=static -j12 --prefix=\$(DESTDIR)/usr/local/boost-1.69.0 install
 +
 +EOF
