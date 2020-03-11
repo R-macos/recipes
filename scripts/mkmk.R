@@ -97,7 +97,7 @@ for (pkg in pkgs) {
     cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
     cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
     cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tsudo chown -Rh 0:0 '$^'\n\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
-    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo $(TAR) fxz '$^' -C /usr/ --strip 1 && touch '$@'\n",sep='')
+    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo $(TAR) fxz '$^' -C /usr/local --strip 2 && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
