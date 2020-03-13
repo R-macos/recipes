@@ -1,4 +1,5 @@
 Package: freetype
+Depends: xml2 (>= 2.6), libpng
 Version: 2.10.0
-Source.URL: https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.xz
+Source.URL: https://download.savannah.gnu.org/releases/freetype/freetype-2.10.0.tar.bz2
 Configure.darwin: --without-old-mac-fonts --without-fsspec --without-fsref --without--quickdraw-toolbox --without-quickdraw-carbon --without-ats

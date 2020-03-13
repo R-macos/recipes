@@ -1,3 +1,4 @@
 Package: xml2
 Version: 2.9.10
+Depends: xz
 Source.URL: ftp://xmlsoft.org/libxml2/libxml2-2.9.10.tar.gz
