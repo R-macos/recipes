@@ -1,5 +1,5 @@
 Package: cairo
-Version: 1.14.2
-Source.URL: http://cairographics.org/releases/cairo-1.14.2.tar.xz
+Version: 1.14.12
+Source.URL: https://www.cairographics.org/releases/cairo-1.14.12.tar.xz
 Depends: freetype (>= 2.1.9), fontconfig, libpng, pixman (>= 0.30.0)
 Configure: --disable-quartz-font --disable-quartz --disable-quartz-image --disable-qt
