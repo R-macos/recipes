@@ -1,6 +1,6 @@
 Package: gmp
-Version: 6.1.2
-Source.URL: https://gmplib.org/download/gmp/gmp-6.1.2.tar.xz
+Version: 6.2.0
+Source.URL: https://gmplib.org/download/gmp/gmp-6.2.0.tar.bz2
 Configure.i386: ABI=32
 Configure.ppc: ABI=32
 Configure.x86_64: ABI=64

@@ -1,5 +1,5 @@
 Package: qpdf
-Version: 5.1.2
-Source.URL: http://downloads.sourceforge.net/qpdf/qpdf-5.1.2.tar.gz
-Depends: pcre (>= 8.36)
+Version: 9.1.1
+Source.URL: https://downloads.sourceforge.net/project/qpdf/qpdf/9.1.1/qpdf-9.1.1.tar.gz
+Depends: jpeg
 Special: in-sources
