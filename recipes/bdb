@@ -1,5 +1,5 @@
 Package: bdb
 Version: 6.2.23
-Source.URL: http://download.oracle.com/berkeley-db/db-6.2.23.NC.tar.gz
+Source.URL: http://download.oracle.com/berkeley-db/db-6.2.23.tar.gz
 Configure.script: dist/configure
 Configure: --enable-stl --prefix=/usr/local
