@@ -10,8 +10,7 @@ diff -Nru test_0.0/configure xx/configure
 +all:
 +
 +install:
-+	echo Installing from $src to \$(DESTDIR)/usr/local/boost-1.73.0
-+	./bootstrap.sh --prefix=\$(DESTDIR)/usr/local/boost-1.73.0
++	echo Installing from $src to \$(DESTDIR)/usr/local
 +	echo Current directory $PWD
 +	echo Copying files from source here... 
 +	cp -r ${src}/. .
