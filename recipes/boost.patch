@@ -1,7 +1,7 @@
 diff -Nru test_0.0/configure xx/configure
 --- test_0.0/configure	     1969-12-31 19:00:00.000000000 -0500
 +++ xx/configure	     2020-05-28 14:22:40.000000000 -0400
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,16 @@
 +#!/bin/sh
 +
 +src=`dirname $0`
@@ -12,10 +12,8 @@ diff -Nru test_0.0/configure xx/configure
 +install:
 +	echo Installing from $src to \$(DESTDIR)/usr/local
 +	echo Current directory $PWD
-+	echo Copying files from source here... 
-+	cp -r ${src}/. .
-+	mkdir -p \$(DESTDIR)/usr/local/boost-1.73.0
-+	echo Installing from $src to \$(DESTDIR)/usr/local/boost-1.73.0
++	mkdir -p \$(DESTDIR)/usr/local
++	mv ${src}/* .
 +	./bootstrap.sh --prefix=\$(DESTDIR)/usr/local/boost-1.73.0
 +	./b2 --prefix=\$(DESTDIR)/usr/local/boost-1.73.0 link=static install
 +
