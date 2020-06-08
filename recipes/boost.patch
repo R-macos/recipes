@@ -15,6 +15,6 @@ diff -Nru test_0.0/configure xx/configure
 +	mkdir -p \$(DESTDIR)/usr/local
 +	mv ${src}/* .
 +	./bootstrap.sh --prefix=\$(DESTDIR)/usr/local/boost-1.73.0
-+	./b2 --prefix=\$(DESTDIR)/usr/local/boost-1.73.0 link=static install
++	./b2 --prefix=\$(DESTDIR)/usr/local/boost-1.73.0 toolset=clang-darwin link=static cxxflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' cflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' install
 +
 +EOF
