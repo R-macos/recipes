@@ -1,0 +1,20 @@
+diff -Nru test_0.0/configure xx/configure
+--- test_0.0/configure	     1969-12-31 19:00:00.000000000 -0500
++++ xx/configure	     2020-05-28 14:22:40.000000000 -0400
+@@ -0,0 +1,16 @@
++#!/bin/sh
++
++src=`dirname $0`
++
++cat << EOF >> Makefile
++all:
++
++install:
++	echo Installing from $src to \$(DESTDIR)/usr/local
++	echo Current directory $PWD
++	mkdir -p \$(DESTDIR)/usr/local
++	mv ${src}/* .
++	./bootstrap.sh --prefix=\$(DESTDIR)/usr/local
++	./b2 --prefix=\$(DESTDIR)/usr/local toolset=clang-darwin link=static cxxflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' cflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' install
++
++EOF
