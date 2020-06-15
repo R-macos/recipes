@@ -1,4 +1,4 @@
 Package: QuantLib
-Depends: boost-headers
+Depends: boost
 Version: 1.18
 Source.URL: https://dl.bintray.com/quantlib/releases/QuantLib-1.18.tar.gz
