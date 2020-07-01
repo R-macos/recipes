@@ -1,8 +1,8 @@
 ## Recipes
 
-This is an experimental system for building static, dependent libraries
+This is a system for building static, dependent libraries
 for R packages. It is mainly intended to automate the maintenance of
-CRAN dependencies for the OS X build system, but the system is intended
+CRAN dependencies for the macOS build system, but the system is intended
 to be usable on other platforms as well.
 
 The idea is for package authors to submit pull requests for
@@ -15,7 +15,7 @@ files in R packages. The required fields are `Package`, `Version` and
 `Source.URL`. Most common optional fields include `Depends` and
 `Configure`.
 
-There is an R script that will process the recipes and create a make
+There is an R script that will process the recipes and create a `make`
 file which can be used to build libraries and their dependencies.
 For example, to build all libraries and their dependencies:
 
@@ -90,7 +90,12 @@ the recipes.
 
 Note: currently `pkgconfig` is not specifically listed in most recipes
 even though several of them use it, so it is advisable to use `make
-pkgconfig` before using `make all`.
+pkgconfig` before using `make all`. Also `pkgconfig` system stubs are
+expected to exist for system libraries such that they can be used as
+dependencies by `pkgconfig`. Some versions of macOS include them, but
+others may require manual installation. Most recent macOS versions don't
+allow stubs in system location since it is read-only, so adding an
+alternative path to `PKG_CONFIG_PATH` may be required.
 
 ### Environment Variables
 
