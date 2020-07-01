@@ -1,0 +1,3 @@
+Package: sqlite3
+Version: 3.32.3
+Source.URL: https://www.sqlite.org/2020/sqlite-autoconf-3320300.tar.gz

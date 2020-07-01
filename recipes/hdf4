@@ -1,0 +1,5 @@
+Package: hdf4
+Version: 4.2.15
+Source.URL: https://support.hdfgroup.org/ftp/HDF/releases/HDF4.2.15/src/hdf-4.2.15.tar.bz2
+Depends: jpeg, szip
+Configure: --prefix=/usr/local --enable-build-mode=production --enable-hdf4-xdr --with-szip --disable-netcdf LIBS=-L/usr/local/lib
