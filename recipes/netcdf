@@ -1,5 +1,5 @@
 Package: netcdf
-Version: 4.7.3
-Depends: hdf5
-Source.URL: https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-c-4.7.3.tar.gz
-Configure: --enable-netcdf-4 --prefix=/usr/local
+Version: 4.7.4
+Depends: hdf5, szip
+Source.URL: https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-c-4.7.4.tar.gz
+Configure: --enable-netcdf-4 --prefix=/usr/local LIBS=-lsz

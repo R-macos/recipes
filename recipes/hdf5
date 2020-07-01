@@ -1,5 +1,7 @@
 Package: hdf5
 Version: 1.12.0
 Source.URL: https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.0/src/hdf5-1.12.0.tar.bz2
-Configure: --prefix=/usr/local --enable-build-mode=production
-#Note: --with-szlib is technically possible, but it breaks NetCDF since it is too dumb to get the correct flags for linking hdf5 with sz
+Depends: szip, jpeg
+Configure: --prefix=/usr/local --enable-build-mode=production --with-szlib
+#Note: there is a bug in install-examples of hdf5 1.12.0 so have to skip those by uisng install-recursive only
+Install: make install-recursive

@@ -1,0 +1,11 @@
+--- gdal-3.1.1-orig/configure	2020-06-22 04:25:56.000000000 -0400
++++ gdal-3.1.1/configure	2020-06-30 21:20:11.000000000 -0400
+@@ -39118,7 +39118,7 @@
+ 
+       HAVE_GEOS="no"
+ 
+-      GEOS_LIBS="`${GEOS_CONFIG} --ldflags` -lgeos_c"
++      GEOS_LIBS="`${GEOS_CONFIG} --static-clibs` -lstdc++"
+       GEOS_CFLAGS="`${GEOS_CONFIG} --cflags`"
+       GEOS_VERSION="`${GEOS_CONFIG} --version`"
+ 
