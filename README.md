@@ -62,6 +62,10 @@ dependencies. Each library is built, packaged and installed.
    If not specified it is assumed that the configure script is
    executable on its own.
 
+ * `Install:` command to perform installation, defaults to
+   `make install` and currently will be supplied with
+   `DESTDIR=...` which is expected to be honored.
+
 
 ### Building
 
