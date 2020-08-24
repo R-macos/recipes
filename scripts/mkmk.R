@@ -64,7 +64,7 @@ os.maj <- paste(os,gsub("\\..*","",os.ver),sep=".")
 
 cfgflags=c("--with-pic --disable-shared --enable-static")
 cfg <- function(d) {
-    f <- cfgflags
+    f <- if (length(d[["Configure.cfgflags"]])) d[["Configure.cfgflags"]] else cfgflags
     if (!is.null(d[["Configure"]])) f <- c(f, d[["Configure"]])
     if (!is.null(d[[paste0("Configure.",os)]])) f <- c(f, d[[paste0("Configure.",os)]])
     if (!is.null(d[[paste0("Configure.",os.maj)]])) f <- c(f, d[[paste0("Configure.",os.maj)]])
