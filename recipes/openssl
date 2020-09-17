@@ -1,0 +1,8 @@
+Package: openssl
+Version: 1.1.1g
+Source.URL: https://www.openssl.org/source/openssl-1.1.1g.tar.gz
+Configure.script: Configure
+Configure: no-shared
+Configure.darwin: --openssldir=/private/etc/ssl
+Configure.darwin.x86_64: darwin64-x86_64-cc enable-ec_nistp_64_gcc_128
+Install: make install_sw
