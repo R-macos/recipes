@@ -21,10 +21,10 @@ for (fn in f) {
     ver <- d$Version
     nver <- if (length(grep("[a-zA-Z]$", ver))) {
         suf <- substr(ver, nchar(ver), nchar(ver))
-	ver <- substr(ver, 1, nchar(ver) - 1)
+	mver <- substr(ver, 1, nchar(ver) - 1)
         m <- match(suf, letters)
 	if (is.na(m)) m <- match(suf, LETTERS)
-	nver <- package_version(paste(ver, m, sep='-'))
+	nver <- package_version(paste(mver, m, sep='-'))
     } else package_version(ver)
     dep <- d$Depends
     dep <- if (length(dep) && any(nzchar(dep))) tools:::.get_requires_with_version_from_package_db(db, "Depends") else list()
