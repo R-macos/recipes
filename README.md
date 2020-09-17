@@ -55,7 +55,11 @@ dependencies. Each library is built, packaged and installed.
    distribution.
 
  * `Configure.script:` name of the configure script to use,
-   defaults to `configure`
+   defaults to `configure`. If this option is set explicitly,
+   then the default flags `--with-pic --disable-shared --enable-static`
+   are no longer used under the assumption that the script
+   is no longer autoconf-based and thus the equivalent flags
+   should be supplied in `Configure:` or friends.
 
  * `Configure.driver:` optional, if set, specifies the executable
    that will be called in order to process the configure script.
