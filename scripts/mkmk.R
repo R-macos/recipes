@@ -43,7 +43,7 @@ for (pkg in pkgs) {
 	       ok <- FALSE
            } else if (!is.null(cond$op)) {
                if (cond$op != ">=") {
-                   message("ERROR: ",pkg," uses condition ",cond$name," ",cond$op, " ", as.character(cond$version), ", but we only supprot >= operators at thsi point")
+                   message("ERROR: ",pkg," uses condition ",cond$name," ",cond$op, " ", as.character(cond$version), ", but we only supprot >= operators at this point")
                    ok <- FALSE
                } else {
                    if (pkgs[[cond$name]]$nver < cond$version) {
@@ -62,9 +62,13 @@ arch <- system("uname -m", int=T)
 os.ver <- system("uname -r", int=T)
 os.maj <- paste(os,gsub("\\..*","",os.ver),sep=".")
 
-cfgflags=c("--with-pic --disable-shared --enable-static")
+## default flags
+cfgflags <- "--with-pic --disable-shared --enable-static"
+
 cfg <- function(d) {
-    f <- cfgflags
+    ## set the default cfgflags unless Configure.script is set
+    ## in which case we can't assume it is autoconf-based
+    f <- if (length(d$Configure.script)) character() else cfgflags
     if (!is.null(d[["Configure"]])) f <- c(f, d[["Configure"]])
     if (!is.null(d[[paste0("Configure.",os)]])) f <- c(f, d[[paste0("Configure.",os)]])
     if (!is.null(d[[paste0("Configure.",os.maj)]])) f <- c(f, d[[paste0("Configure.",os.maj)]])
