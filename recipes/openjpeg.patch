@@ -1,0 +1,12 @@
+diff -Nru test_0.0/configure xx/configure
+--- test_0.0/configure	     1969-12-31 19:00:00.000000000 -0500
++++ xx/configure	     2020-05-28 14:22:40.000000000 -0400
+@@ -0,0 +1,8 @@
++#!/bin/bash
++
++src=`dirname $0`
++if [ -z "$CMAKE" ]; then CMAKE="`which cmake`"; fi
++if [ -z "$CMAKE" ]; then CMAKE=/Applications/CMake.app/Contents/bin/cmake; fi
++
++"$CMAKE" "$src" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:bool=OFF -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON -DCMAKE_EXE_LINKER_FLAGS='/usr/local/lib/libjpeg.a /usr/local/lib/liblzma.a'
++
