@@ -1,6 +1,6 @@
 Package: gdal
-Version: 3.1.1
-Depends: xz, proj
-Source.URL: https://github.com/OSGeo/gdal/releases/download/v3.1.1/gdal-3.1.1.tar.gz
-Configure: --with-static-proj4=/usr/local --with-liblzma 'LIBS=-lsqlite3 -lsz' 'CPPFLAGS=-I/usr/local/pgsql/include'
+Version: 3.1.4
+Depends: xz, proj, openjpeg
+Source.URL: https://github.com/OSGeo/gdal/releases/download/v3.1.4/gdal-3.1.4.tar.gz
+Configure: --with-static-proj4=/usr/local --with-liblzma 'LIBS=-L/usr/local/pgsql/lib -lsqlite3 -lsz' 'CPPFLAGS=-I/usr/local/pgsql/include'
 Special: in-sources
