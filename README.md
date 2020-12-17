@@ -116,6 +116,8 @@ The `mkmk.R` script will respect the following environment variables:
    `{$prefix}` (exact match) to substitute for the _relative_ prefix
    path (i.e., without the leading `/`). This is not done at the shell
    level, but rather a substitution when generating the `Makefile`.
+   The PREFIX variable is available both at shell level and to the
+   make commands by default.
 
  * `NOSUDO` if set to anything non-empty, if doesn't use `sudo` in the
    unpackgaing step. This is mainly useful for user-space
