@@ -105,7 +105,8 @@ sink("build/Makefile")
 
 TAR <- Sys.getenv("TAR")
 if (!nzchar(TAR)) TAR <- "tar"
-cat("TAR='", TAR, "'\n\n", sep='')
+cat("TAR='", TAR, "'\n", sep='')
+cat("PREFIX='", prefix, "'\n\n", sep='')
 
 for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
@@ -115,9 +116,9 @@ for (pkg in pkgs) {
     cfg.proc <- if (length(pkg$d$Configure.driver)) pkg$d$Configure.driver else ""
     mkinst <- if (length(pkg$d$Install)) pkg$d$Install else "make install"
     if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ",cfg.proc," ./",cfg.scr," ",cfg(pkg$d)," && make -j12 && ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && PREFIX=", prefix, " ",cfg.proc," ./",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix," make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     } else {
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ",cfg.proc," ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && make -j12 && ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && PREFIX=", prefix, " ", cfg.proc," ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix, " make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
     }
     tar <- basename(pkg$src)
     do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
