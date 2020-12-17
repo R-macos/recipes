@@ -57,9 +57,9 @@ dependencies. Each library is built, packaged and installed.
  * `Configure.script:` name of the configure script to use,
    defaults to `configure`. If this option is set explicitly,
    then the default flags `--with-pic --disable-shared --enable-static`
-   are no longer used under the assumption that the script
-   is no longer autoconf-based and thus the equivalent flags
-   should be supplied in `Configure:` or friends.
+   and `--prefix=/${prefix}` are no longer used under the assumption
+   that the script is no longer autoconf-based and thus the equivalent
+   flags should be supplied in `Configure:` or friends.
 
  * `Configure.driver:` optional, if set, specifies the executable
    that will be called in order to process the configure script.
@@ -85,7 +85,7 @@ Currently the build steps are
  * run `make -j12`
  * run `make install` with `DESTDIR` set
  * change the ownership of content instide `DESTDIR` to 0:0
- * package `usr` inside the destination into a tar ball
+ * package `${prefix}` inside the destination into a tar ball
  * unpack the tar ball in the system location
 
 Each dependency has to succeed in all the steps above before the next
@@ -108,3 +108,16 @@ The `mkmk.R` script will respect the following environment variables:
  * `TAR` path to the `tar` program. Note that the build system assumes
    a tar version that is smart enough to handle all common compression
    formats (`gzip`, `bzip2`, `xz`) automatically.
+
+ * `PREFIX` defaults to `usr/local` and is the prefix for all builds.
+   Note that no special effort is made for packages to respect that
+   prefix at compile/link time, it is only passed to `--prefix` and
+   used to package the final tar ball. The recipes can use
+   `{$prefix}` (exact match) to substitute for the _relative_ prefix
+   path (i.e., without the leading `/`). This is not done at the shell
+   level, but rather a substitution when generating the `Makefile`.
+
+ * `NOSUDO` if set to anything non-empty, if doesn't use `sudo` in the
+   unpackgaing step. This is mainly useful for user-space
+   installations when setting `PREFIX` to a location owned by the
+   user.
