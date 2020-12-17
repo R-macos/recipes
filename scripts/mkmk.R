@@ -1,3 +1,5 @@
+default.prefix <- "usr/local"
+
 root <- getwd()
 
 f <- Sys.glob("recipes/*")
@@ -8,6 +10,13 @@ pkgs <- list()
 
 bin <- file.path(root, "bin")
 
+prefix <- Sys.getenv("PREFIX")
+if (!length(prefix) || !nzchar(prefix)) prefix <- default.prefix
+## strip any leading / - it has to be a relative path and no double //
+prefix <- gsub("/+", "/", gsub("^/+", "", prefix))
+## for tar --strip
+ndir <- length(strsplit(prefix, "/", TRUE)[[1]])
+
 for (fn in f) {
     d <- read.dcf(fn)
     if (dim(d)[1] > 1L) {
@@ -16,6 +25,8 @@ for (fn in f) {
     }
     db <- d[1,]
     d <- as.list(db)
+    ## replace ${prefix} with the prefix
+    d <- lapply(d, function(o) gsub("${prefix}", prefix, o, fixed=TRUE))
     src <- d$Source.URL
     pkg <- d$Package
     ver <- d$Version
@@ -87,7 +98,7 @@ cat("TAR='", TAR, "'\n\n", sep='')
 
 for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
-    dist <- if (length(pkg$d$Distribution.files)) pkg$d$Distribution.files else "usr/local"
+    dist <- if (length(pkg$d$Distribution.files)) pkg$d$Distribution.files else prefix
     srcdir <- if (length(pkg$d$Configure.subdir)) paste0("/",pkg$d$Configure.subdir[1L]) else ""
     cfg.scr <- if (length(pkg$d$Configure.script)) pkg$d$Configure.script else "configure"
     cfg.proc <- if (length(pkg$d$Configure.driver)) pkg$d$Configure.driver else ""
@@ -102,7 +113,7 @@ for (pkg in pkgs) {
     cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
     cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
     cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tsudo chown -Rh 0:0 '$^'\n\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
-    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo $(TAR) fxz '$^' -C /usr/local --strip 2 && touch '$@'\n",sep='')
+    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo $(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
