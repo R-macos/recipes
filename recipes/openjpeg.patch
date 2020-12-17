@@ -8,5 +8,5 @@ diff -Nru test_0.0/configure xx/configure
 +if [ -z "$CMAKE" ]; then CMAKE="`which cmake`"; fi
 +if [ -z "$CMAKE" ]; then CMAKE=/Applications/CMake.app/Contents/bin/cmake; fi
 +
-+"$CMAKE" "$src" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:bool=OFF -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON -DCMAKE_EXE_LINKER_FLAGS='/usr/local/lib/libjpeg.a /usr/local/lib/liblzma.a'
++"$CMAKE" "$src" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:bool=OFF -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON -DCMAKE_EXE_LINKER_FLAGS="/$PREFIX/lib/libjpeg.a /$PREFIX/lib/liblzma.a"
 +

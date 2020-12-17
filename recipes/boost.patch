@@ -10,11 +10,11 @@ diff -Nru test_0.0/configure xx/configure
 +all:
 +
 +install:
-+	echo Installing from $src to \$(DESTDIR)/usr/local
++	echo Installing from $src to \$(DESTDIR)/\$(PREFIX)
 +	echo Current directory $PWD
-+	mkdir -p \$(DESTDIR)/usr/local
++	mkdir -p \$(DESTDIR)/\$(PREFIX)
 +	mv ${src}/* .
-+	./bootstrap.sh --prefix=\$(DESTDIR)/usr/local
-+	./b2 --prefix=\$(DESTDIR)/usr/local toolset=clang-darwin link=static cxxflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' cflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' install
++	./bootstrap.sh --prefix=\$(DESTDIR)/\$(PREFIX)
++	./b2 --prefix=\$(DESTDIR)/\$(PREFIX) toolset=clang-darwin link=static cxxflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' cflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' install
 +
 +EOF
