@@ -1,6 +1,6 @@
 Package: libpq
-Version: 9.6.9
-Source.URL: https://ftp.postgresql.org/pub/source/v9.6.9/postgresql-9.6.9.tar.bz2
+Version: 9.6.20
+Source.URL: https://ftp.postgresql.org/pub/source/v9.6.20/postgresql-9.6.20.tar.bz2
 Configure.x86_64: CFLAGS=-fPIC
 #: we only pick libpq from the entire PostgeSQL installation...
-Distribution.files: usr/local/pgsql/include/libpq-fe.h usr/local/pgsql/include/postgres_ext.h usr/local/pgsql/include/pg_config_ext.h usr/local/pgsql/lib/libpq.a
+Distribution.files: ${prefix}/include/libpq-fe.h ${prefix}/include/postgres_ext.h ${prefix}/include/pg_config_ext.h ${prefix}/lib/libpq.a ${prefix}/lib/pkgconfig/libpq.pc
