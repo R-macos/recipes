@@ -1,3 +1,6 @@
+## this script generates build/Makefile
+## which is used to build libraries according to the recipes
+
 default.prefix <- "usr/local"
 
 root <- getwd()
@@ -86,6 +89,11 @@ cfg <- function(d) {
     if (!is.null(d[[paste0("Configure.",arch)]])) f <- c(f, d[[paste0("Configure.",arch)]])
     if (!is.null(d[[paste0("Configure.",os,".",arch)]])) f <- c(f, d[[paste0("Configure.",os,".",arch)]])
     if (!is.null(d[[paste0("Configure.",os.maj,".",arch)]])) f <- c(f, d[[paste0("Configure.",os.maj,".",arch)]])
+
+    ## this is not completely fool-proof, but we try to accept --prefix overrides and not step on them
+    if (!(length(d$Configure.script) || length(grep("^--prefix=", f)) || length(grep(" --prefix=", f))))
+       f <- c(paste0("--prefix=/", prefix), f)
+
     paste(f, collapse=" ")
 }
 
@@ -118,3 +126,5 @@ for (pkg in pkgs) {
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
 sink()
+
+cat("\nCreated build/Makefile\n\nUse make -C build <recipe> to build and install a recipe\n\n")
