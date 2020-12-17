@@ -20,6 +20,9 @@ prefix <- gsub("/+", "/", gsub("^/+", "", prefix))
 ## for tar --strip
 ndir <- length(strsplit(prefix, "/", TRUE)[[1]])
 
+sudo <- "sudo "
+if (nzchar(Sys.getenv("NOSUDO"))) sudo <- ""
+
 for (fn in f) {
     d <- read.dcf(fn)
     if (dim(d)[1] > 1L) {
@@ -120,8 +123,11 @@ for (pkg in pkgs) {
     do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
     cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
     cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
-    cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tsudo chown -Rh 0:0 '$^'\n\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
-    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\tsudo $(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
+    chown <- paste0("\t", sudo, "chown -Rh 0:0 '$^'\n")
+    ## don't use chown without sudo unless run as root
+    if (!nzchar(sudo) && isTRUE(!as.vector(Sys.info()["effective_user"] == "root"))) chown <- ""
+    cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n", chown, "\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
+    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\t", sudo, "$(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
