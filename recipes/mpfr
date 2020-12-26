@@ -1,5 +1,5 @@
 Package: mpfr
-Version: 4.0.2
-Source.URL: https://www.mpfr.org/mpfr-current/mpfr-4.0.2.tar.bz2
+Version: 4.1.0
+Source.URL: https://www.mpfr.org/mpfr-current/mpfr-4.1.0.tar.bz2
 GPG.Key: 980C197698C3739D
 Depends: gmp (>= 4.1.0)

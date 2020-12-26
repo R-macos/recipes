@@ -1,0 +1,4 @@
+Package: mpc
+Version: 1.2.1
+Source.URL: https://ftp.gnu.org/gnu/mpc/mpc-1.2.1.tar.gz
+Depends: gmp (>= 5.0.0), mpfr (>= 4.1.0)
