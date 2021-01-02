@@ -9,10 +9,10 @@ src/jpeg-9d: src/jpegsrc.v9d.tar.gz
 	mkdir -p src/jpeg-9d && (cd src/jpeg-9d && $(TAR) fxj ../jpegsrc.v9d.tar.gz && mv */* . )
 src/jpegsrc.v9d.tar.gz:
 	curl -L -o $@ 'http://www.ijg.org/files/jpegsrc.v9d.tar.gz'
-jpeg-9d-darwin.17-x86_64.tar.gz: jpeg-9d-dst
+jpeg-9d-bootstrap.tar.gz: jpeg-9d-dst
 	sudo chown -Rh 0:0 '$^'
 	tar fcz '$@' -C '$^' $(PREFIX)
-jpeg-9d: jpeg-9d-darwin.17-x86_64.tar.gz
+jpeg-9d: jpeg-9d-bootstrap.tar.gz
 	sudo $(TAR) fxz '$^' -C /$(PREFIX) --strip 2 && touch '$@'
 jpeg: jpeg-9d
 
@@ -23,10 +23,10 @@ src/libpng-1.6.37: src/libpng-1.6.37.tar.xz
 	mkdir -p src/libpng-1.6.37 && (cd src/libpng-1.6.37 && $(TAR) fxj ../libpng-1.6.37.tar.xz && mv */* . )
 src/libpng-1.6.37.tar.xz:
 	curl -L -o $@ 'https://downloads.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.xz'
-libpng-1.6.37-darwin.17-x86_64.tar.gz: libpng-1.6.37-dst
+libpng-1.6.37-bootstrap.tar.gz: libpng-1.6.37-dst
 	sudo chown -Rh 0:0 '$^'
 	tar fcz '$@' -C '$^' $(PREFIX)
-libpng-1.6.37: libpng-1.6.37-darwin.17-x86_64.tar.gz
+libpng-1.6.37: libpng-1.6.37-bootstrap.tar.gz
 	sudo $(TAR) fxz '$^' -C /$(PREFIX) --strip 2 && touch '$@'
 libpng: libpng-1.6.37
 
@@ -37,10 +37,10 @@ src/pcre-8.44: src/pcre-8.44.tar.bz2
 	mkdir -p src/pcre-8.44 && (cd src/pcre-8.44 && $(TAR) fxj ../pcre-8.44.tar.bz2 && mv */* . )
 src/pcre-8.44.tar.bz2:
 	curl -L -o $@ 'https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.bz2'
-pcre-8.44-darwin.17-x86_64.tar.gz: pcre-8.44-dst
+pcre-8.44-bootstrap.tar.gz: pcre-8.44-dst
 	sudo chown -Rh 0:0 '$^'
 	tar fcz '$@' -C '$^' $(PREFIX)
-pcre-8.44: pcre-8.44-darwin.17-x86_64.tar.gz
+pcre-8.44: pcre-8.44-bootstrap.tar.gz
 	sudo $(TAR) fxz '$^' -C /$(PREFIX) --strip 2 && touch '$@'
 pcre: pcre-8.44
 
@@ -51,10 +51,10 @@ src/pcre2-10.34: src/pcre2-10.34.tar.bz2
 	mkdir -p src/pcre2-10.34 && (cd src/pcre2-10.34 && $(TAR) fxj ../pcre2-10.34.tar.bz2 && mv */* . )
 src/pcre2-10.34.tar.bz2:
 	curl -L -o $@ 'https://ftp.pcre.org/pub/pcre/pcre2-10.34.tar.bz2'
-pcre2-10.34-darwin.17-x86_64.tar.gz: pcre2-10.34-dst
+pcre2-10.34-bootstrap.tar.gz: pcre2-10.34-dst
 	sudo chown -Rh 0:0 '$^'
 	tar fcz '$@' -C '$^' $(PREFIX)
-pcre2-10.34: pcre2-10.34-darwin.17-x86_64.tar.gz
+pcre2-10.34: pcre2-10.34-bootstrap.tar.gz
 	sudo $(TAR) fxz '$^' -C /$(PREFIX) --strip 2 && touch '$@'
 pcre2: pcre2-10.34
 
@@ -65,10 +65,10 @@ src/pkgconfig-0.28: src/pkg-config-0.28.tar.gz
 	mkdir -p src/pkgconfig-0.28 && (cd src/pkgconfig-0.28 && $(TAR) fxj ../pkg-config-0.28.tar.gz && mv */* . )
 src/pkg-config-0.28.tar.gz:
 	curl -L -o $@ 'http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz'
-pkgconfig-0.28-darwin.17-x86_64.tar.gz: pkgconfig-0.28-dst
+pkgconfig-0.28-bootstrap.tar.gz: pkgconfig-0.28-dst
 	sudo chown -Rh 0:0 '$^'
 	tar fcz '$@' -C '$^' $(PREFIX)
-pkgconfig-0.28: pkgconfig-0.28-darwin.17-x86_64.tar.gz
+pkgconfig-0.28: pkgconfig-0.28-bootstrap.tar.gz
 	sudo $(TAR) fxz '$^' -C /$(PREFIX) --strip 2 && touch '$@'
 pkgconfig: pkgconfig-0.28
 
@@ -79,10 +79,10 @@ src/texinfo-6.7: src/texinfo-6.7.tar.gz
 	mkdir -p src/texinfo-6.7 && (cd src/texinfo-6.7 && $(TAR) fxj ../texinfo-6.7.tar.gz && mv */* . )
 src/texinfo-6.7.tar.gz:
 	curl -L -o $@ 'https://ftp.gnu.org/gnu/texinfo/texinfo-6.7.tar.gz'
-texinfo-6.7-darwin.17-x86_64.tar.gz: texinfo-6.7-dst
+texinfo-6.7-bootstrap.tar.gz: texinfo-6.7-dst
 	sudo chown -Rh 0:0 '$^'
 	tar fcz '$@' -C '$^' $(PREFIX)
-texinfo-6.7: texinfo-6.7-darwin.17-x86_64.tar.gz
+texinfo-6.7: texinfo-6.7-bootstrap.tar.gz
 	sudo $(TAR) fxz '$^' -C /$(PREFIX) --strip 2 && touch '$@'
 texinfo: texinfo-6.7
 
@@ -94,10 +94,10 @@ src/xz-5.2.4: src/xz-5.2.4.tar.bz2
 	mkdir -p src/xz-5.2.4 && (cd src/xz-5.2.4 && $(TAR) fxj ../xz-5.2.4.tar.bz2 && mv */* . )
 src/xz-5.2.4.tar.bz2:
 	curl -L -o $@ 'http://tukaani.org/xz/xz-5.2.4.tar.bz2'
-xz-5.2.4-darwin.17-x86_64.tar.gz: xz-5.2.4-dst
+xz-5.2.4-bootstrap.tar.gz: xz-5.2.4-dst
 	sudo chown -Rh 0:0 '$^'
 	tar fcz '$@' -C '$^' $(PREFIX)
-xz-5.2.4: xz-5.2.4-darwin.17-x86_64.tar.gz
+xz-5.2.4: xz-5.2.4-bootstrap.tar.gz
 	sudo $(TAR) fxz '$^' -C /$(PREFIX) --strip 2 && touch '$@'
 xz: xz-5.2.4
 
