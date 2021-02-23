@@ -1,0 +1,52 @@
+#!/bin/bash
+# This is a small wrapper that makes meson work in autoconf setting
+# (C)2021 Simon Urbanek, License: MIT
+
+echo -n 'Checking for meson ... '
+if meson --version > /dev/null; then
+  echo OK
+else
+  echo 'missing'
+  echo 'ERROR: cannot find meson! This package requires meson and ninja'
+  exit 1
+fi
+
+echo -n 'Checking for ninja ... '
+if ninja --version > /dev/null; then
+  echo OK
+else
+  echo 'missing'
+  echo 'ERROR: cannot find ninja! This package requires meson and ninja'
+  exit 1
+fi
+
+BD="`pwd`"
+SD="`dirname $0`"
+SD="`(cd $SD && pwd)`"
+
+echo Collecting env vars from arguments:
+while (( "$#" )); do
+  if echo "$1" | grep -E '^[A-Z]+=' >/dev/null; then
+    export "$1"
+    echo "  $1"
+  else
+    MARGS+=("$1")
+  fi
+  shift
+done
+
+echo Invoking meson:
+set -x
+(cd "$SD" && meson setup "${MARGS[@]}" --default-library static "$BD" ) || (echo '*** FAILED' >&2; exit 1)
+set +x
+
+cat > "$BD/Makefile" << EOF
+all:
+	ninja
+
+install:
+	DESTDIR=\$(DESTDIR) meson install
+EOF
+
+echo "Makefile generated."
+

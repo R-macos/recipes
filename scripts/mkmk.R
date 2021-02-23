@@ -85,7 +85,7 @@ cfgflags <- "--with-pic --disable-shared --enable-static"
 cfg <- function(d) {
     ## set the default cfgflags unless Configure.script is set
     ## in which case we can't assume it is autoconf-based
-    f <- if (length(d$Configure.script)) character() else cfgflags
+    f <- if (length(d$Configure.script) || length(d$`Build-system`)) character() else cfgflags
     if (!is.null(d[["Configure"]])) f <- c(f, d[["Configure"]])
     if (!is.null(d[[paste0("Configure.",os)]])) f <- c(f, d[[paste0("Configure.",os)]])
     if (!is.null(d[[paste0("Configure.",os.maj)]])) f <- c(f, d[[paste0("Configure.",os.maj)]])
@@ -110,6 +110,8 @@ cat("PREFIX='", prefix, "'\n\n", sep='')
 
 for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
+    bsys <- if (length(pkg$d$`Build-system`)) pkg$d$`Build-system` else ""
+    if (nzchar(bsys) && !file.exists(bsys <- file.path(root, "scripts", paste0("configure.", bsys)))) stop("I can't find driver for the builds system ", bsys)
     dist <- if (length(pkg$d$Distribution.files)) pkg$d$Distribution.files else prefix
     srcdir <- if (length(pkg$d$Configure.subdir)) paste0("/",pkg$d$Configure.subdir[1L]) else ""
     cfg.scr <- if (length(pkg$d$Configure.script)) pkg$d$Configure.script else "configure"
@@ -122,6 +124,7 @@ for (pkg in pkgs) {
     }
     tar <- basename(pkg$src)
     do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
+    if (nzchar(bsys)) do.patch <- paste0(do.patch, " && cp ", shQuote(bsys), " configure")
     cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
     cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
     chown <- paste0("\t", sudo, "chown -Rh 0:0 '$^'\n")

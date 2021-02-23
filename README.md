@@ -70,6 +70,16 @@ dependencies. Each library is built, packaged and installed.
    `make install` and currently will be supplied with
    `DESTDIR=...` which is expected to be honored.
 
+ * `Build-system:` optional, if specified a driver named
+   `configure.<build-system>` is expected to exist in
+   the `scripts` directory of this project which is copied
+   to the sources of the library as `configure` and should perform
+   whatever operations are necessary to make the project
+   autoconf-compatible. Currently we only provide a driver
+   `meson-ninja` which supports `meson` for configuration and
+   `ninja` for builds. Obviously, such systems are far more fragile
+   so use only as a last resort.
+
 
 ### Building
 
