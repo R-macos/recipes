@@ -1,0 +1,110 @@
+diff -ruN fontconfig-2.13.93/doc/fcatomic.sgml fontconfig-2.13.93-1/doc/fcatomic.sgml
+--- fontconfig-2.13.93/doc/fcatomic.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcatomic.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcblanks.sgml fontconfig-2.13.93-1/doc/fcblanks.sgml
+--- fontconfig-2.13.93/doc/fcblanks.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcblanks.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fccache.sgml fontconfig-2.13.93-1/doc/fccache.sgml
+--- fontconfig-2.13.93/doc/fccache.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fccache.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fccharset.sgml fontconfig-2.13.93-1/doc/fccharset.sgml
+--- fontconfig-2.13.93/doc/fccharset.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fccharset.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcconfig.sgml fontconfig-2.13.93-1/doc/fcconfig.sgml
+--- fontconfig-2.13.93/doc/fcconfig.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcconfig.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcconstant.sgml fontconfig-2.13.93-1/doc/fcconstant.sgml
+--- fontconfig-2.13.93/doc/fcconstant.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcconstant.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcdircache.sgml fontconfig-2.13.93-1/doc/fcdircache.sgml
+--- fontconfig-2.13.93/doc/fcdircache.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcdircache.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcfile.sgml fontconfig-2.13.93-1/doc/fcfile.sgml
+--- fontconfig-2.13.93/doc/fcfile.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcfile.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcfontset.sgml fontconfig-2.13.93-1/doc/fcfontset.sgml
+--- fontconfig-2.13.93/doc/fcfontset.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcfontset.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcformat.sgml fontconfig-2.13.93-1/doc/fcformat.sgml
+--- fontconfig-2.13.93/doc/fcformat.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcformat.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcfreetype.sgml fontconfig-2.13.93-1/doc/fcfreetype.sgml
+--- fontconfig-2.13.93/doc/fcfreetype.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcfreetype.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcinit.sgml fontconfig-2.13.93-1/doc/fcinit.sgml
+--- fontconfig-2.13.93/doc/fcinit.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcinit.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fclangset.sgml fontconfig-2.13.93-1/doc/fclangset.sgml
+--- fontconfig-2.13.93/doc/fclangset.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fclangset.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcmatrix.sgml fontconfig-2.13.93-1/doc/fcmatrix.sgml
+--- fontconfig-2.13.93/doc/fcmatrix.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcmatrix.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcobjectset.sgml fontconfig-2.13.93-1/doc/fcobjectset.sgml
+--- fontconfig-2.13.93/doc/fcobjectset.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcobjectset.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcobjecttype.sgml fontconfig-2.13.93-1/doc/fcobjecttype.sgml
+--- fontconfig-2.13.93/doc/fcobjecttype.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcobjecttype.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcpattern.sgml fontconfig-2.13.93-1/doc/fcpattern.sgml
+--- fontconfig-2.13.93/doc/fcpattern.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcpattern.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcrange.sgml fontconfig-2.13.93-1/doc/fcrange.sgml
+--- fontconfig-2.13.93/doc/fcrange.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcrange.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcstring.sgml fontconfig-2.13.93-1/doc/fcstring.sgml
+--- fontconfig-2.13.93/doc/fcstring.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcstring.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcstrset.sgml fontconfig-2.13.93-1/doc/fcstrset.sgml
+--- fontconfig-2.13.93/doc/fcstrset.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcstrset.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcvalue.sgml fontconfig-2.13.93-1/doc/fcvalue.sgml
+--- fontconfig-2.13.93/doc/fcvalue.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcvalue.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
+diff -ruN fontconfig-2.13.93/doc/fcweight.sgml fontconfig-2.13.93-1/doc/fcweight.sgml
+--- fontconfig-2.13.93/doc/fcweight.sgml	1970-01-01 12:00:00.000000000 +1200
++++ fontconfig-2.13.93-1/doc/fcweight.sgml	2021-02-25 09:59:25.000000000 +1300
+@@ -0,0 +1 @@
++
