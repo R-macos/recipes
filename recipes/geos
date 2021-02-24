@@ -1,5 +1,3 @@
 Package: geos
-Version: 3.8.1
-Source.URL: http://download.osgeo.org/geos/geos-3.8.1.tar.bz2
-#: GEOS is broken when using gcc
-Configure.darwin.10: CC=clang CXX=clang++
+Version: 3.9.1
+Source.URL: http://download.osgeo.org/geos/geos-3.9.1.tar.bz2

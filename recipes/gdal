@@ -1,6 +1,6 @@
 Package: gdal
 Version: 3.1.4
-Depends: xz, proj, openjpeg, libwebp, freexl
+Depends: xz, proj, openjpeg, libwebp, freexl, sqlite3
 Source.URL: https://github.com/OSGeo/gdal/releases/download/v3.1.4/gdal-3.1.4.tar.gz
 Configure: --with-static-proj4=/${prefix} --with-liblzma 'LIBS=-lsqlite3 -lsz'
 Special: in-sources
