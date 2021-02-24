@@ -42,7 +42,7 @@ set +x
 
 cat > "$BD/Makefile" << EOF
 all:
-	ninja
+	ninja -j10
 
 install:
 	DESTDIR=\$(DESTDIR) meson install
