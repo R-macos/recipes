@@ -1,0 +1,13 @@
+Only in icu-67.1-1: icu
+diff -ru icu-67.1/source/common/unicode/uconfig.h icu-67.1-1/source/common/unicode/uconfig.h
+--- icu-67.1/source/common/unicode/uconfig.h	2020-04-23 08:04:20.000000000 +1200
++++ icu-67.1-1/source/common/unicode/uconfig.h	2021-02-25 13:54:46.000000000 +1300
+@@ -89,7 +89,7 @@
+  * @internal
+  */
+ #ifndef U_DISABLE_RENAMING
+-#define U_DISABLE_RENAMING 0
++#define U_DISABLE_RENAMING 1
+ #endif
+ 
+ /**
