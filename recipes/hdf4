@@ -2,4 +2,4 @@ Package: hdf4
 Version: 4.2.15
 Source.URL: https://support.hdfgroup.org/ftp/HDF/releases/HDF4.2.15/src/hdf-4.2.15.tar.bz2
 Depends: jpeg, szip
-Configure: --enable-build-mode=production --enable-hdf4-xdr --with-szip --disable-netcdf LIBS=-L/${prefix}/lib FCFLAGS='-w -fallow-argument-mismatch -O2' FFLAGS='-w -fallow-argument-mismatch -O2'
+Configure: --enable-build-mode=production --enable-hdf4-xdr --with-szip --disable-netcdf LIBS=-L/${prefix}/lib CFLAGS='-Wno-implicit-function-declaration' FCFLAGS='-w -fallow-argument-mismatch -O2' FFLAGS='-w -fallow-argument-mismatch -O2'
