@@ -26,8 +26,8 @@ jobs:
 
       - name: Remove local stuff
         run: |
-          sudo mv /usr/local /usr/disabled
-          sudo mkdir /usr/local
+          sudo mkdir /usr/local/.disabled
+          sudo mv /usr/local/* /usr/local/.disabled/
 
       - name: Build pkg-config
         run: |
