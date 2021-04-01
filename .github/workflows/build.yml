@@ -31,7 +31,7 @@ jobs:
 
       - name: Build pkg-config
         run: |
-          make -j4 -C build pkg-config
+          make -j4 -C build pkgconfig
           sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
 
       - name: Build all
