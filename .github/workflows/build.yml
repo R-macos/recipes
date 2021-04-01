@@ -25,7 +25,9 @@ jobs:
         run: Rscript scripts/mkmk.R
 
       - name: Remove local stuff
-        run: sudo rm -rf /usr/local/*
+        run: |
+          sudo mv /usr/local /usr/disabled
+          sudo mkdir /usr/local
 
       - name: Build pkg-config
         run: |
