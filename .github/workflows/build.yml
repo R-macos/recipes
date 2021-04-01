@@ -1,0 +1,46 @@
+on: [push, pull_request]
+
+name: Cook recipes
+
+jobs:
+  cook:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} check
+
+    env:
+      CC: clang
+      CXX: clang++
+      OBJC: clang
+      OBJCXX: clang++
+
+    strategy:
+      matrix:
+        os: [ 'macOS-10.15' ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Create Makefile
+        run: Rscript scripts/mkmk.R
+
+      - name: Remove local stuff
+        run: sudo rm -rf /usr/local/*
+
+      - name: Build pkg-config
+        run: |
+          make -j4 -C build pkg-config
+          sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
+
+      - name: Build all
+        run: make -j4 -C build all
+
+      - name: Collect
+        run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
+
+      - name: Upload
+        if: success()
+        uses: actions/upload-artifact@master
+        with:
+          name: recipes-build
+          path: deploy
