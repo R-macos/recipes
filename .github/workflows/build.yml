@@ -39,7 +39,7 @@ jobs:
           sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
 
       - name: Build R dependencies
-        run: make -C build xz pcre2 jpeg png tiff
+        run: make -C build xz pcre2 jpeg libpng tiff
 
       - name: Collect
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
