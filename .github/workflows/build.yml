@@ -31,13 +31,15 @@ jobs:
 
       - name: Build tools
         run: |
-          make -j4 -C build pkgconfig autoconf automake
+          make -C build pkgconfig
 
       - name: Stubs
-        run: echo sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/ && ls -l /usr/local/lib/pkgconfig/
+        run: |
+          sudo mkdir -p /usr/local/lib/pkgconfig
+          sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
 
       - name: Build R dependencies
-        run: make -j4 -C build xz pcre2 jpeg png tiff
+        run: make -C build xz pcre2 jpeg png tiff
 
       - name: Collect
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
