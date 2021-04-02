@@ -6,7 +6,7 @@ jobs:
   cook:
     runs-on: ${{ matrix.os }}
 
-    name: ${{ matrix.os }} check
+    name: ${{ matrix.os }} build
 
     env:
       CC: clang
@@ -29,13 +29,15 @@ jobs:
           sudo mkdir /usr/local/.disabled
           sudo mv /usr/local/* /usr/local/.disabled/
 
-      - name: Build pkg-config
+      - name: Build tools
         run: |
-          make -j4 -C build pkgconfig
-          sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
+          make -j4 -C build pkgconfig autoconf automake
 
-      - name: Build all
-        run: make -j4 -C build all
+      - name: Stubs
+        run: echo sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/ && ls -l /usr/local/lib/pkgconfig/
+
+      - name: Build R dependencies
+        run: make -j4 -C build xz pcre2 jpeg png tiff
 
       - name: Collect
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
