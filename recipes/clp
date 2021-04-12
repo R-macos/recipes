@@ -1,0 +1,4 @@
+Package: clp
+Version: 1.17.6
+Depends: osi
+Source.URL: https://github.com/coin-or/Clp/archive/refs/tags/releases/1.17.6.tar.gz

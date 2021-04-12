@@ -1,0 +1,4 @@
+Package: dylp
+Version: 1.10.4
+Depends: osi
+Source.URL: https://github.com/coin-or/DyLP/archive/refs/tags/releases/1.10.4.tar.gz
