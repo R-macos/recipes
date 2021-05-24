@@ -1,6 +1,6 @@
 Package: gdal
-Version: 3.2.1
-Depends: xz, proj, openjpeg, libwebp, freexl, sqlite3
-Source.URL: https://github.com/OSGeo/gdal/releases/download/v3.2.1/gdal-3.2.1.tar.gz
-Configure: --with-proj-extra-lib-for-test="`pkg-config --static --libs proj`" --with-freexl=/${prefix} --with-liblzma --with-sqlite3=/${prefix} LIBS="-lsqlite3 -lsz"
+Version: 3.2.3
+Depends: xz, proj, openjpeg, libwebp, freexl, sqlite3, expat
+Source.URL: https://github.com/OSGeo/gdal/releases/download/v3.2.3/gdal-3.2.3.tar.gz
+Configure: --with-proj-extra-lib-for-test="`pkg-config --static --libs proj`" --with-freexl=/${prefix} --with-expat=/${prefix} --with-liblzma --with-sqlite3=/${prefix} LIBS="-lsqlite3 -lsz"
 Special: in-sources
