@@ -1,0 +1,5 @@
+Package: apr-util
+Version: 1.6.1
+Depends: apr
+Source.URL: https://archive.apache.org/dist/apr/apr-util-1.6.1.tar.bz2
+Configure: --with-apr=/${PREFIX} --with-crypto --with-openssl=/${PREFIX}
