@@ -1,4 +1,4 @@
 Package: QuantLib
 Depends: boost
-Version: 1.18
-Source.URL: https://dl.bintray.com/quantlib/releases/QuantLib-1.18.tar.gz
+Version: 1.23
+Source.URL: https://github.com/lballabio/QuantLib/releases/download/QuantLib-v1.23/QuantLib-1.23.tar.gz
