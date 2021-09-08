@@ -1,0 +1,5 @@
+Package: sys-iodbc
+Version: 42.6
+NOTE: This only installs the headers for the library that is already supplied with macOS
+Configure.chmod: a+x
+Source.URL: https://opensource.apple.com/tarballs/iodbc/iodbc-42.6.tar.gz
