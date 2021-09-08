@@ -66,6 +66,11 @@ dependencies. Each library is built, packaged and installed.
    If not specified it is assumed that the configure script is
    executable on its own.
 
+ * `Configure.chmod`: optional, if set, `chmod` is called on the
+   configure script with the specified value prior to execution. 
+   Most commonly this is set to `+x` if the soruces fail to make the
+   script executable.
+
  * `Install:` command to perform installation, defaults to
    `make install` and currently will be supplied with
    `DESTDIR=...` which is expected to be honored.
