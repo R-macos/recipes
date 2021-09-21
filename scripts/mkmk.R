@@ -9,6 +9,13 @@ f <- Sys.glob("recipes/*")
 exclude <- grep("(\\.patch|~)$", f)
 if (length(exclude)) f <- f[-exclude]
 
+binary <- Sys.getenv("BINARY")
+binary <- ! suppressWarnings((is.null(binary) || !isTRUE(as.logical(as.integer(binary)))))
+binary.url <- Sys.getenv("BINARY_URL")
+if (length(binary.url) && nchar(binary.url) < 1) binary.url <- NULL
+
+noinstall <- if (is.null(Sys.getenv("NOINSTALL")) || !nzchar(Sys.getenv("NOINSTALL"))) "" else "#"
+
 pkgs <- list()
 
 bin <- file.path(root, "bin")
@@ -79,6 +86,19 @@ arch <- system("uname -m", int=T)
 os.ver <- system("uname -r", int=T)
 os.maj <- paste(os,gsub("\\..*","",os.ver),sep=".")
 
+## auto-detect the binaries to pull from mac.R-project.org
+if (binary && is.null(binary.url)) {
+    if (!isTRUE(os == "darwin"))
+        stop("BINARY_URL must be set for anythign other than macOS")
+    if (isTRUE(arch == "arm64")) {
+        os.maj <-  "darwin.20"
+        binary.url <- "https://mac.r-project.org/libs-arm64"
+    } else {
+        os.maj <- "darwin.17"
+        binary.url <- "https://mac.r-project.org/libs-4"
+    }
+}
+
 ## default flags
 cfgflags <- "--with-pic --disable-shared --enable-static"
 
@@ -118,23 +138,27 @@ for (pkg in pkgs) {
     cfg.proc <- if (length(pkg$d$Configure.driver)) pkg$d$Configure.driver else ""
     cfg.chmod <- if (length(pkg$d$Configure.chmod)) pkg$d$Configure.chmod else ""
     mkinst <- if (length(pkg$d$Install)) pkg$d$Install else "make install"
-    if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
-        if (nzchar(cfg.chmod)) cfg.chmod <- paste("chmod", cfg.chmod, shQuote(cfg.scr), "&& ")
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ",cfg.chmod,"PREFIX=", prefix, " ",cfg.proc," ./",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix," make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
-    } else {
-        if (nzchar(cfg.chmod)) cfg.chmod <- paste("chmod", cfg.chmod, shQuote(paste0("../src/",pv,srcdir,"/",cfg.scr)), "&& ")
-        cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ", cfg.chmod,"PREFIX=", prefix, " ", cfg.proc," ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix, " make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
-    }
     tar <- basename(pkg$src)
-    do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
-    if (nzchar(bsys)) do.patch <- paste0(do.patch, " && cp ", shQuote(bsys), " configure")
-    cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
-    cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
-    chown <- paste0("\t", sudo, "chown -Rh 0:0 '$^'\n")
-    ## don't use chown without sudo unless run as root
-    if (!nzchar(sudo) && isTRUE(!as.vector(Sys.info()["effective_user"] == "root"))) chown <- ""
-cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tif [ ! -e ",prefix,"/pkg ]; then mkdir $^/",prefix,"/pkg; fi\n\t(cd $^ && find ",prefix," > ", prefix, "/pkg/", pv,"-",os.maj,"-",arch,".list )\n", chown, "\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
-    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\t", sudo, "$(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
+    if (!binary) {
+        if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
+            if (nzchar(cfg.chmod)) cfg.chmod <- paste("chmod", cfg.chmod, shQuote(cfg.scr), "&& ")
+            cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ",cfg.chmod,"PREFIX=", prefix, " ",cfg.proc," ./",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix," make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        } else {
+            if (nzchar(cfg.chmod)) cfg.chmod <- paste("chmod", cfg.chmod, shQuote(paste0("../src/",pv,srcdir,"/",cfg.scr)), "&& ")
+            cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ", cfg.chmod,"PREFIX=", prefix, " ", cfg.proc," ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix, " make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+        }
+        do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
+        if (nzchar(bsys)) do.patch <- paste0(do.patch, " && cp ", shQuote(bsys), " configure")
+        cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
+        cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
+        chown <- paste0("\t", sudo, "chown -Rh 0:0 '$^'\n")
+        ## don't use chown without sudo unless run as root
+        if (!nzchar(sudo) && isTRUE(!as.vector(Sys.info()["effective_user"] == "root"))) chown <- ""
+        cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tif [ ! -e ",prefix,"/pkg ]; then mkdir $^/",prefix,"/pkg; fi\n\t(cd $^ && find ",prefix," > ", prefix, "/pkg/", pv,"-",os.maj,"-",arch,".list )\n", chown, "\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
+    } else {
+        cat(pv,"-",os.maj,"-",arch,".tar.gz:\n\tcurl -LO ",binary.url,"/$@\n",sep='')
+    }
+    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\t", noinstall, sudo, "$(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
