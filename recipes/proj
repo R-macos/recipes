@@ -1,4 +1,4 @@
 Package: proj
 Version: 7.2.1
-Depends: pkgconfig
+Depends: pkgconfig, tiff, libpng, jpeg
 Source.URL: http://download.osgeo.org/proj/proj-7.2.1.tar.gz
