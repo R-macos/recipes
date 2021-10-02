@@ -1,3 +1,4 @@
 Package: libpng
 Version: 1.6.37
+Depends: pkgconfig
 Source.URL: https://downloads.sourceforge.net/project/libpng/libpng16/1.6.37/libpng-1.6.37.tar.xz

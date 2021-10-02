@@ -1,4 +1,4 @@
 Package: harfbuzz
 Version: 2.7.4
-Depends: icu, fribidi
+Depends: icu, fribidi, pkgconfig
 Source.URL: https://github.com/harfbuzz/harfbuzz/releases/download/2.7.4/harfbuzz-2.7.4.tar.xz

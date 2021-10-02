@@ -1,4 +1,5 @@
 Package: pcre
 Version: 8.44
+Depends: pkgconfig
 Source.URL: https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.bz2
 Configure: --enable-unicode-properties

@@ -1,5 +1,5 @@
 Package: qpdf
 Version: 9.1.1
 Source.URL: https://downloads.sourceforge.net/project/qpdf/qpdf/9.1.1/qpdf-9.1.1.tar.gz
-Depends: jpeg
+Depends: jpeg, pkgconfig
 Special: in-sources

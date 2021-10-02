@@ -1,5 +1,5 @@
 Package: freetype
-Depends: xml2 (>= 2.6), libpng
-Version: 2.10.4
-Source.URL: http://mirror.downloadvn.com/nongnu/freetype/freetype-2.10.4.tar.xz
+Depends: libpng, pkgconfig
+Version: 2.11.0
+Source.URL: http://mirror.downloadvn.com/nongnu/freetype/freetype-2.11.0.tar.xz
 Configure.darwin: --without-old-mac-fonts --without-fsspec --without-fsref --without--quickdraw-toolbox --without-quickdraw-carbon --without-ats

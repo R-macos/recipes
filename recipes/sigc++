@@ -1,3 +1,4 @@
 Package: sigc++
 Version: 2.10.3
+Depends: pkgconfig
 Source.URL: http://ftp.acc.umu.se/pub/GNOME/sources/libsigc++/2.10/libsigc++-2.10.3.tar.xz
