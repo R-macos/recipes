@@ -17,6 +17,7 @@ if (length(binary.url) && nchar(binary.url) < 1) binary.url <- NULL
 noinstall <- if (is.null(Sys.getenv("NOINSTALL")) || !nzchar(Sys.getenv("NOINSTALL"))) "" else "#"
 
 pkgs <- list()
+virt <- list()
 
 bin <- file.path(root, "bin")
 
@@ -43,6 +44,12 @@ for (fn in f) {
     src <- d$Source.URL
     pkg <- d$Package
     ver <- d$Version
+    dep <- d$Depends
+    dep <- if (length(dep) && any(nzchar(dep))) tools:::.get_requires_with_version_from_package_db(db, "Depends") else list()
+    if (is.null(ver) && is.null(src)) { ## virtual
+        virt[[pkg]] <- list(pkg=pkg, dep=dep)
+        next
+    }
     nver <- if (length(grep("[a-zA-Z]$", ver))) {
         suf <- substr(ver, nchar(ver), nchar(ver))
 	mver <- substr(ver, 1, nchar(ver) - 1)
@@ -50,8 +57,6 @@ for (fn in f) {
 	if (is.na(m)) m <- match(suf, LETTERS)
 	nver <- package_version(paste(mver, m, sep='-'))
     } else package_version(ver)
-    dep <- d$Depends
-    dep <- if (length(dep) && any(nzchar(dep))) tools:::.get_requires_with_version_from_package_db(db, "Depends") else list()
     patch <- file.path(root, paste0(fn, ".patch"))
     if (!file.exists(patch)) patch <- c()
     pkgs[[pkg]] <- list(pkg=pkg, ver=ver, nver=nver, dep=dep, src=src, d=d, patch=patch)
@@ -59,7 +64,7 @@ for (fn in f) {
 
 ok <- TRUE
 
-for (pkg in pkgs) {
+for (pkg in c(virt, pkgs)) {
     if (length(pkg$dep)) {
        for (cond in pkg$dep) if (!is.null(cond$name)) {
            if (is.null(pkgs[[cond$name]])) {
@@ -128,6 +133,12 @@ if (!nzchar(TAR)) TAR <- "tar"
 cat("TAR='", TAR, "'\n", sep='')
 cat("PREFIX='", prefix, "'\n\n", sep='')
 
+dep.targets <- function(dep)
+   paste(sapply(pkg$dep, function(o) {
+      dp <- c(pkgs, virt)[[o$name]]
+      if (is.null(dp$ver)) dp$pkg else paste(dp$pkg, dp$ver, sep='-')
+   }), collapse=' ')
+
 for (pkg in pkgs) {
     pv <- paste0(pkg$pkg,"-",pkg$ver)
     bsys <- if (length(pkg$d$`Build-system`)) pkg$d$`Build-system` else ""
@@ -142,10 +153,10 @@ for (pkg in pkgs) {
     if (!binary) {
         if (length(grep("in-sources", pkg$d$Special))) { ## requires in-sources install
             if (nzchar(cfg.chmod)) cfg.chmod <- paste("chmod", cfg.chmod, shQuote(cfg.scr), "&& ")
-            cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ",cfg.chmod,"PREFIX=", prefix, " ",cfg.proc," ./",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix," make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+            cat(pv,"-dst: src/",pv," ",dep.targets(pkg$dep),"\n\trm -rf ",pv,"-obj && rsync -a src/",pv,srcdir,"/ ",pv,"-obj/ && cd ",pv,"-obj && ",cfg.chmod,"PREFIX=", prefix, " ",cfg.proc," ./",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix," make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
         } else {
             if (nzchar(cfg.chmod)) cfg.chmod <- paste("chmod", cfg.chmod, shQuote(paste0("../src/",pv,srcdir,"/",cfg.scr)), "&& ")
-            cat(pv,"-dst: src/",pv," ",paste(sapply(pkg$dep, function(o) paste0(pkgs[[o$name]]$pkg,"-",pkgs[[o$name]]$ver)),collapse=' '),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ", cfg.chmod,"PREFIX=", prefix, " ", cfg.proc," ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix, " make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
+            cat(pv,"-dst: src/",pv," ",dep.targets(pkg$dep),"\n\trm -rf ",pv,"-obj && mkdir ",pv,"-obj && cd ",pv,"-obj && ", cfg.chmod,"PREFIX=", prefix, " ", cfg.proc," ../src/",pv,srcdir,"/",cfg.scr," ",cfg(pkg$d)," && PREFIX=", prefix, " make -j12 && PREFIX=", prefix, " ", mkinst, " DESTDIR=",root,"/build/",pv,"-dst\n\n", sep='')
         }
         do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
         if (nzchar(bsys)) do.patch <- paste0(do.patch, " && cp ", shQuote(bsys), " configure")
@@ -160,6 +171,9 @@ for (pkg in pkgs) {
     }
     cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\t", noinstall, sudo, "$(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
+}
+for (pkg in virt) {
+    cat(pkg$pkg,": ",dep.targets(pkg$dep),"\n\ttouch '$@'\n")
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
 sink()
