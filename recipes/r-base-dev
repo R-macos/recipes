@@ -1,0 +1,3 @@
+Package: r-base-dev
+Description: Virtual package providing all dependent libraries to build R
+Depends: xz, tiff, libpng, openssl, jpeg, pcre2, cairo, texinfo
