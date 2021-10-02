@@ -5,5 +5,6 @@ Configure: --enable-cxx
 Configure.i386: ABI=32
 Configure.ppc: ABI=32
 Configure.x86_64: ABI=64
+Configure.darwin.x86_64: --build=sandybridge-apple-darwin`uname -r`
 Configure.ppc64: ABI=64
 Configure.arm64: ABI=64
