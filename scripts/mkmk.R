@@ -17,7 +17,6 @@ if (length(binary.url) && nchar(binary.url) < 1) binary.url <- NULL
 noinstall <- if (is.null(Sys.getenv("NOINSTALL")) || !nzchar(Sys.getenv("NOINSTALL"))) "" else "#"
 
 pkgs <- list()
-virt <- list()
 
 bin <- file.path(root, "bin")
 
@@ -47,7 +46,7 @@ for (fn in f) {
     dep <- d$Depends
     dep <- if (length(dep) && any(nzchar(dep))) tools:::.get_requires_with_version_from_package_db(db, "Depends") else list()
     if (is.null(ver) && is.null(src)) { ## virtual
-        virt[[pkg]] <- list(pkg=pkg, dep=dep)
+        pkgs[[pkg]] <- list(pkg=pkg, dep=dep)
         next
     }
     nver <- if (length(grep("[a-zA-Z]$", ver))) {
@@ -64,7 +63,7 @@ for (fn in f) {
 
 ok <- TRUE
 
-for (pkg in c(virt, pkgs)) {
+for (pkg in pkgs) {
     if (length(pkg$dep)) {
        for (cond in pkg$dep) if (!is.null(cond$name)) {
            if (is.null(pkgs[[cond$name]])) {
@@ -134,12 +133,17 @@ cat("TAR='", TAR, "'\n", sep='')
 cat("PREFIX='", prefix, "'\n\n", sep='')
 
 dep.targets <- function(dep)
-   paste(sapply(pkg$dep, function(o) {
-      dp <- c(pkgs, virt)[[o$name]]
+   paste(sapply(dep, function(o) {
+      dp <- pkgs[[o$name]]
       if (is.null(dp$ver)) dp$pkg else paste(dp$pkg, dp$ver, sep='-')
    }), collapse=' ')
 
 for (pkg in pkgs) {
+    if (is.null(pkg$ver)) { ## virtual
+        cat(pkg$pkg,": ",dep.targets(pkg$dep),"\n\ttouch '$@'\n", sep='')
+        next
+    }
+
     pv <- paste0(pkg$pkg,"-",pkg$ver)
     bsys <- if (length(pkg$d$`Build-system`)) pkg$d$`Build-system` else ""
     if (nzchar(bsys) && !file.exists(bsys <- file.path(root, "scripts", paste0("configure.", bsys)))) stop("I can't find driver for the builds system ", bsys)
@@ -172,10 +176,7 @@ for (pkg in pkgs) {
     cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\t", noinstall, sudo, "$(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }
-for (pkg in virt) {
-    cat(pkg$pkg,": ",dep.targets(pkg$dep),"\n\ttouch '$@'\n")
-}
-cat("\n\nall: ", paste(sapply(pkgs, function(o) paste(o$pkg, o$ver, sep='-')), collapse=' '), "\n\n", sep='')
+cat("\n\nall: ", paste(sapply(pkgs, function(o) if (!is.null(o$ver)) paste(o$pkg, o$ver, sep='-') else ''), collapse=' '), "\n\n", sep='')
 sink()
 
 cat("\nCreated build/Makefile\n\nUse make -C build <recipe> to build and install a recipe\n\n")
