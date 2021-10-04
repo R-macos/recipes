@@ -1,0 +1,21 @@
+diff -ru dylp-1.10.4/DyLP/configure dylp-1.10.4-1/DyLP/configure
+--- dylp-1.10.4/DyLP/configure	2019-02-23 11:11:58.000000000 +1300
++++ dylp-1.10.4-1/DyLP/configure	2021-10-03 18:05:52.000000000 +1300
+@@ -25664,7 +25664,7 @@
+ 
+  { echo "$as_me:$LINENO: Checking for proper name for isfinite()." >&5
+ echo "$as_me: Checking for proper name for isfinite()." >&6;}
+-  ac_name_of_isfinite="unavailable"
++  ac_name_of_isfinite="isfinite"
+   echo "$as_me:$LINENO: checking for finite" >&5
+ echo $ECHO_N "checking for finite... $ECHO_C" >&6
+ if test "${ac_cv_func_finite+set}" = set; then
+@@ -25969,7 +25969,7 @@
+ 
+  { echo "$as_me:$LINENO: Checking for proper name for isnan()." >&5
+ echo "$as_me: Checking for proper name for isnan()." >&6;}
+-  ac_name_of_isnan="unavailable"
++  ac_name_of_isnan="isnan"
+   echo "$as_me:$LINENO: checking for isnan" >&5
+ echo $ECHO_N "checking for isnan... $ECHO_C" >&6
+ if test "${ac_cv_func_isnan+set}" = set; then
