@@ -3,6 +3,30 @@
 osname=`uname -s`
 osarch=`uname -m` 
 
+args=($@)
+for ((i=1;i<=$#;i++)); do
+    case "x${!i}" in
+	x--) unset args[$i-1]; break;;
+	x-f) FORCE=1; unset args[$i-1];;
+	x-b) BINARY=1; unset args[$i-1];;
+	x-p) PERL=`which perl`; unset args[$i-1]; if [ -z "$PERL" ]; then PERL=perl; fi;;
+	x-h)
+	    echo ''
+	    echo " Usage: $0 [-f] [-b] [-p] [-h] [[--] ...]"
+	    echo ''
+	    echo ' -f  - create builds/Makefile even if it exists'
+	    echo ' -b  - install from binaries'
+	    echo ' -p  - use Perl even if R is present'
+	    echo ' --  - any further arguments are passed ann not interpreted'
+	    echo ' -h  - this help page'
+	    echo ' ... additional arguments passed to make'
+	    echo ''
+	    echo 'The builds are perfromed in the "builds" subdirectory'
+	    echo ''
+	    exit 0;;
+    esac
+done
+
 ## auto-detect PREFIX if not specified
 if [ -z "$PREFIX" -a x$OSARCH = xarm64 -a x$osname = xDarwin ]; then
   PREFIX=opt/R/arm64
@@ -13,6 +37,11 @@ if [ -z "$PREFIX" ]; then
   else
     PREFIX=usr/local
   fi
+fi
+
+## fall back to CMake.app if necessary
+if [ -e /Applications/CMake.app/Contents/bin/cmake ]; then
+    PATH=$PATH:/Applications/CMake.app/Contents/bin
 fi
 
 ## make sure prefix is first on the PATH
@@ -66,23 +95,37 @@ fi
 
 ## need to create Makefile?
 if [ ! -e build/Makefile ]; then
-  if [ -z "$RSBIN" ]; then
-    echo "ERROR: cannot find Rscript binary. Set PATH or RSBIN accordingly." >&2
-    exit 1
-  fi
+    if [ -n "$PERL" -o -z "$RSBIN" ]; then
+	: ${PERL=`which perl`}
+	if [ -z "$PERL" ]; then
+	    X=`perl -e 'print 1;'`
+	    if [ x$X = x1 ]; then
+		PERL=perl
+	    else
+		echo "ERROR: neither R nor Perl found. Please, install either and make sure it is on the PATH."
+		exit 1
+	    fi
+	fi
+	RUN="$PERL scripts/mkmk.pl"
+	echo "Using Perl generator ($PERL)"
+    else
+	RUN="$RSBIN scripts/mkmk.R"
+	echo "Using R generator ($RSBIN)"
+    fi
 
-  if "$RSBIN" scripts/mkmk.R; then
-    echo 'build/Makefile created.'
-  else
-    echo "ERROR: mkmk.R failed" >&2
-    exit 1
-  fi 
+    if $RUN; then
+	echo 'build/Makefile created.'
+	echo ''
+    else
+	echo "ERROR: Makefile generation failed" >&2
+	exit 1
+    fi
 fi
 
 if [ x"$osname" = xDarwin ]; then
   PWD=`pwd`
   export PKG_CONFIG_PATH=/$PREFIX/lib/pkgconfig:$PWD/stubs/pkgconfig-darwin:/usr/lib/pkgconfig
- 
-  make -C build $* 
 fi
 
+set -e
+make -C build "${args[@]}"
