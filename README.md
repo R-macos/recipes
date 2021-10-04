@@ -16,13 +16,28 @@ files in R packages. The required fields are `Package`, `Version` and
 `Configure`.
 
 There is an R script that will process the recipes and create a `make`
-file which can be used to build libraries and their dependencies.
-For example, to build all libraries and their dependencies:
+file which can be used to build libraries and their dependencies. In
+case you do not have R yet, there is also a Perl script as well, so
+you need either of Perl or R.
 
-    Rscript scripts/mkmk.R && cd build && make all
+More recently, we have added a user-friendly command line tool simply
+called `build.sh` (requires `bash`) which replicates the build as
+performed on the CRAN machines. For example, to build all libraries
+needed to build R use:
 
-Use a recipe name instead of `all` to build a specific library and its
-dependencies. Each library is built, packaged and installed.
+    ./build.sh r-base-dev
+
+You can replace `r-base-dev` with any recipe or use `all` to build 
+all recipes. See `./build.sh -h` for a little help page. 
+Each library is built, packaged and installed. The
+default locations used by the above script are `/opt/R/$arch` and
+`/usr/local`. The former will be used if present where `$arch` is
+typically `x86_64` or `arm64`, otherwise `/usr/local` is the
+fall-back.
+
+For a more fine-grained control you can run `scripts/mkmk.R` or
+`scripts/mkmk.pl` yourself and see the list of environment
+variables at the bottom of this page for possible configurations.
 
 ### Reference
 
@@ -37,9 +52,9 @@ dependencies. Each library is built, packaged and installed.
 
  * `Package:` name of the package (required)
 
- * `Version:` version of the package (required)
+ * `Version:` version of the package (required*)
 
- * `Source.URL:` URL of the source tar ball (required)
+ * `Source.URL:` URL of the source tar ball (required*)
 
  * `Configure.subdir:` subdirectory containing the sources
 
@@ -85,6 +100,10 @@ dependencies. Each library is built, packaged and installed.
    `ninja` for builds. Obviously, such systems are far more fragile
    so use only as a last resort.
 
+(*) - virtual packages are packages that are only used to trigger
+installation of other packages, they only create a target in the
+`Makefile`, but don't create any output themselves.
+Those don't have `Version:` nor `Source.URL:`.
 
 ### Building
 
@@ -107,14 +126,16 @@ Each dependency has to succeed in all the steps above before the next
 recipe is used. Makefile is used to determine the dependencies between
 the recipes.
 
-Note: currently `pkgconfig` is not specifically listed in most recipes
+Note: currently `pkgconfig` is not specifically listed in all recipes
 even though several of them use it, so it is advisable to use `make
 pkgconfig` before using `make all`. Also `pkgconfig` system stubs are
 expected to exist for system libraries such that they can be used as
 dependencies by `pkgconfig`. Some versions of macOS include them, but
 others may require manual installation. Most recent macOS versions don't
 allow stubs in system location since it is read-only, so adding an
-alternative path to `PKG_CONFIG_PATH` may be required.
+alternative path to `PKG_CONFIG_PATH` may be required. The
+`build.sh` script automatically adds the system stubs shipped with
+the recipes to `PKG_CONFIG_PATH`.
 
 ### Environment Variables
 
@@ -134,7 +155,13 @@ The `mkmk.R` script will respect the following environment variables:
    The `PREFIX` variable is available both at shell level and to the
    make commands by default.
 
- * `NOSUDO` if set to anything non-empty, if doesn't use `sudo` in the
-   unpackgaing step. This is mainly useful for user-space
+ * `NOSUDO` if set to 1 `sudo` will not be used in the
+   unpacking step. This is mainly useful for user-space
    installations when setting `PREFIX` to a location owned by the
    user.
+
+ * `BINARY` (experimental) if set to 1 then the script creates a
+   `Makefile` which downloads binaries from `BINARY_URL` instead of
+   building them. On macOS if `BINARY_URL` is not set, the binaries
+   are downloaded from https://mac.r-project.org
+ 
