@@ -88,9 +88,8 @@ else
 fi
 
 ## if -f is used we re-build the Makefile regardless
-if [ x"$1" = x-f ]; then
+if [ -n "$FORCE" ]; then
   rm -f build/Makefile
-  shift
 fi
 
 ## need to create Makefile?
