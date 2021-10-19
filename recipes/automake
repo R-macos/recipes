@@ -1,4 +1,4 @@
 Package: automake
 Version: 1.16.5
 Depends: autoconf (>= 2.69)
-Source.URL: http://ftp.gnu.org/gnu/automake/automake-1.16.5.tar.gz
+Source.URL: https://ftp.gnu.org/gnu/automake/automake-${ver}.tar.gz
