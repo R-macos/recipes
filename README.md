@@ -41,20 +41,26 @@ variables at the bottom of this page for possible configurations.
 
 ### Reference
 
+ * `Package:` name of the package (required)
+
+ * `Version:` version of the package (required*).
+   This version string can be substituted in other directives using `${ver}`.
+
+ * `Source.URL:` URL of the source tar ball (required*)
+
+ * `Depends:` comma separated list of dependent recipes, i.e. recipes
+   that must be successfully installed before this one. Optional version
+   specification of the form `rcp (>= min.ver)` is allowed for individual
+   dependencies.
+
+Most of the following entries are optional:
+
  * `Configure[.<os>[.<ver>]][.<arch>]:` flags to add to the `configure`
    script. `<os>` is the lowecase name of the OS as returned by
    `uname`, `<ver>` is the major version of the OS (`uname -r` up
    to the first dot) and `<arch>` is the architecture of the
    platform. Multiple types can be specified and they are concatenated
    using precedence `os, ver, arch`.
-
- * `Depends:` list of dependent recipes
-
- * `Package:` name of the package (required)
-
- * `Version:` version of the package (required*)
-
- * `Source.URL:` URL of the source tar ball (required*)
 
  * `Configure.subdir:` subdirectory containing the sources
 
@@ -63,10 +69,10 @@ variables at the bottom of this page for possible configurations.
    sources.
 
  * `Distribution.files:` list of files (or directories) to include
-   in the final distribution tar ball. Defaults to `usr/local`.
+   in the final distribution tar ball. Defaults to `${prefix}`.
    This directive is intended only for restricting the content,
-   installation is only supported for content under `usr/local`
-   so no files outside that tree can be part of  the final
+   installation is only supported for content under `${prefix}`
+   so no files outside that tree can be part of the final
    distribution.
 
  * `Configure.script:` name of the configure script to use,
@@ -126,16 +132,13 @@ Each dependency has to succeed in all the steps above before the next
 recipe is used. Makefile is used to determine the dependencies between
 the recipes.
 
-Note: currently `pkgconfig` is not specifically listed in all recipes
-even though several of them use it, so it is advisable to use `make
-pkgconfig` before using `make all`. Also `pkgconfig` system stubs are
-expected to exist for system libraries such that they can be used as
-dependencies by `pkgconfig`. Some versions of macOS include them, but
-others may require manual installation. Most recent macOS versions don't
-allow stubs in system location since it is read-only, so adding an
-alternative path to `PKG_CONFIG_PATH` may be required. The
-`build.sh` script automatically adds the system stubs shipped with
-the recipes to `PKG_CONFIG_PATH`.
+Note: `pkgconfig` system stubs are expected to exist for system
+libraries such that they can be used as dependencies by `pkgconfig`.
+Some versions of macOS include them, but others may require manual
+installation. Most recent macOS versions don't allow stubs in system
+location since it is read-only, so adding an alternative path to
+`PKG_CONFIG_PATH` may be required. The `build.sh` script automatically
+adds the system stubs shipped with the recipes to `PKG_CONFIG_PATH`.
 
 ### Environment Variables
 
