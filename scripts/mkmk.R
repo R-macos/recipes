@@ -169,7 +169,7 @@ for (pkg in pkgs) {
         chown <- paste0("\t", sudo, "chown -Rh 0:0 '$^'\n")
         ## don't use chown without sudo unless run as root
         if (!nzchar(sudo) && isTRUE(!as.vector(Sys.info()["effective_user"] == "root"))) chown <- ""
-        cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tif [ ! -e ",prefix,"/pkg ]; then mkdir $^/",prefix,"/pkg; fi\n\t(cd $^ && find ",prefix," > ", prefix, "/pkg/", pv,"-",os.maj,"-",arch,".list )\n", chown, "\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
+        cat(pv,"-",os.maj,"-",arch,".tar.gz: ",pv,"-dst\n\tif [ ! -e $^/",prefix,"/pkg ]; then mkdir $^/",prefix,"/pkg; fi\n\t(cd $^ && find ",prefix," > ", prefix, "/pkg/", pv,"-",os.maj,"-",arch,".list )\n", chown, "\ttar fcz '$@' -C '$^' ",dist,"\n", sep='')
     } else {
         cat(pv,"-",os.maj,"-",arch,".tar.gz:\n\tcurl -LO ",binary.url,"/$@\n",sep='')
     }

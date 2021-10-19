@@ -249,7 +249,7 @@ foreach my $name (sort keys %pkgs) {
         ## don't use chown without sudo unless run as root
 	## FIXME: unimplemented
         ##if (!nzchar(sudo) && isTRUE(!as.vector(Sys.info()["effective_user"] == "root"))) chown <- ""
-        print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e $prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\ttar fcz '\$\@' -C '\$^' $dist\n";
+        print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\ttar fcz '\$\@' -C '\$^' $dist\n";
     } else {
         print OUT "$pv-$os_maj-$arch.tar.gz:\n\tcurl -LO $binary_url/\$\@\n";
     }
