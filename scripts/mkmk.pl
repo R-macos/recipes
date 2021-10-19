@@ -84,13 +84,15 @@ sub get_deps {
 
 foreach $fn (@f) {
     my %d = read_dcf($fn);
+    my $ver = $d{"version"};
 
     ## replace ${prefix} with the prefix
     foreach (keys %d) { $d{$_} =~ s/\$\{prefix\}/$prefix/ge; }
+    ## replace ${ver} with the version
+    foreach (keys %d) { $d{$_} =~ s/\$\{ver\}/$ver/ge; }
 
     my $src = $d{"source.url"};
     my $pkg = $d{"package"};
-    my $ver = $d{"version"};
     my $dep = $d{"depends"};
 
 #    print "=== $fn:\n";

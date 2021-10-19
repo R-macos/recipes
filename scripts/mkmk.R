@@ -38,11 +38,13 @@ for (fn in f) {
     }
     db <- d[1,]
     d <- as.list(db)
+    ver <- d$Version
     ## replace ${prefix} with the prefix
     d <- lapply(d, function(o) gsub("${prefix}", prefix, o, fixed=TRUE))
+    ## replace ${ver} with the Version
+    if (!is.null(ver)) d <- lapply(d, function(o) gsub("${ver}", ver, o, fixed=TRUE))
     src <- d$Source.URL
     pkg <- d$Package
-    ver <- d$Version
     dep <- d$Depends
     dep <- if (length(dep) && any(nzchar(dep))) tools:::.get_requires_with_version_from_package_db(db, "Depends") else list()
     if (is.null(ver) && is.null(src)) { ## virtual
