@@ -1,6 +1,6 @@
 Package: pcre2
-Version: 10.34
-Source.URL: https://ftp.pcre.org/pub/pcre/pcre2-10.34.tar.bz2
+Version: 10.39
+Source.URL: https://github.com/PhilipHazel/pcre2/releases/download/pcre2-${ver}/pcre2-${ver}.tar.bz2
 Depends: pkgconfig
 Configure.darwin: --disable-jit
 #Note: JIT is broken - at least on macOS (out of memory errors)
