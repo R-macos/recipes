@@ -1,6 +1,8 @@
 ## this script generates build/Makefile
 ## which is used to build libraries according to the recipes
 
+## FIXME: this has hardcoded make -j12
+
 default.prefix <- "usr/local"
 
 root <- getwd()
@@ -82,7 +84,7 @@ for (pkg in pkgs) {
                    }
                }
            }
-       }        
+       }
     }
     if (!ok) stop("=== bailing out, dependencies not met ===")
 }
@@ -95,7 +97,7 @@ os.maj <- paste(os,gsub("\\..*","",os.ver),sep=".")
 ## auto-detect the binaries to pull from mac.R-project.org
 if (binary && is.null(binary.url)) {
     if (!isTRUE(os == "darwin"))
-        stop("BINARY_URL must be set for anythign other than macOS")
+        stop("BINARY_URL must be set for anything other than macOS")
     if (isTRUE(arch == "arm64")) {
         os.maj <-  "darwin.20"
         binary.url <- "https://mac.r-project.org/libs-arm64"
