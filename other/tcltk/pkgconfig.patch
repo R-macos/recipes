@@ -1,0 +1,40 @@
+diff -ruN 0/pkgconfig/kbproto.pc 1/pkgconfig/kbproto.pc
+--- 0/pkgconfig/kbproto.pc	1970-01-01 12:00:00.000000000 +1200
++++ 1/pkgconfig/kbproto.pc	2021-11-16 11:21:21.000000000 +1300
+@@ -0,0 +1,9 @@
++prefix=/opt/X11
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
++ 
++Name: KBProto
++Description: KB extension headers
++Version: 1.0.7
++Cflags: -I${includedir}
+diff -ruN 0/pkgconfig/renderproto.pc 1/pkgconfig/renderproto.pc
+--- 0/pkgconfig/renderproto.pc	1970-01-01 12:00:00.000000000 +1200
++++ 1/pkgconfig/renderproto.pc	2021-11-16 11:21:21.000000000 +1300
+@@ -0,0 +1,9 @@
++prefix=/opt/X11
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
++ 
++Name: RenderProto
++Description: Render extension headers
++Version: 0.11.1
++Cflags: -I${includedir}
+diff -ruN 0/pkgconfig/xproto.pc 1/pkgconfig/xproto.pc
+--- 0/pkgconfig/xproto.pc	1970-01-01 12:00:00.000000000 +1200
++++ 1/pkgconfig/xproto.pc	2021-11-16 11:21:21.000000000 +1300
+@@ -0,0 +1,10 @@
++prefix=/opt/X11
++exec_prefix=${prefix}
++libdir=${exec_prefix}/lib
++includedir=${prefix}/include
++includex11dir=${prefix}/include/X11
++ 
++Name: Xproto
++Description: Xproto headers
++Version: 7.0.31
++Cflags: -I${includedir}

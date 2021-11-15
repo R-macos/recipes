@@ -1,0 +1,51 @@
+diff -ru Tktable2.10/generic/tkTableTag.c Tktable2.10-1/generic/tkTableTag.c
+--- Tktable2.10/generic/tkTableTag.c	2008-11-15 11:46:57.000000000 +1300
++++ Tktable2.10-1/generic/tkTableTag.c	2021-09-11 16:56:46.000000000 +1200
+@@ -212,7 +212,7 @@
+     TableJoinTag *jtagPtr = (TableJoinTag *) tagPtr;
+ 
+     if (jtagPtr->magic != 0x99ABCDEF) {
+-	panic("bad mojo in TableResetTag");
++	Tcl_Panic("bad mojo in TableResetTag");
+     }
+ 
+     memset((VOID *) jtagPtr, 0, sizeof(TableJoinTag));
+@@ -269,7 +269,7 @@
+     unsigned int prio;
+ 
+     if (jtagPtr->magic != 0x99ABCDEF) {
+-	panic("bad mojo in TableMergeTag");
++	Tcl_Panic("bad mojo in TableMergeTag");
+     }
+ 
+ #ifndef NO_TAG_PRIORITIES
+@@ -432,7 +432,7 @@
+ 	    if (bottom)	{ *bottom	= tagPtr->bd[3]; }
+ 	    break;
+ 	default:
+-	    panic("invalid border value '%d'\n", tagPtr->borders);
++	    Tcl_Panic("invalid border value '%d'\n", tagPtr->borders);
+ 	    break;
+     }
+     return tagPtr->borders;
+diff -ru Tktable2.10/generic/tkTableUtil.c Tktable2.10-1/generic/tkTableUtil.c
+--- Tktable2.10/generic/tkTableUtil.c	2002-10-16 20:31:48.000000000 +1300
++++ Tktable2.10-1/generic/tkTableUtil.c	2021-09-11 16:56:46.000000000 +1200
+@@ -105,7 +105,7 @@
+ 	bordersPtr	= &(tagPtr->borders);
+ 	bdPtr		= tagPtr->bd;
+     } else {
+-	panic("invalid type given to TableOptionBdSet\n");
++	Tcl_Panic("invalid type given to TableOptionBdSet\n");
+ 	return TCL_ERROR; /* lint */
+     }
+ 
+@@ -188,7 +188,7 @@
+     } else if (type == BD_TABLE_WIN) {
+ 	return ((TableEmbWindow *) widgRec)->borderStr;
+     } else {
+-	panic("invalid type given to TableOptionBdSet\n");
++	Tcl_Panic("invalid type given to TableOptionBdSet\n");
+ 	return NULL; /* lint */
+     }
+ }
