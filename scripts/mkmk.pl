@@ -149,7 +149,7 @@ $os_maj = "$os.$os_maj";
 ## auto-detect the binaries to pull from mac.R-project.org
 if ($binary && $binary_url eq '') {
     if ($os eq "darwin") {
-	print STDERR "BINARY_URL must be set for anythign other than macOS\n";
+	print STDERR "BINARY_URL must be set for anything other than macOS\n";
 	exit 1;
     }
     if ($arch eq "arm64") {
@@ -186,8 +186,16 @@ system "mkdir -p build/src 2>/dev/null";
 open OUT, ">build/Makefile" || die "ERROR: cannot create build/Makefile";
 
 my $TAR = $ENV{"TAR"};
+my $tarflags='';
+
 $TAR = 'tar' if ($TAR eq '');
 print OUT "TAR='$TAR'\nPREFIX='$prefix'\n\n";
+
+if(system("tar c --uid 0 /dev/null > /dev/null 2>&1")) {
+  print "NOTE: your tar does not support --uid so it won't be set\n";
+} else {
+  $tarflags='--uid 0 --gid 80';
+}
 
 sub dep_targets {
     return join ' ', map {
@@ -247,11 +255,7 @@ foreach my $name (sort keys %pkgs) {
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');
 	print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
         print OUT "src/$tar:\n\tcurl -L -o \$\@ '$pkg{src}'\n";
-        $chown = "\t${sudo}chown -Rh 0:0 '\$^'\n";
-        ## don't use chown without sudo unless run as root
-	## FIXME: unimplemented
-        ##if (!nzchar(sudo) && isTRUE(!as.vector(Sys.info()["effective_user"] == "root"))) chown <- ""
-        print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\ttar fcz '\$\@' -C '\$^' $dist\n";
+        print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\t\$(TAR) fcz '\$\@' $tarflags -C '\$^' $dist\n";
     } else {
         print OUT "$pv-$os_maj-$arch.tar.gz:\n\tcurl -LO $binary_url/\$\@\n";
     }
