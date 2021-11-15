@@ -9,5 +9,5 @@ diff -Nru test_0.0/configure xx/configure
 +if [ -z "$CMAKE" ]; then CMAKE=/Applications/CMake.app/Contents/bin/cmake; fi
 +
 +set -x
-+"$CMAKE" "$src" -DCMAKE_INSTALL_PREFIX="/$PREFIX" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:bool=OFF -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON -DCMAKE_EXE_LINKER_FLAGS="/$PREFIX/lib/libjpeg.a /$PREFIX/lib/liblzma.a /$PREFIX/lib/libwebp.a"
++"$CMAKE" "$src" -DCMAKE_INSTALL_PREFIX="/$PREFIX" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS:bool=OFF -DCMAKE_POSITION_INDEPENDENT_CODE:bool=ON -DCMAKE_EXE_LINKER_FLAGS="/$PREFIX/lib/libjpeg.a /$PREFIX/lib/liblzma.a /$PREFIX/lib/libwebp.a" -DCMAKE_C_FLAGS="-I/$PREFIX/include"
 +

@@ -1,5 +1,5 @@
 Package: fontconfig
 Version: 2.13.94
-Source.URL: https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.13.94.tar.xz
+Source.URL: https://www.freedesktop.org/software/fontconfig/release/fontconfig-${ver}.tar.xz
 Configure.darwin: --with-baseconfigdir=/Library/Frameworks/R.framework/Resources/fontconfig/fonts --with-cache-dir=/Library/Frameworks/R.framework/Resources/fontconfig/cache --with-default-fonts=/usr/X11/lib/X11/fonts --with-add-fonts=/System/Library/Fonts,/Library/Fonts,~/Library/Fonts --enable-libxml2 --datadir=/Library/Frameworks/R.framework/Resources/fontconfig
 Depends: pkgconfig, freetype (>= 2.5.5)

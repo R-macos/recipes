@@ -1,4 +1,4 @@
 Package: pkgconfig
-Version: 0.28
-Source.URL: http://pkgconfig.freedesktop.org/releases/pkg-config-0.28.tar.gz
+Version: 0.29.2
+Source.URL: http://pkgconfig.freedesktop.org/releases/pkg-config-${ver}.tar.gz
 Configure: --with-internal-glib --enable-indirect-deps=yes

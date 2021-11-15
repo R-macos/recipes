@@ -1,6 +1,6 @@
 Package: zeromq
-Version: 4.3.2
+Version: 4.3.4
 Depends: pkgconfig
-Source.URL: https://github.com/zeromq/libzmq/releases/download/v4.3.2/zeromq-4.3.2.tar.gz
+Source.URL: https://github.com/zeromq/libzmq/releases/download/v${ver}/zeromq-${ver}.tar.gz
 ##: Due to a bug in ZMQ we have to force CC=C++ since it's trying to link C++ with C linker which fails
 Configure.darwin.13: CC=clang++ CXX=clang++

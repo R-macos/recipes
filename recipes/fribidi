@@ -1,4 +1,4 @@
 Package: fribidi
-Version: 1.0.10
+Version: 1.0.11
 Depends: pkgconfig
-Source.URL: https://github.com/fribidi/fribidi/releases/download/v1.0.10/fribidi-1.0.10.tar.xz
+Source.URL: https://github.com/fribidi/fribidi/releases/download/v${ver}/fribidi-${ver}.tar.xz

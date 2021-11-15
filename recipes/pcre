@@ -1,5 +1,6 @@
 Package: pcre
-Version: 8.44
+Version: 8.45
 Depends: pkgconfig
-Source.URL: https://ftp.pcre.org/pub/pcre/pcre-8.44.tar.bz2
+Source.URL: https://sourceforge.net/projects/pcre/files/pcre/${ver}/pcre-${ver}.tar.bz2
 Configure: --enable-unicode-properties
+Configure.arm64: --disable-jit

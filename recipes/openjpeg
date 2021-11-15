@@ -1,4 +1,4 @@
 Package: openjpeg
 Version: 2.4.0
-Source.URL: https://github.com/uclouvain/openjpeg/archive/v2.4.0.tar.gz
+Source.URL: https://github.com/uclouvain/openjpeg/archive/v${ver}.tar.gz
 Configure.driver: sh

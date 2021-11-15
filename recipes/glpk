@@ -1,5 +1,5 @@
 Package: glpk
-Version: 4.65
-Source.URL: http://ftp.gnu.org/gnu/glpk/glpk-4.65.tar.gz
+Version: 5.0
+Source.URL: http://ftp.gnu.org/gnu/glpk/glpk-${ver}.tar.gz
 Depends: gmp
 Configure: --with-gmp
