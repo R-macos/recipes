@@ -1,18 +1,13 @@
-diff -ru openssl-1.1.1h/Configurations/10-main.conf openssl-1.1.1h-arm/Configurations/10-main.conf
---- openssl-1.1.1h/Configurations/10-main.conf	2020-09-23 00:55:07.000000000 +1200
-+++ openssl-1.1.1h-arm/Configurations/10-main.conf	2020-12-04 12:39:33.000000000 +1300
-@@ -1527,6 +1527,14 @@
-     # Option "freeze" such as -std=gnu9x can't negatively interfere
-     # with future defaults for below two targets, because MacOS X
-     # for PPC has no future, it was discontinued by vendor in 2009.
-+"darwin64-arm64-cc" => {
-+    inherit_from     => [ "darwin-common", asm("aarch64_asm") ],
-+    CFLAGS           => add("-Wall"),
-+    cflags           => add("-arch arm64"),
-+    lib_cppflags     => add("-DL_ENDIAN"),
-+    bn_ops           => "SIXTY_FOUR_BIT_LONG",
-+    perlasm_scheme   => "macosx",
-+},
-     "darwin-ppc-cc" => {
-         inherit_from     => [ "darwin-common", asm("ppc32_asm") ],
-         cflags           => add("-arch ppc -std=gnu9x -Wa,-force_cpusubtype_ALL"),
+diff -ru openssl-1.1.1l/crypto/rand/rand_unix.c openssl-1.1.1l-1/crypto/rand/rand_unix.c
+--- openssl-1.1.1l/crypto/rand/rand_unix.c	2021-08-24 09:38:47.000000000 -0400
++++ openssl-1.1.1l-1/crypto/rand/rand_unix.c	2021-11-24 14:42:14.000000000 -0500
+@@ -35,7 +35,7 @@
+ # include <sys/param.h>
+ #endif
+ #if defined(__APPLE__)
+-# include <CommonCrypto/CommonRandom.h>
++# include <CommonCrypto/CommonCryptor.h>
+ #endif
+ 
+ #if defined(OPENSSL_SYS_UNIX) || defined(__DJGPP__)
+Only in openssl-1.1.1l-1/crypto/rand: rand_unix.c~
