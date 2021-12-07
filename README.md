@@ -101,9 +101,13 @@ Most of the following entries are optional:
    the `scripts` directory of this project which is copied
    to the sources of the library as `configure` and should perform
    whatever operations are necessary to make the project
-   autoconf-compatible. Currently we only provide a driver
+   autoconf-compatible. Currently we only provide drivers
+   `cmake` which supports [CMake](https://cmake.org) and
    `meson-ninja` which supports `meson` for configuration and
-   `ninja` for builds. Obviously, such systems are far more fragile
+   `ninja` for builds. The latter must be installed, typically
+   using `pip install meson ninja` (add `--user` if you cannot
+   install in the system location).
+   Obviously, such systems are far more fragile
    so use only as a last resort.
 
 (*) - virtual packages are packages that are only used to trigger
@@ -124,7 +128,8 @@ Currently the build steps are
    from the recipe
  * run `make -j12`
  * run `make install` with `DESTDIR` set
- * change the ownership of content instide `DESTDIR` to 0:0
+ * change the ownership of content inside `DESTDIR` to 0:0
+   (unless `tar` supports `--uid`/`--gid` flags)
  * package `${prefix}` inside the destination into a tar ball
  * unpack the tar ball in the system location
 
