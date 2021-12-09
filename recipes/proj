@@ -1,4 +1,4 @@
 Package: proj
 Version: 8.1.1
-Depends: pkgconfig, tiff, libpng, jpeg
+Depends: pkgconfig, tiff, libpng, jpeg, sqlite3
 Source.URL: http://download.osgeo.org/proj/proj-${ver}.tar.gz
