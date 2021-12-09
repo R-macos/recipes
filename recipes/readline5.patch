@@ -1,0 +1,10 @@
+diff -ru readline5-5.2-014/rldefs.h readline5-5.2-014-arm/rldefs.h
+--- readline5-5.2-014/rldefs.h	2005-07-05 15:27:25.000000000 +1200
++++ readline5-5.2-014-arm/rldefs.h	2021-12-10 10:10:36.000000000 +1300
+@@ -157,4 +157,6 @@
+ /* CONFIGURATION SECTION */
+ #include "rlconf.h"
+ 
++#include <sys/ioctl.h>
++
+ #endif /* !_RLDEFS_H_ */

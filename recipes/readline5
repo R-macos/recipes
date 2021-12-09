@@ -1,0 +1,3 @@
+Package: readline5
+Version: 5.2-014
+Source.URL: https://mac.r-project.org/src/readline-${ver}.tar.gz
