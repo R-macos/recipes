@@ -1,3 +1,4 @@
 Package: libgeotiff
 Version: 1.7.0
+Depends: jpeg, tiff, proj (>= 6.0)
 Source.URL: https://github.com/OSGeo/libgeotiff/releases/download/${ver}/libgeotiff-${ver}.tar.gz
