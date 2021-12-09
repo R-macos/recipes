@@ -1,0 +1,29 @@
+--- clp-1.17.6/Clp/clp.pc.in	2020-04-11 16:51:55.000000000 +0100
++++ clp-1.17.6/Clp/clp.pc.in.new	2021-11-16 07:57:18.000000000 +0000
+@@ -7,6 +7,6 @@
+ Description: COIN-OR Linear Programming Solver
+ URL: https://projects.coin-or.org/Clp
+ Version: @PACKAGE_VERSION@
+-Libs: -L${libdir} -lClpSolver -lClp @CLPLIB_PCLIBS@
++Libs: -L${libdir} -lClpSolver -lClp @CLPLIB_PCLIBS@ -lc++
+ Cflags: -I${includedir}
+ Requires: @CLPLIB_PCREQUIRES@
+--- clp-1.17.6/Clp/src/Clp_C_Interface.cpp~	2020-04-11 16:51:55.000000000 +0100
++++ clp-1.17.6/Clp/src/Clp_C_Interface.cpp	2021-11-16 08:39:04.000000000 +0000
+@@ -375,14 +375,14 @@
+   model->model_->chgObjCoefficients(objIn);
+ }
+ /* Change matrix coefficients */
+-#if (defined(__cplusplus) && __cplusplus >= 199901L) || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L)
++//#if (defined(__cplusplus) && __cplusplus >= 199901L) || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L)
+ COINLIBAPI void COINLINKAGE
+ Clp_modifyCoefficient(Clp_Simplex *model, int row, int column, double newElement,
+   bool keepZero)
+ {
+   model->model_->modifyCoefficient(row, column, newElement, keepZero);
+ }
+-#endif
++//#endif
+ /* Drops names - makes lengthnames 0 and names empty */
+ COINLIBAPI void COINLINKAGE
+ Clp_dropNames(Clp_Simplex *model)
