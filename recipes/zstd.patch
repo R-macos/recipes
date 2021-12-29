@@ -1,0 +1,45 @@
+diff -ruN zstd-1.5.1/configure zstd-1.5.1-fix/configure
+--- zstd-1.5.1/configure	1969-12-31 19:00:00.000000000 -0500
++++ zstd-1.5.1-fix/configure	2021-12-28 22:35:37.000000000 -0500
+@@ -0,0 +1,41 @@
++#!/bin/bash
++
++BD="`pwd`"
++SD="`dirname $0`"
++SD="`(cd $SD && pwd)`"
++
++echo Copying sources ...
++## zstd can only build in-sources
++cp -r $SD/* .
++
++echo Collecting env vars from arguments:
++while (( "$#" )); do
++    if echo "$1" | grep -E '^[A-Z]+=' >/dev/null; then
++	export "$1"
++	echo "  $1"
++    else
++	if echo "$1" | grep '^--prefix='; then
++	    PREFIX=`echo $1 | sed 's:^--prefix=/*::'`
++	else
++	    MARGS+=("$1")
++	fi
++    fi
++    shift
++done
++
++if [ -z "$PREFIX" ]; then
++    PREFIX=usr/local
++    echo "PREFIX no specified, falling back to $PREFIX"
++fi
++echo "Setting prefix=/$PREFIX"
++
++cat > Makefile <<EOF
++all:
++	make -C lib -j8 libzstd.a
++
++install:
++	make -C lib -j8 prefix=/${PREFIX} DESTDIR=\$(DESTDIR)/ install-static install-includes
++
++EOF
++
++echo "Makefile generated."

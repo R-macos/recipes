@@ -1,0 +1,4 @@
+Package: zstd
+Version: 1.5.1
+Source.URL: https://github.com/facebook/zstd/releases/download/v${ver}/zstd-${ver}.tar.gz
+Configure.chmod: +x
