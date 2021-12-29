@@ -50,7 +50,7 @@ for (fn in f) {
     dep <- d$Depends
     dep <- if (length(dep) && any(nzchar(dep))) tools:::.get_requires_with_version_from_package_db(db, "Depends") else list()
     if (is.null(ver) && is.null(src)) { ## virtual
-        pkgs[[pkg]] <- list(pkg=pkg, dep=dep)
+        pkgs[[pkg]] <- list(pkg=pkg, dep=dep, d=d)
         next
     }
     nver <- if (length(grep("[a-zA-Z]$", ver))) {
@@ -136,11 +136,11 @@ if (!nzchar(TAR)) TAR <- "tar"
 cat("TAR='", TAR, "'\n", sep='')
 cat("PREFIX='", prefix, "'\n\n", sep='')
 
-dep.targets <- function(dep)
+dep.targets <- function(dep, sep=' ')
    paste(sapply(dep, function(o) {
       dp <- pkgs[[o$name]]
       if (is.null(dp$ver)) dp$pkg else paste(dp$pkg, dp$ver, sep='-')
-   }), collapse=' ')
+   }), collapse=sep)
 
 for (pkg in pkgs) {
     if (is.null(pkg$ver)) { ## virtual
@@ -177,7 +177,7 @@ for (pkg in pkgs) {
     } else {
         cat(pv,"-",os.maj,"-",arch,".tar.gz:\n\tcurl -LO ",binary.url,"/$@\n",sep='')
     }
-    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\t", noinstall, sudo, "$(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && touch '$@'\n",sep='')
+    cat(pv,": ",pv,"-",os.maj,"-",arch,".tar.gz\n\t", noinstall, sudo, "$(TAR) fxz '$^' -C /", prefix, " --strip ", ndir, " && echo 'Package: ",pkg$pkg,"~Version: ",pkg$ver,"~Depends: ", pkg$d$Depends, "~BuiltWith: ",dep.targets(pkg$dep,", "),"~BuiltFor: ",os.maj,"-",arch,"~Binary: ",pv,"-",os.maj,"-",arch,".tar.gz~' | tr '~' '\\n' > '$@' && touch '$@'\n",sep='')
     cat(pkg$pkg,": ",pv,"\n\n",sep='')
 }
 cat("\n\nall: ", paste(sapply(pkgs, function(o) if (!is.null(o$ver)) paste(o$pkg, o$ver, sep='-') else ''), collapse=' '), "\n\n", sep='')
