@@ -3,7 +3,8 @@
 This is a system for building static, dependent libraries
 for R packages. It is mainly intended to automate the maintenance of
 CRAN dependencies for the macOS build system, but the system is intended
-to be usable on other platforms as well.
+to be usable on other platforms as well. Resulting binaries
+are available at https://mac.R-project.org/bin/.
 
 The idea is for package authors to submit pull requests for
 dependencies their packages require such that they can be
@@ -171,5 +172,8 @@ The `mkmk.R` script will respect the following environment variables:
  * `BINARY` (experimental) if set to 1 then the script creates a
    `Makefile` which downloads binaries from `BINARY_URL` instead of
    building them. On macOS if `BINARY_URL` is not set, the binaries
-   are downloaded from https://mac.r-project.org
+   are downloaded from https://mac.r-project.org This is now _deprecated_
+   in favor of the tools at https://mac.r-project.org/bin/ which are
+   better at dependency resolution as recipes may not always match the
+   repository.
  
