@@ -75,6 +75,10 @@ echo "install prefix: /$PREFIX"
 
 export PREFIX
 
+if [ ! -e "/$PREFIX/bin" ]; then
+    mkdir -p "/$PREFIX/bin" 2> /dev/null ## ok to fail, we deal with sudo later
+fi
+
 if touch /$PREFIX/bin/.1; then
   echo "sudo not required"
   export NOSUDO=1
