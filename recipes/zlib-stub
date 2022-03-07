@@ -1,0 +1,4 @@
+Package: zlib-stub
+Description: System stub for zlib
+Version: 0.1
+Source.URL: https://mac.R-project.org/zlib-stub-${ver}.tar.gz
