@@ -1,5 +1,5 @@
 Package: netcdf
-Version: 4.7.4
+Version: 4.8.1
 Depends: hdf5, szip
-Source.URL: https://www.unidata.ucar.edu/downloads/netcdf/ftp/netcdf-c-4.7.4.tar.gz
+Source.URL: https://github.com/Unidata/netcdf-c/archive/refs/tags/v${ver}.tar.gz
 Configure: --enable-netcdf-4 LIBS=-lsz
