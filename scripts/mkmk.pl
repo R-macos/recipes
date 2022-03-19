@@ -147,6 +147,7 @@ foreach my $name (keys %pkgs) {
 my $os = lc `uname`; chomp $os;
 my $arch = lc `uname -m`; chomp $arch;
 my $os_ver = `uname -r`; chomp $os_ver;
+$os_ver=$ENV{OS_VER} if ($ENV{OS_VER} ne '');
 my $os_maj = $os_ver;
 $os_maj =~ s/\..*//;
 $os_maj = "$os.$os_maj";
@@ -253,10 +254,10 @@ foreach my $name (sort keys %pkgs) {
     if (!$binary) {
         if ($d{special} =~ /in-sources/) { ## requires in-sources install
 	    $cfg_chmod = "chmod $cfg_chmod ".shQuote($cfg_scr)." && " if ($cfg_chmod ne '');
-	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj && rsync -a src/$pv$srcdir/ $pv-obj/ && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ./$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make -j12 && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
+	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj \$\@ && rsync -a src/$pv$srcdir/ $pv-obj/ && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ./$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make -j12 && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
         } else {
 	    $cfg_chmod = "chmod $cfg_chmod ".shQuote("../src/$pv$srcdir/$cfg_scr")." && " if ($cfg_chmod ne '');
-	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj && mkdir $pv-obj && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ../src/$pv$srcdir/$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make -j12 && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
+	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj \$\@ && mkdir $pv-obj && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ../src/$pv$srcdir/$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make -j12 && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
         }
         $do_patch = ($pkg{patch} ne '') ? "&& patch -p1 < ".shQuote($pkg{patch}) : '';
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');
