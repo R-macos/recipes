@@ -1,0 +1,6 @@
+Package: poppler
+Version: 22.03.0
+Source.URL: https://poppler.freedesktop.org/poppler-${ver}.tar.xz
+Depends: tiff, cairo
+Build-system: cmake
+Configure: --prefix=/${prefix} -DCMAKE_EXE_LINKER_FLAGS="`pkg-config --static --libs cairo libtiff-4`" -DCMAKE_C_FLAGS="`pkg-config --cflags cairo libtiff-4`"
