@@ -3,7 +3,7 @@
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
-includedir=${prefix}/include
+includedir=${prefix}/include/libxml2
 modules=1
 
 Name: libXML
@@ -13,4 +13,4 @@ Requires:
 Libs: -lxml2
 ## static libs most likely need -llzma  -liconv
 Libs.private: -lpthread -lz  -lm 
-Cflags:
+Cflags: -I${includedir}
