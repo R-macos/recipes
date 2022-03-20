@@ -1,7 +1,7 @@
 diff -ru proj-7.2.1/proj.pc.in proj-7.2.1-1/proj.pc.in
 --- proj-7.2.1/proj.pc.in	2020-11-08 00:47:02.000000000 +1300
 +++ proj-7.2.1-1/proj.pc.in	2021-03-04 10:57:39.000000000 +1300
-@@ -7,8 +7,8 @@
+@@ -7,8 +7,9 @@
  
  Name: PROJ
  Description: Coordinate transformation software library
@@ -9,6 +9,6 @@ diff -ru proj-7.2.1/proj.pc.in proj-7.2.1-1/proj.pc.in
 +Requires: libtiff-4
  Version: @VERSION@
  Libs: -L${libdir} -lproj
--Libs.private: @SQLITE3_LIBS@ @TIFF_LIBS@ @CURL_LIBS@ -lstdc++
-+Libs.private: @SQLITE3_LIBS@ @TIFF_LIBS@ @CURL_LIBS@ -lc++
+ Libs.private: @EXTRA_LIBS@
++Libs.private: @EXTRA_LIBS@ -lc++
  Cflags: -I${includedir}
