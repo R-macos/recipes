@@ -52,7 +52,7 @@ foreach $fn (@a) {
             print "$fn has not changed, skipping re-compression\n";
          } else {
             print "Re-compressing $fn -> $xfn\n";
-            system("$xz -c9 < '$fn' > '$xfn'") == 0 || die("Cannot re-compress!");
+            system("gzip -dc $fn | $xz -c9 > '$xfn'") == 0 || die("Cannot re-compress!");
             system("ls -l $fn");
             ($atime, $mtime) = (stat($fn))[8,9];
             utime($atime, $mtime, $xfn);
