@@ -1,4 +1,5 @@
 Package: geos
-Version: 3.9.1
+Version: 3.10.2
 Depends: pkgconfig
-Source.URL: http://download.osgeo.org/geos/geos-3.9.1.tar.bz2
+Source.URL: http://download.osgeo.org/geos/geos-3.10.2.tar.bz2
+Build-system: cmake
