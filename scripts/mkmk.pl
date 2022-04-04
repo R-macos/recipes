@@ -247,7 +247,7 @@ foreach my $name (sort keys %pkgs) {
     my $tar = $pkg{src};
     $tar =~ s/.*\///;
     if ($pkg{ver} eq '') { ## virtual
-	print OUT "$pkg{pkg}: ".dep_targets($pkg{dep})."\n\ttouch '\$\@'\n";
+	print OUT "$pkg{pkg}: ".dep_targets($pkg{dep})."\n\techo 'Bundle: $pkg{pkg}~Depends: $d{Depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~' | tr '~' '\\n' > '\$\@' && cp '\$\@' '\$\@.bundle' && touch '\$\@'\n";
 	next;
     }
 
