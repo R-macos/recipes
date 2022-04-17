@@ -1,5 +1,5 @@
 Package: poppler
-Version: 22.03.0
+Version: 22.04.0
 Source.URL: https://poppler.freedesktop.org/poppler-${ver}.tar.xz
 Depends: tiff, cairo
 Build-system: cmake

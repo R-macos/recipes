@@ -1,0 +1,24 @@
+diff -ru poppler-22.03.0-orig/poppler-glib.pc.cmake poppler-22.03.0/poppler-glib.pc.cmake
+--- poppler-22.03.0-orig/poppler-glib.pc.cmake	2022-03-01 13:50:27.000000000 -0800
++++ poppler-22.03.0/poppler-glib.pc.cmake	2022-04-17 15:03:24.000000000 -0700
+@@ -5,7 +5,7 @@
+ Name: poppler-glib
+ Description: GLib wrapper for poppler
+ Version: @POPPLER_VERSION@
+-Requires: glib-2.0 >= @GLIB_REQUIRED@ gobject-2.0 >= @GLIB_REQUIRED@ cairo >= @CAIRO_VERSION@ @PC_REQUIRES@
++Requires: glib-2.0 >= @GLIB_REQUIRED@ gobject-2.0 >= @GLIB_REQUIRED@ cairo >= @CAIRO_VERSION@ gio-2.0 >= @GLIB_REQUIRED@ @PC_REQUIRES@
+ @PC_REQUIRES_PRIVATE@
+ 
+ Libs: -L${libdir} -lpoppler-glib
+diff -ru poppler-22.03.0-orig/poppler.pc.cmake poppler-22.03.0/poppler.pc.cmake
+--- poppler-22.03.0-orig/poppler.pc.cmake	2022-03-01 13:50:27.000000000 -0800
++++ poppler-22.03.0/poppler.pc.cmake	2022-04-17 15:05:18.000000000 -0700
+@@ -5,6 +5,7 @@
+ Name: poppler
+ Description: PDF rendering library
+ Version: @POPPLER_VERSION@
++Requires.private: libtiff-4, cairo
+ 
+-Libs: -L${libdir} -lpoppler
++Libs: -L${libdir} -lpoppler -lopenjp2
+ Cflags: -I${includedir}/poppler
