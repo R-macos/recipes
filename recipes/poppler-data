@@ -1,0 +1,4 @@
+Package: poppler-data
+Version: 0.4.11
+Source.URL: https://poppler.freedesktop.org/poppler-data-${ver}.tar.gz
+Build-system: make
