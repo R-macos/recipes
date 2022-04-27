@@ -1,0 +1,6 @@
+Package: jags
+Version: 4.3.1
+Source.URL: https://sourceforge.net/projects/mcmc-jags/files/JAGS/4.x/Source/JAGS-4.3.1.tar.gz
+Configure.darwin: --with-blas='-framework Accelerate' --with-lapack='-framework Accelerate' CC=clang CXX=clang++
+Configure.x86_64: --prefix=/usr/local CFLAGS='-O2 -mmacosx-version-min=10.13' CXXFLAGS='-O2 -mmacosx-version-min=10.13' F77="/usr/local/gfortran/bin/gfortran"
+Configure.arm64: --prefix=/opt/R/arm64 CFLAGS='-O2 -mmacosx-version-min=11' CXXFLAGS='-O2 -mmacosx-version-min=11' F77="/opt/R/arm64/gfortran/bin/gfortran"
