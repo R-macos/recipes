@@ -1,0 +1,4 @@
+Package: stoken
+Version: 0.92
+Depends: nettle
+Source.URL: https://downloads.sourceforge.net/project/stoken/stoken-0.92.tar.gz
