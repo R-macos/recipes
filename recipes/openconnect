@@ -1,0 +1,7 @@
+Package: openconnect
+Version: 8.10
+Depends: nettle, openssl
+Source.URL: https://fossies.org/linux/privat/openconnect-8.10.tar.gz
+Configure: --with-vpnc-script=/${prefix}/etc/vpnc/vpnc-script --disable-nls
+Configure.darwin: LIBS='-framework PCSC'
+##FIXME: curl -Lo /${prefix}/etc/vpnc/vpnc-script https://git.infradead.org/users/dwmw2/vpnc-scripts.git/blob_plain/master:/vpnc-script
