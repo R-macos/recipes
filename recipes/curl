@@ -1,0 +1,5 @@
+Package: curl
+Version: 7.78.0
+Depends: openssl, nghttp2
+Source.URL: https://curl.se/download/curl-7.78.0.tar.bz2
+Configure: --with-openssl
