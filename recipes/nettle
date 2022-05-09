@@ -1,0 +1,4 @@
+Package: nettle
+Version: 3.7.2
+Depends: gmp
+Source.URL: https://ftp.gnu.org/gnu/nettle/nettle-3.7.3.tar.gz
