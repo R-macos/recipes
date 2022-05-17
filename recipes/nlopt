@@ -1,4 +1,4 @@
 Package: nlopt
-Version: 2.6.2
+Version: 2.7.1
 Source.URL: https://github.com/stevengj/nlopt/archive/v${ver}.tar.gz
 Build-system: cmake
