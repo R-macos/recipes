@@ -1,0 +1,3 @@
+Package: vde2
+Version: 2.3.3
+Source.URL: https://github.com/virtualsquare/vde-2/archive/refs/tags/v${ver}.tar.gz

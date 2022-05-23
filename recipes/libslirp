@@ -1,0 +1,5 @@
+Package: libslirp
+Version: 4.7.0
+Depends: glib
+Build-system: meson-ninja
+Source.URL: https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${ver}/libslirp-v${ver}.tar.gz

@@ -1,0 +1,3 @@
+Package: lzo
+Version: 2.10
+Source.URL: https://www.oberhumer.com/opensource/lzo/download/lzo-${ver}.tar.gz

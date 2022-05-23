@@ -1,0 +1,6 @@
+Package: snappy
+Version: 1.1.9
+Depends: pkgconfig
+Build-system: cmake
+Source.URL: https://github.com/google/snappy/archive/${ver}.tar.gz
+Configure: -DSNAPPY_BUILD_TESTS=OFF -DSNAPPY_BUILD_BENCHMARKS=OFF

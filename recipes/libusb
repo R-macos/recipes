@@ -1,0 +1,3 @@
+Package: libusb
+Version: 1.0.26
+Source.URL: https://github.com/libusb/libusb/releases/download/v${ver}/libusb-${ver}.tar.bz2
