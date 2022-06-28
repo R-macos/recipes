@@ -2,4 +2,4 @@ Package: subversion
 Version: 1.14.1
 Source.URL: https://archive.apache.org/dist/subversion/subversion-${ver}.tar.bz2
 Depends: openssl, sqlite3, apr, apr-util, serf, utf8proc
-Configure: --with-lz4=internal LIBS='-lssl -lcrypto'
+Configure: --with-lz4=internal LIBS='-L/${prefix}/lib -lssl -lcrypto'

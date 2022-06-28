@@ -2,4 +2,4 @@ Package: netcdf
 Version: 4.8.1
 Depends: hdf5, szip
 Source.URL: https://github.com/Unidata/netcdf-c/archive/refs/tags/v${ver}.tar.gz
-Configure: --enable-netcdf-4 LIBS=-lsz
+Configure: --enable-netcdf-4 LIBS='-L/${prefix}/lib -lsz'
