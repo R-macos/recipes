@@ -197,7 +197,7 @@ my $tarflags='';
 $TAR = 'tar' if ($TAR eq '');
 print OUT "TAR='$TAR'\nPREFIX='$prefix'\n\n";
 
-if(system("tar c --uid 0 /dev/null > /dev/null 2>&1")) {
+if(system("$TAR c --uid 0 /dev/null > /dev/null 2>&1")) {
   print "NOTE: your tar does not support --uid so it won't be set\n";
 } else {
   $tarflags='--uid 0 --gid 80';
