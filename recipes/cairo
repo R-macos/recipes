@@ -2,4 +2,4 @@ Package: cairo
 Version: 1.16.0
 Source.URL: https://www.cairographics.org/releases/cairo-1.16.0.tar.xz
 Depends: freetype (>= 2.1.9), fontconfig, libpng, pixman (>= 0.30.0)
-Configure: --disable-quartz-font --disable-quartz --disable-quartz-image --disable-qt
+Configure.darwin: --disable-quartz-font --disable-quartz --disable-quartz-image --disable-qt --x-includes=/opt/X11/include --x-libraries=/opt/X11/lib
