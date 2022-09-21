@@ -1,0 +1,3 @@
+Package: unixodbc
+Version: 2.3.11
+Source.URL: http://www.unixodbc.org/unixODBC-${ver}.tar.gz

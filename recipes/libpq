@@ -2,5 +2,6 @@ Package: libpq
 Version: 14.5
 Source.URL: https://ftp.postgresql.org/pub/source/v${ver}/postgresql-${ver}.tar.bz2
 Configure.x86_64: CFLAGS=-fPIC
+Make: make MAKELEVEL=0 -j12
 #: we only pick libpq from the entire PostgeSQL installation...
-Distribution.files: ${prefix}/include/libpq-fe.h ${prefix}/include/postgres_ext.h ${prefix}/include/pg_config_ext.h ${prefix}/lib/libpq.a ${prefix}/lib/pkgconfig/libpq.pc
+Distribution.files: ${prefix}/include/libpq-fe.h ${prefix}/include/postgres_ext.h ${prefix}/include/pg_config_ext.h ${prefix}/lib/libpq.a ${prefix}/lib/libpgcommon.a ${prefix}/lib/libpgport.a ${prefix}/lib/pkgconfig/libpq.pc
