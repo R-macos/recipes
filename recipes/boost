@@ -1,4 +1,4 @@
 Package: boost
-Version: 1.77.0
-Source.URL: https://downloads.sourceforge.net/project/boost/boost/1.77.0/boost_1_77_0.tar.bz2
+Version: 1.79.0
+Source.URL: https://downloads.sourceforge.net/project/boost/boost/${ver}/boost_1_79_0.tar.bz2
 Configure.driver: sh

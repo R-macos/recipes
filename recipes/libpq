@@ -1,5 +1,5 @@
 Package: libpq
-Version: 9.6.24
+Version: 14.5
 Source.URL: https://ftp.postgresql.org/pub/source/v${ver}/postgresql-${ver}.tar.bz2
 Configure.x86_64: CFLAGS=-fPIC
 #: we only pick libpq from the entire PostgeSQL installation...

@@ -1,5 +1,5 @@
 Package: hdf5
-Version: 1.12.1
+Version: 1.12.2
 Source.URL: https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-${ver}/src/hdf5-${ver}.tar.bz2
 Depends: szip, jpeg
 Configure: --enable-build-mode=production --with-szlib

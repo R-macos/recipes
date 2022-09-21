@@ -1,5 +1,5 @@
 Package: qpdf
-Version: 10.0.4
-Source.URL: https://downloads.sourceforge.net/project/qpdf/qpdf/${ver}/qpdf-${ver}.tar.gz
+Version: 11.1.0
+Source.URL: https://github.com/qpdf/qpdf/releases/download/v${ver}/qpdf-${ver}.tar.gz
 Depends: jpeg, pkgconfig
 Special: in-sources

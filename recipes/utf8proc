@@ -1,5 +1,5 @@
 Package: utf8proc
-Version: 2.6.1
-Source.URL: https://github.com/JuliaStrings/utf8proc/archive/v2.6.1.tar.gz
+Version: 2.7.0
+Source.URL: https://github.com/JuliaStrings/utf8proc/archive/v${ver}.tar.gz
 Configure.driver: true
 Special: in-sources

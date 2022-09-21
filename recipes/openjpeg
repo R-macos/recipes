@@ -1,5 +1,5 @@
 Package: openjpeg
-Version: 2.4.0
+Version: 2.5.0
 Build-system: cmake
 Source.URL: https://github.com/uclouvain/openjpeg/archive/v${ver}.tar.gz
 Comment: cmake doesn't detect any flags correctly so we have to pass

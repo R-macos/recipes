@@ -1,5 +1,5 @@
 Package: icu
-Version: 70.1
-Source.URL: https://github.com/unicode-org/icu/releases/download/release-70-1/icu4c-70_1-src.tgz
+Version: 71.1
+Source.URL: https://github.com/unicode-org/icu/releases/download/release-71-1/icu4c-71_1-src.tgz
 Configure: --disable-renaming
 Configure.subdir: source

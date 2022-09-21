@@ -1,4 +1,4 @@
 Package: libsndfile
-Version: 1.0.28
+Version: 1.1.0
 Depends: pkgconfig
-Source.URL: http://www.mega-nerd.com/libsndfile/files/libsndfile-1.0.28.tar.gz
+Source.URL: https://github.com/libsndfile/libsndfile/releases/download/${ver}/libsndfile-${ver}.tar.xz

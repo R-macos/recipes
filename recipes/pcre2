@@ -1,5 +1,5 @@
 Package: pcre2
-Version: 10.39
+Version: 10.40
 Source.URL: https://github.com/PhilipHazel/pcre2/releases/download/pcre2-${ver}/pcre2-${ver}.tar.bz2
 Depends: pkgconfig
 Configure.darwin: --disable-jit

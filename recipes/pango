@@ -1,6 +1,6 @@
 Package: pango
-Version: 1.49.3
+Version: 1.50.10
 Depends: glib, cairo, freetype, harfbuzz, fontconfig, fribidi
 Build-system: meson-ninja
-Source.URL: https://download.gnome.org/sources/pango/1.49/pango-1.49.3.tar.xz
+Source.URL: https://download.gnome.org/sources/pango/1.50/pango-1.50.10.tar.xz
 Configure.darwin: LDFLAGS='-framework Foundation -L/${prefix}/lib -lbz2 -lpng -lz -lpixman-1 -lxml2 -llzma'

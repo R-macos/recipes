@@ -1,4 +1,4 @@
 Package: tiff
-Version: 4.3.0
-Source.URL: http://download.osgeo.org/libtiff/tiff-4.3.0.tar.gz
+Version: 4.4.0
+Source.URL: http://download.osgeo.org/libtiff/tiff-${ver}.tar.gz
 Depends: jpeg, xz, libwebp
