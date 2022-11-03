@@ -1,6 +1,6 @@
 Package: gdal
 Version: 3.4.2
-Depends: pkgconfig, xz, libpq, proj, openjpeg, libwebp, freexl, sqlite3, expat, hdf4, hdf5, szip
+Depends: pkgconfig, xz, libpq, proj, openjpeg, libwebp, freexl, sqlite3, expat, hdf4, hdf5, szip, netcdf
 Source.URL: https://github.com/OSGeo/gdal/releases/download/v${ver}/gdal-${ver}.tar.gz
 Configure: --with-proj-extra-lib-for-test="`pkg-config --static --libs proj` -lsz" --with-freexl=/${prefix} --with-expat=/${prefix} --with-liblzma --with-sqlite3=/${prefix}
 Special: in-sources
