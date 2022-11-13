@@ -1,6 +1,16 @@
---- gdal-3.1.1-orig/configure	2020-06-22 04:25:56.000000000 -0400
-+++ gdal-3.1.1/configure	2020-06-30 21:20:11.000000000 -0400
-@@ -39118,7 +39118,7 @@
+diff -ru gdal-3.5.2/configure gdal-3.5.2-fix/configure
+--- gdal-3.5.2/configure	2022-09-03 00:20:11
++++ gdal-3.5.2-fix/configure	2022-11-13 21:27:54
+@@ -35342,7 +35342,7 @@
+   $as_echo_n "(cached) " >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lodbc  $LIBS"
++LIBS="-lodbc -liconv $LIBS"
+ cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */
+ 
+@@ -37142,7 +37142,7 @@
  
        HAVE_GEOS="no"
  
