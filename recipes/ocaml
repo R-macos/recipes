@@ -1,0 +1,4 @@
+Package: ocaml
+Version: 4.14.0
+Source.URL: https://github.com/ocaml/ocaml/archive/refs/tags/${ver}.tar.gz
+Special: in-sources

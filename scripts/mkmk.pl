@@ -23,7 +23,7 @@ $prefix = $default_prefix if ($prefix eq '');
 ## strip any leading / - it has to be a relative path and no double //
 $prefix =~ s/^\/+//;
 
-my @pparts = split /\/+/, $prefix; 
+my @pparts = split /\/+/, $prefix;
 my $ndir = @pparts;
 
 my $sudo = ($ENV{"NOSUDO"} + 0) > 0 ? "" : "sudo ";
@@ -184,7 +184,7 @@ sub cfg {
     ## this is not completely fool-proof, but we try to accept --prefix overrides and not step on them
     my $tst = ' ' . join ' ', @f;
     @f = ("--prefix=/$prefix", @f) if (!($d{'configure.script'} ne '' || $tst =~ / --prefix=/));
-    
+
     return join ' ', @f;
 }
 
@@ -261,7 +261,7 @@ foreach my $name (sort keys %pkgs) {
         }
         $do_patch = ($pkg{patch} ne '') ? "&& patch -p1 < ".shQuote($pkg{patch}) : '';
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');
-	print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
+	print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && shopt -s dotglob && mv */* . && shopt -u dotglob $do_patch)\n";
         print OUT "src/$tar:\n\t$curl -L -o \$\@ '$pkg{src}'\n";
         print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\t\$(TAR) fcz '\$\@' $tarflags -C '\$^' $dist\n";
     } else {

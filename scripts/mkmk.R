@@ -168,7 +168,7 @@ for (pkg in pkgs) {
         }
         do.patch <- if (length(pkg$patch)) paste("&& patch -p1 <", shQuote(pkg$patch)) else ""
         if (nzchar(bsys)) do.patch <- paste0(do.patch, " && cp ", shQuote(bsys), " configure")
-        cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar," && mv */* . ",do.patch,")\n",sep='')
+        cat("src/",pv,": src/",tar,"\n\tmkdir -p src/",pv," && (cd src/",pv," && $(TAR) fxj ../",tar,"&& shopt -s dotglob && mv */* . && shopt -u dotglob",do.patch,")\n",sep='')
         cat("src/",tar,":\n\tcurl -L -o $@ '",pkg$src,"'\n",sep='')
         chown <- paste0("\t", sudo, "chown -Rh 0:0 '$^'\n")
         ## don't use chown without sudo unless run as root
