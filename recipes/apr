@@ -1,3 +1,3 @@
 Package: apr
-Version: 1.7.0
-Source.URL: https://apache.inspire.net.nz/apr/apr-1.7.0.tar.bz2
+Version: 1.7.2
+Source.URL: https://dlcdn.apache.org//apr/apr-${ver}.tar.bz2
