@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VER=8.6.12
+VER=8.6.13
 OSVER=`uname -r | sed -E 's:^([0-9]+\.[0-9]+)\..*:\1:'`
 ARCH=`uname -m`
 

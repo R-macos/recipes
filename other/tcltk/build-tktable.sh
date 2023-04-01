@@ -4,7 +4,7 @@ VER=2.10
 OSVER=`uname -r | sed -E 's:^([0-9]+\.[0-9]+)\..*:\1:'`
 ARCH=`uname -m`
 
-curl -LO https://fossies.org/linux/privat/Tktable${VER}.tar.gz
+curl -LO https://cfhcable.dl.sourceforge.net/project/tktable/tktable/2.10/Tktable2.10.tar.gz #https://fossies.org/linux/privat/Tktable${VER}.tar.gz
 tar fxz Tktable${VER}.tar.gz
 (cd Tktable${VER} && patch -p1 < ../Tktable${VER}.patch)
 

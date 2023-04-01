@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VER=8.6.12
+VER=8.6.13
 OSVER=`uname -r | sed -E 's:^([0-9]+\.[0-9]+)\..*:\1:'`
 ARCH=`uname -m`
 
@@ -27,7 +27,7 @@ export PATH=/opt/R/${ARCH}/bin:$PATH
 WD="`pwd`"
 cd tk${VER}/unix
 
-export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:$WD/pkgconfig:/opt/R/${ARCH}/lib/pkgconfig:/usr/lib/pkgconfig
+export PKG_CONFIG_PATH=/opt/X11/lib/pkgconfig:/opt/X11/share/pkgconfig:$WD/pkgconfig:/opt/R/${ARCH}/lib/pkgconfig:/usr/lib/pkgconfig
 
 ./configure --prefix=/opt/R/${ARCH} --disable-corefoundation --disable-framework --disable-aqua --enable-xft
 make -j12 && make install DESTDIR="$WD/dst-tk"
