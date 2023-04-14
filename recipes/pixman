@@ -1,4 +1,5 @@
 Package: pixman
 Version: 0.42.2
 Depends: pkgconfig
-Source.URL: https://www.cairographics.org/releases/pixman-0.42.2.tar.gz
+Source.URL: https://www.cairographics.org/releases/pixman-${ver}.tar.gz
+Configure.arm64: --disable-arm-a64-neon
