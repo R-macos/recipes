@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "ERROR: missing <manifest>!" >&2
+    exit 1
+fi
+
+PKG="$1"
+shift
+
+## any suggests?
+if [ -z "$1" ]; then exit 0; fi
+
+ADD=''
+
+while (( "$#" )); do
+    if [ -e $1 ]; then
+	ADD="$ADD $1"
+    fi
+    shift
+done
+
+if [ -n "$ADD" ]; then
+    sed -E -i '' "s/(^BuiltWith: .*)\$/\1$ADD/" "$PKG"
+    grep ^BuiltWith: "$PKG"
+fi

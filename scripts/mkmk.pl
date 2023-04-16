@@ -16,7 +16,7 @@ my $jobs = $ENV{"JOBS"} + 0 > 0 ? $ENV{"JOBS"} : "12";
 
 my %pkgs;
 
-my $bin = "$root/bin";
+my $bin = "$root/scripts";
 
 my $prefix = $ENV{"PREFIX"};
 $prefix = $default_prefix if ($prefix eq '');
@@ -33,6 +33,10 @@ my $curl = $ENV{"CURL"};
 if ($curl eq '') {
     $curl = ( -e "$root/scripts/curl" ) ? "$root/scripts/curl" : "curl";
 }
+
+my $tarspec = $prefix;
+## Recent macOS makes /usr/local read-only, so we exclude /usr/local itself
+$tarspec = "$prefix/*" if ($prefix eq 'usr/local');
 
 sub read_dcf {
     my %h;
@@ -100,18 +104,20 @@ foreach $fn (@f) {
     my $src = $d{"source.url"};
     my $pkg = $d{"package"};
     my $dep = $d{"depends"};
+    my $sug = $d{"suggests"};
 
 #    print "=== $fn:\n";
 #    foreach (sort(keys(%d))) { print "$_: $d{$_}\n"; }
 
     my @deps = get_deps($dep);
+    my @sugs = get_deps($sug);
 #    print "$fn: '$dep' "; foreach (@deps) { my %h=%$_; print "[$h{name}] "; }; print "\n";
 
     if ($ver eq '' && $src eq '') { ## virtual
-	$pkgs{$pkg} = { pkg => $pkg, dep => \@deps, d => \%d };
+	$pkgs{$pkg} = { pkg => $pkg, dep => \@deps, sug => \@sugs, d => \%d };
     } else {
 	$patch = (-e "$root/$fn.patch") ? "$root/$fn.patch" : "";
-	$pkgs{$pkg} = { pkg => $pkg, ver => $ver, dep => \@deps, src => $src, d => \%d, patch => $patch };
+	$pkgs{$pkg} = { pkg => $pkg, ver => $ver, dep => \@deps, src => $src, d => \%d, patch => $patch, sug => \@sugs };
     }
 }
 
@@ -239,7 +245,7 @@ foreach my $name (sort keys %pkgs) {
 	}
     }
 
-    my $dist = ($d{'distribution.files'} ne '') ? $d{'distribution.files'} : $prefix;
+    my $dist = ($d{'distribution.files'} ne '') ? $d{'distribution.files'} : $tarspec;
     my $srcdir = ($d{'configure.subdir'} ne '') ? "/$d{'configure.subdir'}" : '';
     my $cfg_scr = ($d{'configure.script'} ne '') ? $d{'configure.script'} : 'configure';
     my $cfg_proc = ($d{'configure.driver'} ne '') ? $d{'configure.driver'} : '';
@@ -248,7 +254,7 @@ foreach my $name (sort keys %pkgs) {
     my $tar = $pkg{src};
     $tar =~ s/.*\///;
     if ($pkg{ver} eq '') { ## virtual
-	print OUT "$pkg{pkg}: ".dep_targets($pkg{dep})."\n\techo 'Bundle: $pkg{pkg}~Depends: $d{Depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~' | tr '~' '\\n' > '\$\@' && cp '\$\@' '\$\@.bundle' && touch '\$\@'\n";
+	print OUT "$pkg{pkg}: ".dep_targets($pkg{dep})."\n\techo 'Bundle: $pkg{pkg}~Depends: $d{depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~' | tr '~' '\\n' > '\$\@' && cp '\$\@' '\$\@.bundle' && touch '\$\@'\n";
 	next;
     }
 
@@ -268,7 +274,7 @@ foreach my $name (sort keys %pkgs) {
     } else {
         print OUT "$pv-$os_maj-$arch.tar.gz:\n\t$curl -LO $binary_url/\$\@\n";
     }
-    print OUT "$pv: $pv-$os_maj-$arch.tar.gz\n\t$noinstall$sudo\$(TAR) fxz '\$^' -C /$prefix --strip $ndir && echo 'Package: $pkg{pkg}~Version: $pkg{ver}~Depends: $d{Depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~Binary: $pv-$os_maj-$arch.tar.gz~' | tr '~' '\\n' > '\$\@' & touch '\$\@'\n";
+    print OUT "$pv: $pv-$os_maj-$arch.tar.gz\n\t$noinstall$sudo\$(TAR) fxz '\$^' -C /$prefix --strip $ndir && echo 'Package: $pkg{pkg}~Version: $pkg{ver}~Depends: $d{depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~Binary: $pv-$os_maj-$arch.tar.gz~' | tr '~' '\\n' > '\$\@' && '$bin/add-if-present' '\$\@' ".dep_targets($pkg{sug}, ", ")." && touch '\$\@'\n";
     print OUT "$pkg{pkg}: $pv\n\n";
 }
 #for (pkg in virt) {
