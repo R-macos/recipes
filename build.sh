@@ -3,13 +3,17 @@
 osname=`uname -s`
 osarch=`uname -m` 
 
+## it is too tedious to maintain two paths, so Perl generator is now
+## default (since it's required for bootstrap anyway) and R is deprecated
+: ${PERL=$(command -v perl)}
+
 args=($@)
 for ((i=1;i<=$#;i++)); do
     case "x${!i}" in
 	x--) unset args[$i-1]; break;;
 	x-f) FORCE=1; unset args[$i-1];;
 	x-b) BINARY=1; unset args[$i-1];;
-	x-p) PERL=`which perl`; unset args[$i-1]; if [ -z "$PERL" ]; then PERL=perl; fi;;
+	x-p) PERL=$(command -v perl); unset args[$i-1]; if [ -z "$PERL" ]; then PERL=perl; fi;;
 	x-h)
 	    echo ''
 	    echo " Usage: $0 [-f] [-b] [-p] [-h] [[--] ...]"
@@ -21,7 +25,7 @@ for ((i=1;i<=$#;i++)); do
 	    echo ' -h  - this help page'
 	    echo ' ... additional arguments passed to make'
 	    echo ''
-	    echo 'The builds are perfromed in the "builds" subdirectory'
+	    echo 'The builds are performed in the "builds" subdirectory'
 	    echo ''
 	    exit 0;;
     esac
