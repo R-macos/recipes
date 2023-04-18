@@ -18,6 +18,7 @@ while (( "$#" )); do
 	echo ''
 	exit 0
     fi
+    shift
 done
 
 if [ -e /Volumes/Temp/tmp ]; then
