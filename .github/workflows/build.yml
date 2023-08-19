@@ -1,4 +1,16 @@
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      recipes:
+        description: "Which recipes to build, takes precedent"
+      all:
+        description: "Build all recipes"
+        default: false
+
+permissions:
+  contents: read
 
 name: Cook recipes
 
@@ -16,10 +28,35 @@ jobs:
 
     strategy:
       matrix:
-        os: [ 'macOS-10.15' ]
+        os: [ 'macos-11' ]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # default is 1
+          ref: "${{ github.ref }}"
+      
+      - name: Find changed recipes
+        id: find
+        shell: bash
+        run: |
+          ref="${{ github.ref_name == 'master' && 'HEAD~1' || 'origin/master' }}"
+          if [ "${{ inputs.all }}" = true ]; then
+            files=`ls -d recipes/*`
+          else
+            files=`git diff --name-only $ref`
+          fi
+
+          recipes=$(echo $files |
+            tr ' ' '\n' |
+            grep 'recipes/[^\.]*$' |
+            sed 's|recipes/\(.*\)|\1|g' |
+            tr '\n' ' ')
+
+          echo $recipes
+          if [ ! -z "$recipes" ]; then
+            echo "recipes=$recipes">> $GITHUB_OUTPUT
+          fi
 
       - name: Create Makefile
         run: Rscript scripts/mkmk.R
@@ -39,13 +76,15 @@ jobs:
           sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
 
       - name: Build R dependencies
-        run: make -C build xz pcre2 jpeg libpng tiff
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)  
+        run: make -C build ${{ inputs.recipes || steps.find.outputs.recipes }}
 
       - name: Collect
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)  
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
 
       - name: Upload
-        if: success()
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)  
         uses: actions/upload-artifact@master
         with:
           name: recipes-build
