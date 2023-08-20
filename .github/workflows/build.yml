@@ -36,7 +36,7 @@ jobs:
         with:
           fetch-depth: 0 # default is 1
           ref: "${{ github.ref }}"
-      
+
       - name: Find changed recipes
         id: find
         shell: bash
@@ -77,15 +77,15 @@ jobs:
           sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
 
       - name: Build R dependencies
-        if: success() && (inputs.recipes || steps.find.outputs.recipes)  
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)
         run: make -C build ${{ inputs.recipes || steps.find.outputs.recipes }}
 
       - name: Collect
-        if: success() && (inputs.recipes || steps.find.outputs.recipes)  
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)
         run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
 
       - name: Upload
-        if: success() && (inputs.recipes || steps.find.outputs.recipes)  
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)
         uses: actions/upload-artifact@master
         with:
           name: recipes-build
