@@ -1,0 +1,3 @@
+Package: libb2
+Version: 0.98.1
+Source.URL: https://github.com/BLAKE2/libb2/releases/download/v${ver}/libb2-${ver}.tar.gz
