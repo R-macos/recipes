@@ -1,0 +1,11 @@
+--- a/lib/Makefile
++++ b/lib/Makefile
+@@ -43,7 +43,7 @@ LIBVER_MINOR := $(shell echo $(LIBVER_MINOR_SCRIPT))
+ LIBVER_PATCH := $(shell echo $(LIBVER_PATCH_SCRIPT))
+ LIBVER  := $(shell echo $(LIBVER_SCRIPT))
+ 
+-BUILD_SHARED:=yes
++BUILD_SHARED:=no
+ BUILD_STATIC:=yes
+ 
+ CPPFLAGS+= -DXXH_NAMESPACE=LZ4_
