@@ -1,0 +1,4 @@
+Package: iconv-stub
+Description: System stub for iconv
+Version: 0.1
+Source.URL: https://github.com/gaborcsardi/recipes/releases/download/latest/iconv-stub-${ver}.tar.gz
