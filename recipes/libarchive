@@ -1,5 +1,5 @@
 Package: libarchive
 Version: 3.7.2
 Source.URL: https://www.libarchive.org/downloads/libarchive-${ver}.tar.xz
-Depends: libb2, lz4, xz, zstd
+Depends: libb2, lz4, xz, zstd, iconv-stub
 Configure: --without-lzo2 --without-nettle --without-xml2 --without-openssl --with-expat
