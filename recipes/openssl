@@ -1,5 +1,5 @@
 Package: openssl
-Version: 1.1.1t
+Version: 1.1.1w
 Source.URL: https://www.openssl.org/source/openssl-${ver}.tar.gz
 Configure.script: Configure
 Configure: no-shared
