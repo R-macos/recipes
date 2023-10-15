@@ -1,4 +1,6 @@
 Package: zstd
-Version: 1.5.2
+Version: 1.5.5
 Source.URL: https://github.com/facebook/zstd/releases/download/v${ver}/zstd-${ver}.tar.gz
+Depends: lz4, xz
 Configure.chmod: +x
+Configure: -DZSTD_BUILD_CONTRIB=ON -DZSTD_LEGACY_SUPPORT=ON -DZSTD_ZLIB_SUPPORT=ON -DZSTD_LZMA_SUPPORT=ON -DZSTD_LZ4_SUPPORT=ON
