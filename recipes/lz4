@@ -1,0 +1,5 @@
+Package: lz4
+Version: 1.9.4
+Source.URL: https://github.com/lz4/lz4/archive/v${ver}.tar.gz
+Build-system: make
+Configure: --set=BUILD_SHARED=no --set=BUILD_STATIC=yes --target=lib-release
