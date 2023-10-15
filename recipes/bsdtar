@@ -1,6 +1,6 @@
 Package: bsdtar
 Description: This package is a subset of libarchive, only installing static bsdtar and bsdcat tools
-Version: 3.6.0
-Depends: xz, zstd
-Source.URL: https://github.com/libarchive/libarchive/releases/download/v3.6.0/libarchive-${ver}.tar.xz
+Version: 3.7.2
+Depends: libb2, xz, lz4, zstd
+Source.URL: https://github.com/libarchive/libarchive/releases/download/v${ver}/libarchive-${ver}.tar.xz
 Distribution.files: ${prefix}/bin/bsdtar ${prefix}/bin/bsdcat
