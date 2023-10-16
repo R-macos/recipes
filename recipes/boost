@@ -1,4 +1,4 @@
 Package: boost
-Version: 1.80.0
-Source.URL: https://downloads.sourceforge.net/project/boost/boost/${ver}/boost_1_80_0.tar.bz2
+Version: 1.83.0
+Source.URL: https://downloads.sourceforge.net/project/boost/boost/${ver}/boost_1_83_0.tar.bz2
 Configure.driver: sh

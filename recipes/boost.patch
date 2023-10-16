@@ -15,6 +15,6 @@ diff -Nru test_0.0/configure xx/configure
 +	mkdir -p \$(DESTDIR)/\$(PREFIX)
 +	mv ${src}/* .
 +	./bootstrap.sh --prefix=\$(DESTDIR)/\$(PREFIX)
-+	./b2 --prefix=\$(DESTDIR)/\$(PREFIX) toolset=clang-darwin link=static cxxflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' cflags='-mmacosx-version-min=10.13 -Wall -g -O2 -fPIC -fvisibility=hidden' install
++	./b2 --prefix=\$(DESTDIR)/\$(PREFIX) toolset=clang-darwin link=static cxxflags='-Wall -g -O2 -fPIC -fvisibility=hidden' cflags='-Wall -g -O2 -fPIC -fvisibility=hidden' install
 +
 +EOF
