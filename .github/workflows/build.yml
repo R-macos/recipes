@@ -1,0 +1,94 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      recipes:
+        description: "Which recipes to build, takes precedent"
+      all:
+        description: "Build all recipes"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+name: Cook recipes
+
+jobs:
+  cook:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} build
+
+    env:
+      CC: clang
+      CXX: clang++
+      OBJC: clang
+      OBJCXX: clang++
+
+    strategy:
+      matrix:
+        os: [ 'macos-11' ]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # default is 1
+          ref: "${{ github.ref }}"
+
+      - name: Find changed recipes
+        id: find
+        shell: bash
+        run: |
+          ref="${{ github.ref_name == 'master' && 'HEAD~1' || 'origin/master' }}"
+          if [ "${{ inputs.all }}" = true ]; then
+            files=`ls -d recipes/*`
+          else
+            files=`git diff --name-only $ref`
+          fi
+
+          recipes=$(echo $files |
+            tr ' ' '\n' |
+            grep 'recipes/[^\.]*$' |
+            sed 's|recipes/\(.*\)|\1|g' |
+            tr '\n' ' ')
+
+          echo $recipes
+          if [ ! -z "$recipes" ]; then
+            echo "recipes=$recipes">> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Makefile
+        run: Rscript scripts/mkmk.R
+
+      - name: Remove local stuff
+        run: |
+          sudo mkdir /usr/local/.disabled
+          sudo mv /usr/local/* /usr/local/.disabled/
+
+      - name: Build tools
+        run: |
+          make -C build pkgconfig
+
+      - name: Stubs
+        run: |
+          sudo mkdir -p /usr/local/lib/pkgconfig
+          sudo cp stubs/pkgconfig-darwin/*.pc /usr/local/lib/pkgconfig/
+
+      - name: Build R dependencies
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)
+        run: make -C build ${{ inputs.recipes || steps.find.outputs.recipes }}
+
+      - name: Collect
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)
+        run: mkdir deploy && cp -p build/*-darwin*.tar.gz deploy/
+
+      - name: Upload
+        if: success() && (inputs.recipes || steps.find.outputs.recipes)
+        uses: actions/upload-artifact@master
+        with:
+          name: recipes-build
+          path: deploy
