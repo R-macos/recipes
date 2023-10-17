@@ -1,0 +1,3 @@
+Package: libtool
+Version: 2.4.7
+Source.URL: https://ftp.gnu.org/gnu/libtool/libtool-${ver}.tar.gz
