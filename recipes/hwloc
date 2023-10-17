@@ -1,5 +1,6 @@
 Package: hwloc
 Version: 2.9.3
+Depends: automake (>= 1.16)
 Source.URL: https://download.open-mpi.org/release/hwloc/v2.9/hwloc-${ver}.tar.gz
 Configure: --disable-cairo --disable-libxml2 --disable-plugin-dlopen --disable-plugin-ltdl
   
