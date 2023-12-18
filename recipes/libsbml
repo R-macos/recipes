@@ -1,0 +1,6 @@
+Package: libsbml
+Version: 5.20.2
+Source.URL: https://github.com/sbmlteam/libsbml/archive/refs/tags/v${ver}.tar.gz
+Depends: expat
+Configure: -DENABLE_FBC=ON -DENABLE_GROUPS=ON
+Build-system: cmake
