@@ -1,6 +1,5 @@
 Package: libsbml
 Version: 5.20.2
 Source.URL: https://github.com/sbmlteam/libsbml/archive/refs/tags/v${ver}.tar.gz
-Depends: zlib-stub
-Configure: -DENABLE_FBC=ON -DENABLE_GROUPS=ON -WITH_LIBXML=TRUE
+Configure: -DENABLE_FBC=ON -DENABLE_GROUPS=ON -DWITH_LIBXML=TRUE
 Build-system: cmake
