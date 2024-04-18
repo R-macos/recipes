@@ -1,5 +1,5 @@
 Package: libpq
-Version: 14.5
+Version: 16.2
 Source.URL: https://ftp.postgresql.org/pub/source/v${ver}/postgresql-${ver}.tar.bz2
 Configure.x86_64: CFLAGS=-fPIC
 Make: make MAKELEVEL=0 -j12
