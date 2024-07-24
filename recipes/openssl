@@ -1,9 +1,9 @@
 Package: openssl
-Version: 1.1.1w
-Source.URL: https://www.openssl.org/source/openssl-${ver}.tar.gz
+Version: 3.2.2
+Source.URL: https://github.com/openssl/openssl/releases/download/openssl-${ver}/openssl-${ver}.tar.gz
 Configure.script: Configure
 Configure: no-shared
 Configure.darwin: --prefix=/${prefix} --openssldir=/private/etc/ssl
 Configure.darwin.x86_64: darwin64-x86_64-cc enable-ec_nistp_64_gcc_128
-Configure.darwin.arm64: darwin64-arm64-cc no-asm
+Configure.darwin.arm64: darwin64-arm64-cc
 Install: make install_sw
