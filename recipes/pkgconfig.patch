@@ -1,0 +1,66 @@
+diff -ru pkgconfig-0.29.2-0/glib/glib/gatomic.h pkgconfig-0.29.2/glib/glib/gatomic.h
+--- pkgconfig-0.29.2-0/glib/glib/gatomic.h	2016-04-12 09:39:26
++++ pkgconfig-0.29.2/glib/glib/gatomic.h	2024-07-25 10:55:53
+@@ -167,28 +167,28 @@
+     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
+     (void) (0 ? (gpointer) *(atomic) : 0);                                   \
+     (void) (0 ? (val) ^ (val) : 0);                                          \
+-    (gssize) __sync_fetch_and_add ((atomic), (val));                         \
++    (gssize) __sync_fetch_and_add ((atomic), (gpointer) (val));		\
+   }))
+ #define g_atomic_pointer_and(atomic, val) \
+   (G_GNUC_EXTENSION ({                                                          \
+     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
+     (void) (0 ? (gpointer) *(atomic) : 0);                                   \
+     (void) (0 ? (val) ^ (val) : 0);                                          \
+-    (gsize) __sync_fetch_and_and ((atomic), (val));                          \
++    (gsize) __sync_fetch_and_and ((atomic), (gpointer) (val));		\
+   }))
+ #define g_atomic_pointer_or(atomic, val) \
+   (G_GNUC_EXTENSION ({                                                          \
+     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
+     (void) (0 ? (gpointer) *(atomic) : 0);                                   \
+     (void) (0 ? (val) ^ (val) : 0);                                          \
+-    (gsize) __sync_fetch_and_or ((atomic), (val));                           \
++    (gsize) __sync_fetch_and_or ((atomic), (gpointer) (val));		\
+   }))
+ #define g_atomic_pointer_xor(atomic, val) \
+   (G_GNUC_EXTENSION ({                                                          \
+     G_STATIC_ASSERT (sizeof *(atomic) == sizeof (gpointer));                 \
+     (void) (0 ? (gpointer) *(atomic) : 0);                                   \
+     (void) (0 ? (val) ^ (val) : 0);                                          \
+-    (gsize) __sync_fetch_and_xor ((atomic), (val));                          \
++    (gsize) __sync_fetch_and_xor ((atomic), (gpointer) (val));		\
+   }))
+ 
+ #else /* defined(G_ATOMIC_LOCK_FREE) && defined(__GCC_HAVE_SYNC_COMPARE_AND_SWAP_4) */
+diff -ru pkgconfig-0.29.2-0/glib/glib/gbitlock.c pkgconfig-0.29.2/glib/glib/gbitlock.c
+--- pkgconfig-0.29.2-0/glib/glib/gbitlock.c	2016-04-12 09:39:26
++++ pkgconfig-0.29.2/glib/glib/gbitlock.c	2024-07-25 10:59:16
+@@ -433,7 +433,7 @@
+   gsize v;
+ 
+  retry:
+-  v = g_atomic_pointer_or (pointer_address, mask);
++  v = g_atomic_pointer_or ((gpointer*) pointer_address, mask);
+   if (v & mask)
+     /* already locked */
+     {
+@@ -489,7 +489,7 @@
+ 
+     g_return_val_if_fail (lock_bit < 32, FALSE);
+ 
+-    v = g_atomic_pointer_or (pointer_address, mask);
++    v = g_atomic_pointer_or ((gpointer*) pointer_address, mask);
+ 
+     return ~v & mask;
+ #endif
+@@ -525,7 +525,7 @@
+     volatile gsize *pointer_address = address;
+     gsize mask = 1u << lock_bit;
+ 
+-    g_atomic_pointer_and (pointer_address, ~mask);
++    g_atomic_pointer_and ((gpointer*) pointer_address, ~mask);
+ #endif
+ 
+     {
