@@ -116,6 +116,13 @@ foreach $fn (@f) {
     if ($ver eq '' && $src eq '') { ## virtual
 	$pkgs{$pkg} = { pkg => $pkg, dep => \@deps, sug => \@sugs, d => \%d };
     } else {
+	## this is a hack: GNU server is incredibly slow (we are talking
+	## dial-up modem speeds!) so switch to a local mirror if set
+	if (($gnu_url=`cat ~/.gnu-mirror 2>/dev/null`) ne '') {
+	    chomp $gnu_url;
+	    $src =~ s/https?:\/\/ftp\.gnu\.org\/(pub\/|)gnu\//$gnu_url/ge;
+	}
+
 	$patch = (-e "$root/$fn.patch") ? "$root/$fn.patch" : "";
 	$pkgs{$pkg} = { pkg => $pkg, ver => $ver, dep => \@deps, src => $src, d => \%d, patch => $patch, sug => \@sugs };
     }
