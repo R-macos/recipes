@@ -1,6 +1,6 @@
 Package: hdf4
-Version: 4.2.15
-Source.URL: https://support.hdfgroup.org/ftp/HDF/releases/HDF4.2.15/src/hdf-4.2.15.tar.bz2
+Version: 4.3.0
+Source.URL: https://github.com/HDFGroup/hdf4/releases/download/hdf${ver}/hdf${ver}.tar.gz
 Depends: jpeg, szip
 Configure: --enable-build-mode=production --enable-hdf4-xdr --with-szip --disable-netcdf --disable-fortran LIBS=-L/${prefix}/lib
 Configure.darwin.20: CFLAGS='-Wno-implicit-function-declaration'
