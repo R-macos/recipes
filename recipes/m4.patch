@@ -1,0 +1,30 @@
+Only in m4-1.4.19: .prev-version
+Only in m4-1.4.19: .tarball-version
+diff -ru m4-1.4.19/build-aux/missing m4-1.4.19-1/build-aux/missing
+--- m4-1.4.19/build-aux/missing	2021-05-08 09:07:32
++++ m4-1.4.19-1/build-aux/missing	2024-07-25 15:12:08
+@@ -1,6 +1,8 @@
+ #! /bin/sh
+ # Common wrapper for a few potentially missing GNU programs.
+ 
++exit 0
++
+ scriptversion=2018-03-07.03; # UTC
+ 
+ # Copyright (C) 1996-2020 Free Software Foundation, Inc.
+Only in m4-1.4.19-1/build-aux: missing~
+Only in m4-1.4.19-1: m4-1.4.19
+diff -ru m4-1.4.19/src/format.c m4-1.4.19-1/src/format.c
+--- m4-1.4.19/src/format.c	2021-05-11 09:21:21
++++ m4-1.4.19-1/src/format.c	2024-07-25 15:08:42
+@@ -350,10 +350,8 @@
+       *p = '\0';
+ 
+       /* Our constructed format string in fstart is safe.  */
+-#if 4 < __GNUC__ + (6 <= __GNUC_MINOR__)
+ # pragma GCC diagnostic push
+ # pragma GCC diagnostic ignored "-Wformat-nonliteral"
+-#endif
+ 
+       switch (datatype)
+         {

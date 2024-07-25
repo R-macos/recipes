@@ -1,0 +1,3 @@
+Package: m4
+Version: 1.4.19
+Source.URL: https://ftp.gnu.org/pub/gnu/m4/m4-${ver}.tar.xz

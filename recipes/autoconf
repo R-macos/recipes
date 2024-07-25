@@ -1,3 +1,4 @@
 Package: autoconf
-Version: 2.71
+Version: 2.72
+Depends: m4
 Source.URL: https://ftp.gnu.org/gnu/autoconf/autoconf-${ver}.tar.gz
