@@ -1,6 +1,6 @@
-diff -ruN serf-1.3.9/Makefile serf-1.3.9-fixed/Makefile
---- serf-1.3.9/Makefile	1970-01-01 12:00:00
-+++ serf-1.3.9-fixed/Makefile	2023-04-18 17:24:20
+diff -ruN serf-1.3.10/Makefile serf-1.3.10-1/Makefile
+--- serf-1.3.10/Makefile	1970-01-01 12:00:00
++++ serf-1.3.10-1/Makefile	2024-07-25 11:55:57
 @@ -0,0 +1,17 @@
 +ifeq ($(MACOSX_DEPLOYMENT_TARGET),)
 +  ADDCC=
@@ -19,9 +19,9 @@ diff -ruN serf-1.3.9/Makefile serf-1.3.9-fixed/Makefile
 +	cp -p libserf-1.a '$(DESTDIR)/$(PREFIX)/lib/'
 +	cp -p serf-1.pc '$(DESTDIR)/$(PREFIX)/lib/pkgconfig'
 +	cp -p serf.h serf_bucket_types.h serf_bucket_util.h '$(DESTDIR)/$(PREFIX)/include/'
-diff -ruN serf-1.3.9/SConstruct serf-1.3.9-fixed/SConstruct
---- serf-1.3.9/SConstruct	2015-09-18 00:46:24
-+++ serf-1.3.9-fixed/SConstruct	2023-04-16 13:08:53
+diff -ruN serf-1.3.10/SConstruct serf-1.3.10-1/SConstruct
+--- serf-1.3.10/SConstruct	2023-05-18 21:33:55
++++ serf-1.3.10-1/SConstruct	2024-07-25 11:55:57
 @@ -68,7 +68,7 @@
    default_libdir='..'
    default_prefix='Debug'
@@ -31,29 +31,7 @@ diff -ruN serf-1.3.9/SConstruct serf-1.3.9-fixed/SConstruct
    default_libdir='$PREFIX/lib'
    default_prefix='/usr/local'
  
-@@ -163,9 +163,9 @@
-               suffix='.def', src_suffix='.h')
-   })
- 
--match = re.search('SERF_MAJOR_VERSION ([0-9]+).*'
--                  'SERF_MINOR_VERSION ([0-9]+).*'
--                  'SERF_PATCH_VERSION ([0-9]+)',
-+match = re.search(b'SERF_MAJOR_VERSION ([0-9]+).*'
-+                  b'SERF_MINOR_VERSION ([0-9]+).*'
-+                  b'SERF_PATCH_VERSION ([0-9]+)',
-                   env.File('serf.h').get_contents(),
-                   re.DOTALL)
- MAJOR, MINOR, PATCH = [int(x) for x in match.groups()]
-@@ -183,7 +183,7 @@
- 
- unknown = opts.UnknownVariables()
- if unknown:
--  print 'Warning: Used unknown variables:', ', '.join(unknown.keys())
-+  print ('Warning: Used unknown variables:', ', '.join(unknown.keys()))
- 
- apr = str(env['APR'])
- apu = str(env['APU'])
-@@ -404,7 +404,7 @@
+@@ -426,7 +426,7 @@
                                                         env.get('GSSAPI_LIBS', '')),
                             })
  
@@ -62,7 +40,7 @@ diff -ruN serf-1.3.9/SConstruct serf-1.3.9-fixed/SConstruct
  
  if CALLOUT_OKAY:
    conf = Configure(env)
-@@ -434,8 +434,7 @@
+@@ -456,8 +456,7 @@
                                       % (target_install_shared_path,
                                          install_shared_path)))
  
