@@ -11,9 +11,10 @@ while (( "$#" )); do
     if [ "x$1" = x--tools ]; then RUN_TOOLS=1; fi
     if [ "x$1" = x--all ]; then RUN_ALL=1; fi
     if [ "x$1" = x--cran ]; then AS_CRAN=1; fi
+    if [ "x$1" = x--continue -o "x$1" = x-c ]; then DO_CONT=1; fi
     if [ "x$1" = x-h -o "x$1" = x--help ]; then
 	echo ''
-	echo " Usage: $0 [-h|--help] [--cran] [--tools | --all]"
+	echo " Usage: $0 [-h|--help] [-c|--continue] [--cran] [--tools | --all]"
 	echo ''
 	echo " Default is --base (r-base-dev), tools include emacs and subversion."
 	echo ''
@@ -118,27 +119,40 @@ else
     fi
 fi
 
-## freetype and harfbuzz have a circular dependency
-## and need to be bootstrapped in the order FT -> HB -> FT
-echo ''
-echo " ----- Bootstrapping freetype"
-echo ''
-./build.sh -f -p freetype
-./build.sh -f -p harfbuzz
-rm -rf build/freetype-2.*
-echo ''
-echo " ----- Re-building freetype with Harfbuzz"
-echo ''
-./build.sh -f -p freetype
+## check if freetype is built with harfbuzz - we cannot continue if it's not
+RECPT=`ls -d build/freetype-* | head -n1`
+if [ -z "$RECPT" ] || ! grep '^BuiltWith:.*harfbuzz' "$RECPT" >/dev/null 2>&1; then
+    [ -n "$DO_CONT"] && echo "WARNING: freetype bootstrap is not complete - have to ignore --continue"
+    unset DO_CONT
+fi
+
+if [ -z "$DO_CONT" ]; then
+    ## freetype and harfbuzz have a circular dependency
+    ## and need to be bootstrapped in the order FT -> HB -> FT
+    echo ''
+    echo " ----- Bootstrapping freetype"
+    echo ''
+    ./build.sh -f -p freetype
+    ./build.sh -f -p harfbuzz
+    rm -rf build/freetype-2.*
+    echo ''
+    echo " ----- Re-building freetype with Harfbuzz"
+    echo ''
+    ./build.sh -f -p freetype
+fi
+
+if [ ! -e build/r-base-dev ]; then unset DO_CONT; fi
 
 ## required
-echo ''
-echo " ----- Building r-base-dev"
-echo ''
-./build.sh -f -p r-base-dev
+if [ -z "$DO_CONT" ]; then
+    echo ''
+    echo " ----- Building r-base-dev"
+    echo ''
+    ./build.sh -f -p r-base-dev
+fi
 
 ## NOTE: CRAN R also uses: readline5 pango
-if [ -n "$AS_CRAN" ]; then
+if [ -n "$AS_CRAN" -a -z "$DO_CONT" ]; then
     ./build.sh -f -p readline5
     ## pango has to be built last due to glib causing issues
 fi
