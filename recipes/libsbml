@@ -1,5 +1,5 @@
 Package: libsbml
 Version: 5.20.2
 Source.URL: https://github.com/sbmlteam/libsbml/archive/refs/tags/v${ver}.tar.gz
-Configure: -DENABLE_FBC=ON -DENABLE_GROUPS=ON -DWITH_LIBXML=TRUE
+Configure: -DLIBSBML_SKIP_SHARED_LIBRARY=ON -DENABLE_FBC=ON -DENABLE_GROUPS=ON -DWITH_LIBXML=TRUE
 Build-system: cmake
