@@ -1,5 +1,5 @@
 Package: pkgconfig
 Version: 0.29.2
-Depends: zlib-stub
+Depends: sys-stubs
 Source.URL: http://pkgconfig.freedesktop.org/releases/pkg-config-${ver}.tar.gz
 Configure: --with-internal-glib --enable-indirect-deps=yes
