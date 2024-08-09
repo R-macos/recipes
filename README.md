@@ -16,10 +16,8 @@ files in R packages. The required fields are `Package`, `Version` and
 `Source.URL`. Most common optional fields include `Depends` and
 `Configure`.
 
-There is an R script that will process the recipes and create a `make`
-file which can be used to build libraries and their dependencies. In
-case you do not have R yet, there is also a Perl script as well, so
-you need either of Perl or R.
+There is a Perl script which will process the recipes and create a `make`
+file which can be used to build libraries and their dependencies.
 
 More recently, we have added a user-friendly command line tool simply
 called `build.sh` (requires `bash`) which replicates the build as
@@ -34,9 +32,9 @@ Each library is built, packaged and installed. The
 default locations used by the above script are `/opt/R/$arch` and
 `/usr/local`. The former will be used if present where `$arch` is
 typically `x86_64` or `arm64`, otherwise `/usr/local` is the
-fall-back.
+fall-back (not recommended).
 
-For a more fine-grained control you can run `scripts/mkmk.R` or
+For a more fine-grained control you can run
 `scripts/mkmk.pl` yourself and see the list of environment
 variables at the bottom of this page for possible configurations.
 
@@ -47,7 +45,7 @@ variables at the bottom of this page for possible configurations.
  * `Version:` version of the package (required*).
    This version string can be substituted in other directives using `${ver}`.
 
- * `Source.URL:` URL of the source tar ball (required*)
+ * `Source-URL:` URL of the source tar ball (required*)
 
  * `Depends:` comma separated list of dependent recipes, i.e. recipes
    that must be successfully installed before this one. Optional version
@@ -56,39 +54,39 @@ variables at the bottom of this page for possible configurations.
 
 Most of the following entries are optional:
 
- * `Configure[.<os>[.<ver>]][.<arch>]:` flags to add to the `configure`
+ * `Configure[-<os>[-<ver>]][-<arch>]:` flags to add to the `configure`
    script. `<os>` is the lowecase name of the OS as returned by
    `uname`, `<ver>` is the major version of the OS (`uname -r` up
    to the first dot) and `<arch>` is the architecture of the
    platform. Multiple types can be specified and they are concatenated
    using precedence `os, ver, arch`.
 
- * `Configure.subdir:` subdirectory containing the sources
+ * `Configure-Subdir:` subdirectory containing the sources
 
  * `Special:` special recipe flags, currently only `in-sources` is
    supported which forces the build to be performed inside the
    sources.
 
- * `Distribution.files:` list of files (or directories) to include
+ * `Distribution-Files:` list of files (or directories) to include
    in the final distribution tar ball. Defaults to `${prefix}`.
    This directive is intended only for restricting the content,
    installation is only supported for content under `${prefix}`
    so no files outside that tree can be part of the final
    distribution.
 
- * `Configure.script:` name of the configure script to use,
+ * `Configure-Script:` name of the configure script to use,
    defaults to `configure`. If this option is set explicitly,
    then the default flags `--with-pic --disable-shared --enable-static`
    and `--prefix=/${prefix}` are no longer used under the assumption
    that the script is no longer autoconf-based and thus the equivalent
    flags should be supplied in `Configure:` or friends.
 
- * `Configure.driver:` optional, if set, specifies the executable
+ * `Configure-Driver:` optional, if set, specifies the executable
    that will be called in order to process the configure script.
    If not specified it is assumed that the configure script is
    executable on its own.
 
- * `Configure.chmod`: optional, if set, `chmod` is called on the
+ * `Configure-chmod`: optional, if set, `chmod` is called on the
    configure script with the specified value prior to execution. 
    Most commonly this is set to `+x` if the soruces fail to make the
    script executable.
@@ -97,7 +95,7 @@ Most of the following entries are optional:
    `make install` and currently will be supplied with
    `DESTDIR=...` which is expected to be honored.
 
- * `Build-system:` optional, if specified a driver named
+ * `Build-System:` optional, if specified a driver named
    `configure.<build-system>` is expected to exist in
    the `scripts` directory of this project which is copied
    to the sources of the library as `configure` and should perform
@@ -111,10 +109,28 @@ Most of the following entries are optional:
    Obviously, such systems are far more fragile
    so use only as a last resort.
 
+ * `Suggests:` optional, comma separated list of packages 
+   (see `Depends:`) which are optional, but their presence
+   can add functionality. Those packages will not be required,
+   so the build can happen with or without them. If they are present,
+   their presence will be recorded in the resulting manifest.
+
+ * `Build-Depends:` optional, similar to `Depends:` but the
+   the listed packages are only required during the build stage and
+   they will not be included in the binary manifest as dependency.
+   This is used only for build tools like `automake`.
+
 (*) - virtual packages are packages that are only used to trigger
 installation of other packages, they only create a target in the
 `Makefile`, but don't create any output themselves.
 Those don't have `Version:` nor `Source.URL:`.
+
+NOTE: Originally, the DCF keys were using `R` notation such as
+`Source.URL` which was, unfortunately, later mixed with the Debian
+notation such as `Build-System`. To make the syntax consistent all
+keys are now defined using the Debian notation (so `Source-URL`).
+The `R` notation is still accepted (i.e., any `.` in the keys is
+treated as `-`), but deprecated.
 
 ### Building
 
@@ -145,6 +161,11 @@ installation. Most recent macOS versions don't allow stubs in system
 location since it is read-only, so adding an alternative path to
 `PKG_CONFIG_PATH` may be required. The `build.sh` script automatically
 adds the system stubs shipped with the recipes to `PKG_CONFIG_PATH`.
+To ensure compatibility the
+[sys-stubs](https://github.com/R-macos/recipes/blob/master/recipes/sys-stubs)
+recipe provides a package which installs the system stubs (see
+[pkgconfig-sys-stubs](https://github.com/R-macos/pkgconfig-sys-stubs)
+for the soruce).
 
 ### Environment Variables
 
@@ -169,11 +190,5 @@ The `mkmk.R` script will respect the following environment variables:
    installations when setting `PREFIX` to a location owned by the
    user.
 
- * `BINARY` (experimental) if set to 1 then the script creates a
-   `Makefile` which downloads binaries from `BINARY_URL` instead of
-   building them. On macOS if `BINARY_URL` is not set, the binaries
-   are downloaded from https://mac.r-project.org This is now _deprecated_
-   in favor of the tools at https://mac.r-project.org/bin/ which are
-   better at dependency resolution as recipes may not always match the
-   repository.
+ * `PERL` command to run `perl` interprerted. Defaults to `perl`.
  
