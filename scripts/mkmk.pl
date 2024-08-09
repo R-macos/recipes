@@ -208,6 +208,15 @@ sub cfg {
     return join ' ', @f;
 }
 
+sub chkhash {
+    my %d = %{$_[0]};
+    if ($d{'source-sha256'} ne '') {
+        print "== chkhash: ".$d{'source-sha256'}."\n";
+	return '&& [ '.lc($d{'source-sha256'}).' = `openssl sha256 $@ | sed '."'s:.*= ::'".'` ]';
+    }
+    return '';
+}
+
 system "mkdir -p build/src 2>/dev/null";
 open OUT, ">build/Makefile" || die "ERROR: cannot create build/Makefile";
 
@@ -283,7 +292,7 @@ foreach my $name (sort keys %pkgs) {
         $do_patch = ($pkg{patch} ne '') ? "&& patch -p1 < ".shQuote($pkg{patch}) : '';
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');
 	print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
-        print OUT "src/$tar:\n\t$curl -L -o \$\@ '$pkg{src}'\n";
+        print OUT "src/$tar:\n\t$curl -fL -o \$\@ '$pkg{src}'".chkhash($pkg{d})."\n";
         print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\t\$(TAR) fcz '\$\@' $tarflags -C '\$^' $dist\n";
     } else {
         print OUT "$pv-$os_maj-$arch.tar.gz:\n\t$curl -LO $binary_url/\$\@\n";

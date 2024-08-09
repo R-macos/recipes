@@ -47,6 +47,9 @@ variables at the bottom of this page for possible configurations.
 
  * `Source-URL:` URL of the source tar ball (required*)
 
+ * `Source-SHA256:` optional, SHA256 hash of the source file.
+   If set, the integrity of the downloaded file is checked (recommended).
+
  * `Depends:` comma separated list of dependent recipes, i.e. recipes
    that must be successfully installed before this one. Optional version
    specification of the form `rcp (>= min.ver)` is allowed for individual
