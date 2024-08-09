@@ -13,7 +13,7 @@ automatically installed on the build VMs.
 The dependency descriptions are simple DCF files. The format should be
 self-explanatory, it follows the same conventions as `DESCRIPTION`
 files in R packages. The required fields are `Package`, `Version` and
-`Source.URL`. Most common optional fields include `Depends` and
+`Source-URL`. Most common optional fields include `Depends` and
 `Configure`.
 
 There is a Perl script which will process the recipes and create a `make`
@@ -88,7 +88,7 @@ Most of the following entries are optional:
 
  * `Configure-chmod`: optional, if set, `chmod` is called on the
    configure script with the specified value prior to execution. 
-   Most commonly this is set to `+x` if the soruces fail to make the
+   Most commonly this is set to `+x` if the sources fail to make the
    script executable.
 
  * `Install:` command to perform installation, defaults to
