@@ -51,6 +51,8 @@ sub read_dcf {
 	    }
 	    $key = lc($1);
 	    my $val = $2;
+	    ## make . (R-syntax) and - (Debian) equivalent
+	    $key =~ s/[-.]/-/g;
 	    if ($h{$key} ne '') {
 		print STDERR "WARNING: duplicate section '$key' in $fn\n";
 		$h{$key} .= " $val";
@@ -101,9 +103,10 @@ foreach $fn (@f) {
     ## replace ${ver} with the version
     foreach (keys %d) { $d{$_} =~ s/\$\{ver\}/$ver/ge; }
 
-    my $src = $d{"source.url"};
+    my $src = $d{"source-url"};
     my $pkg = $d{"package"};
     my $dep = $d{"depends"};
+    my $bdep = $d{"build-depends"};
     my $sug = $d{"suggests"};
 
 #    print "=== $fn:\n";
@@ -111,10 +114,11 @@ foreach $fn (@f) {
 
     my @deps = get_deps($dep);
     my @sugs = get_deps($sug);
+    my @bdeps = get_deps($bdep);
 #    print "$fn: '$dep' "; foreach (@deps) { my %h=%$_; print "[$h{name}] "; }; print "\n";
 
     if ($ver eq '' && $src eq '') { ## virtual
-	$pkgs{$pkg} = { pkg => $pkg, dep => \@deps, sug => \@sugs, d => \%d };
+	$pkgs{$pkg} = { pkg => $pkg, dep => \@deps, bdep => \@bdeps, sug => \@sugs, d => \%d };
     } else {
 	## this is a hack: GNU server is incredibly slow (we are talking
 	## dial-up modem speeds!) so switch to a local mirror if set
@@ -124,7 +128,7 @@ foreach $fn (@f) {
 	}
 
 	$patch = (-e "$root/$fn.patch") ? "$root/$fn.patch" : "";
-	$pkgs{$pkg} = { pkg => $pkg, ver => $ver, dep => \@deps, src => $src, d => \%d, patch => $patch, sug => \@sugs };
+	$pkgs{$pkg} = { pkg => $pkg, ver => $ver, dep => \@deps, bdep => \@bdeps, src => $src, d => \%d, patch => $patch, sug => \@sugs };
     }
 }
 
@@ -133,7 +137,9 @@ my $ok = 1;
 ## check dependencies
 foreach my $name (keys %pkgs) {
     my %pkg = %{$pkgs{$name}};
-    foreach my $c (@{$pkg{dep}}) {
+    my @adep = @{$pkg{dep}};
+    push @adep, @{$pkg{bdep}};
+    foreach my $c (@adep) {
 	my %cond = %$c;
 	if ($cond{name} ne '') {
 	    if (! defined $pkgs{$cond{name}}) {
@@ -189,15 +195,15 @@ sub cfg {
     ## set the default cfgflags unless Configure.script is set
     ## in which case we can't assume it is autoconf-based
     my @f;
-    push @f, $cfgflags if ($d{'configure.script'} eq '' && $d{'build-system'} eq '');
-    foreach (("configure", "configure.$os", "configure.$os_maj", "configure.$arch",
-	      "configure.$os.$arch", "configure.$os_maj.$arch")) {
+    push @f, $cfgflags if ($d{'configure-script'} eq '' && $d{'build-system'} eq '');
+    foreach (("configure", "configure-$os", "configure-$os_maj", "configure-$arch",
+	      "configure-$os-$arch", "configure-$os_maj-$arch")) {
 	push @f, $d{$_} if ($d{$_} ne '');
     }
 
     ## this is not completely fool-proof, but we try to accept --prefix overrides and not step on them
     my $tst = ' ' . join ' ', @f;
-    @f = ("--prefix=/$prefix", @f) if (!($d{'configure.script'} ne '' || $tst =~ / --prefix=/));
+    @f = ("--prefix=/$prefix", @f) if (!($d{'configure-script'} ne '' || $tst =~ / --prefix=/));
     
     return join ' ', @f;
 }
@@ -220,12 +226,13 @@ if(system("$TAR c --uid 0 /dev/null > /dev/null 2>&1")) {
 sub dep_targets {
     my $sep = $_[1];
     $sep = ' ' if ($seq eq '');
-    return join ' ', map {
+    my $res = join ' ', map {
 	my %d = %$_;
 	my $name = $d{name};
 	my %p = %{$pkgs{$name}};
 	($p{ver} eq '') ? $name : "$name-$p{ver}";
     } @{$_[0]};
+    return $res;
 }
 
 ## quote string using ' quotes
@@ -252,26 +259,26 @@ foreach my $name (sort keys %pkgs) {
 	}
     }
 
-    my $dist = ($d{'distribution.files'} ne '') ? $d{'distribution.files'} : $tarspec;
-    my $srcdir = ($d{'configure.subdir'} ne '') ? "/$d{'configure.subdir'}" : '';
-    my $cfg_scr = ($d{'configure.script'} ne '') ? $d{'configure.script'} : 'configure';
-    my $cfg_proc = ($d{'configure.driver'} ne '') ? $d{'configure.driver'} : '';
-    my $cfg_chmod = ($d{'configure.chmod'} ne '') ? $d{'configure.chmod'} : '';
+    my $dist = ($d{'distribution-files'} ne '') ? $d{'distribution-files'} : $tarspec;
+    my $srcdir = ($d{'configure-subdir'} ne '') ? "/$d{'configure-subdir'}" : '';
+    my $cfg_scr = ($d{'configure-script'} ne '') ? $d{'configure-script'} : 'configure';
+    my $cfg_proc = ($d{'configure-driver'} ne '') ? $d{'configure-driver'} : '';
+    my $cfg_chmod = ($d{'configure-chmod'} ne '') ? $d{'configure-chmod'} : '';
     my $mkinst = ($d{'install'} ne '') ? $d{'install'} : "make install";
     my $tar = $pkg{src};
     $tar =~ s/.*\///;
     if ($pkg{ver} eq '') { ## virtual
-	print OUT "$pkg{pkg}: ".dep_targets($pkg{dep})."\n\techo 'Bundle: $pkg{pkg}~Depends: $d{depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~' | tr '~' '\\n' > '\$\@' && cp '\$\@' '\$\@.bundle' && touch '\$\@'\n";
+	print OUT "$pkg{pkg}: ".dep_targets($pkg{bdep})." ".dep_targets($pkg{dep})."\n\techo 'Bundle: $pkg{pkg}~Depends: $d{depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~' | tr '~' '\\n' > '\$\@' && cp '\$\@' '\$\@.bundle' && touch '\$\@'\n";
 	next;
     }
 
     if (!$binary) {
         if ($d{special} =~ /in-sources/) { ## requires in-sources install
 	    $cfg_chmod = "chmod $cfg_chmod ".shQuote($cfg_scr)." && " if ($cfg_chmod ne '');
-	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj \$\@ && rsync -a src/$pv$srcdir/ $pv-obj/ && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ./$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make MAKELEVEL=0 -j$jobs && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
+	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{bdep})." ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj \$\@ && rsync -a src/$pv$srcdir/ $pv-obj/ && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ./$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make MAKELEVEL=0 -j$jobs && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
         } else {
 	    $cfg_chmod = "chmod $cfg_chmod ".shQuote("../src/$pv$srcdir/$cfg_scr")." && " if ($cfg_chmod ne '');
-	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj \$\@ && mkdir $pv-obj && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ../src/$pv$srcdir/$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make MAKELEVEL=0 -j$jobs && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
+	    print OUT "$pv-dst: src/$pv ".dep_targets($pkg{bdep})." ".dep_targets($pkg{dep})."\n\trm -rf $pv-obj \$\@ && mkdir $pv-obj && cd $pv-obj && ${cfg_chmod}PREFIX=$prefix $cfg_proc ../src/$pv$srcdir/$cfg_scr ".cfg($pkg{d})." && PREFIX=$prefix make MAKELEVEL=0 -j$jobs && PREFIX=$prefix $mkinst DESTDIR=$root/build/$pv-dst\n\n";
         }
         $do_patch = ($pkg{patch} ne '') ? "&& patch -p1 < ".shQuote($pkg{patch}) : '';
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');

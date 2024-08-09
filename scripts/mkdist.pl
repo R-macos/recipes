@@ -50,8 +50,8 @@ foreach $fn (@b, @a) {
 	( $name ne '') || die "ERROR: receipt $pkg does not include package name!\n";
 	( -e "recipes/$name" ) || die "ERROR: cannot find recipe for $name!\n";
 	open IN, "recipes/$name";
-	while (<IN>) {
-            $dep .= $_ if (/^(Depends|Suggest)/);
+	while (<IN>) { ## fill in those from the recipe, not the receipt
+            $dep .= $_ if (/^(Depends|Suggest|Build[-.]Dep)/i);
 	}
 	if (!$bundle) {
 	    my $xfn = $fn;

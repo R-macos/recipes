@@ -12,15 +12,14 @@ for ((i=1;i<=$#;i++)); do
     case "x${!i}" in
 	x--) unset args[$i-1]; break;;
 	x-f) FORCE=1; unset args[$i-1];;
-	x-b) BINARY=1; unset args[$i-1];;
+	x-b) BINARY=1; unset args[$i-1];; ## defunct
+	x-x) USEX11=1; unset args[$i-1];; ## not documented, macOS only
 	x-p) PERL=$(command -v perl); unset args[$i-1]; if [ -z "$PERL" ]; then PERL=perl; fi;;
 	x-h)
 	    echo ''
-	    echo " Usage: $0 [-f] [-b] [-p] [-h] [[--] ...]"
+	    echo " Usage: $0 [-f] [-h] [[--] ...]"
 	    echo ''
 	    echo ' -f  - create builds/Makefile even if it exists'
-	    echo ' -b  - install from binaries'
-	    echo ' -p  - use Perl even if R is present'
 	    echo ' --  - any further arguments are passed ann not interpreted'
 	    echo ' -h  - this help page'
 	    echo ' ... additional arguments passed to make'
@@ -31,16 +30,32 @@ for ((i=1;i<=$#;i++)); do
     esac
 done
 
+if [ -n "$BINARY" ]; then
+    echo 'ERROR: Binary installs are no longer supported by this script.'
+    echo '       Please use https://mac.R-project.org/bin/install.R'
+    exit 1
+fi
+
 ## auto-detect PREFIX if not specified
 if [ -z "$PREFIX" -a x$OSARCH = xarm64 -a x$osname = xDarwin ]; then
   PREFIX=opt/R/arm64
 fi
 if [ -z "$PREFIX" ]; then
-  if [ -e "/opt/R/$osarch" ]; then
-    PREFIX="opt/R/$osarch"
-  else
-    PREFIX=usr/local
-  fi
+    if [ -e "/opt/R/$osarch" ]; then
+	PREFIX="opt/R/$osarch"
+    else
+	if [ x$osname = xDarwin ]; then
+	    echo ''
+	    echo "*** WARNING: you are using /usr/local as prefix, this is strongly discuraged"
+	    echo "             as it tends to conflict with other package managers on macOS."
+	    echo "             Consider creating /opt/R/$osarch instead:"
+	    echo ''
+	    echo "               sudo mkdir -p /opt/R/$osarch"
+	    echo "               sudo chown \$USER /opt/R/$osarch"
+	    echo ''
+	fi
+	PREFIX=usr/local
+    fi
 fi
 
 ## fall back to CMake.app if necessary
@@ -62,16 +77,6 @@ if [ /"$PREFIX" != /usr/local -a "/$PREFIX" != /usr ]; then
   if [ -z "$LDFLAGS" ]; then
     export LDFLAGS="-L/$PREFIX/lib"
   fi
-fi
-
-## find R
-: ${RSBIN=`which Rscript`}
-if [ -z "$RSBIN" ]; then
-  for pp in /usr/bin /usr/local/bin /opt/R/$osarch/bin /Library/Frameworks/R.framework/Resources/bin; do
-    if [ -x "$pp/Rscript" ]; then
-      RSBIN="$pp/Rscript"
-    fi
-  done
 fi
 
 echo "Building for $osname ($osarch):"
@@ -102,22 +107,12 @@ fi
 
 ## need to create Makefile?
 if [ ! -e build/Makefile ]; then
-    if [ -n "$PERL" -o -z "$RSBIN" ]; then
-	: ${PERL=`which perl`}
-	if [ -z "$PERL" ]; then
-	    X=`perl -e 'print 1;'`
-	    if [ x$X = x1 ]; then
-		PERL=perl
-	    else
-		echo "ERROR: neither R nor Perl found. Please, install either and make sure it is on the PATH."
-		exit 1
-	    fi
-	fi
+    if [ -n "$PERL" ]; then
 	RUN="$PERL scripts/mkmk.pl"
 	echo "Using Perl generator ($PERL)"
     else
-	RUN="$RSBIN scripts/mkmk.R"
-	echo "Using R generator ($RSBIN)"
+	echo "ERROR: Perl not found. Set PERL if in a non-standard location."
+	exit 1
     fi
 
     if $RUN; then
@@ -130,8 +125,12 @@ if [ ! -e build/Makefile ]; then
 fi
 
 if [ x"$osname" = xDarwin ]; then
-  PWD=`pwd`
-  export PKG_CONFIG_PATH=/$PREFIX/lib/pkgconfig:$PWD/stubs/pkgconfig-darwin:/usr/lib/pkgconfig
+    PWD=`pwd`
+    ## we are now providing stubs as a recipe so this should no longer be needed
+    export PKG_CONFIG_PATH=/$PREFIX/lib/pkgconfig:/$PREFIX/share/pkgconfig:$PWD/stubs/pkgconfig-darwin:/usr/lib/pkgconfig
+    if [ -n "$USEX11" -a -e /usr/X11/lib/pkgconfig ]; then
+	export PKG_CONFIG_PATH="${PKG_CONFIG_PATH}:/usr/X11/lib/pkgconfig:/usr/X11/share/pkgconfig"
+    fi
 fi
 
 set -e
