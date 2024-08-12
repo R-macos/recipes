@@ -211,7 +211,6 @@ sub cfg {
 sub chkhash {
     my %d = %{$_[0]};
     if ($d{'source-sha256'} ne '') {
-        print "== chkhash: ".$d{'source-sha256'}."\n";
 	return '&& [ '.lc($d{'source-sha256'}).' = `openssl sha256 $@ | sed '."'s:.*= ::'".'` ]';
     }
     return '';
@@ -224,7 +223,7 @@ my $TAR = $ENV{"TAR"};
 my $tarflags='';
 
 $TAR = 'tar' if ($TAR eq '');
-print OUT "TAR='$TAR'\nPREFIX='$prefix'\n\n";
+print OUT "TAR='$TAR'\nPREFIX='$prefix'\n\nbuild_all: all\n\n";
 
 if(system("$TAR c --uid 0 /dev/null > /dev/null 2>&1")) {
   print "NOTE: your tar does not support --uid so it won't be set\n";
@@ -255,6 +254,8 @@ sub shQuote {
     return $a;
 }
 
+my @srctars; ## list of all source tar balls
+
 foreach my $name (sort keys %pkgs) {
     my %pkg = %{$pkgs{$name}};
     my %d = %{$pkg{d}};
@@ -276,6 +277,8 @@ foreach my $name (sort keys %pkgs) {
     my $mkinst = ($d{'install'} ne '') ? $d{'install'} : "make install";
     my $tar = $pkg{src};
     $tar =~ s/.*\///;
+    $tar = $name."-$tar" if ($tar =~ /^[0-9]/);    ## GitHub creates dangerous tar bombs - prepend recipe name in those cases for sanity
+    $tar = $name."-$1" if ($tar =~ /^v([0-9].*)/); ## some use v prefix, so catch those and strip the prefix
     if ($pkg{ver} eq '') { ## virtual
 	print OUT "$pkg{pkg}: ".dep_targets($pkg{bdep})." ".dep_targets($pkg{dep})."\n\techo 'Bundle: $pkg{pkg}~Depends: $d{depends}~BuiltWith: ".dep_targets($pkg{dep}, ", ")."~BuiltFor: $os_maj-$arch~' | tr '~' '\\n' > '\$\@' && cp '\$\@' '\$\@.bundle' && touch '\$\@'\n";
 	next;
@@ -292,7 +295,10 @@ foreach my $name (sort keys %pkgs) {
         $do_patch = ($pkg{patch} ne '') ? "&& patch -p1 < ".shQuote($pkg{patch}) : '';
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');
 	print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
+	push @srctars, "src/$tar";
         print OUT "src/$tar:\n\t$curl -fL -o \$\@ '$pkg{src}'".chkhash($pkg{d})."\n";
+        print OUT "src/$tar.sha256: src/$tar\n\topenssl sha256 \$^ > \$\@\n";
+	print OUT "src/$name.hash: src/$tar.sha256\n\tsed -e 's:.* ::' -e 's/^/Source-SHA256: /' \$^ > \$\@\n";
         print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\t\$(TAR) fcz '\$\@' $tarflags -C '\$^' $dist\n";
     } else {
         print OUT "$pv-$os_maj-$arch.tar.gz:\n\t$curl -LO $binary_url/\$\@\n";
@@ -305,6 +311,8 @@ foreach my $name (sort keys %pkgs) {
 #}
 
 print OUT "\n\nall: ". join(' ', map { ($pkgs{$_}{ver}) ? $pkgs{$_}{pkg}.'-'.$pkgs{$_}{ver} : ''; } sort keys %pkgs). "\n\n";
+print OUT "download: ". join(' ', @srctars) ."\n\n.PHONY: all build_all download\n\n";
+print OUT "hash: ". join(' ', map { ($pkgs{$_}{ver}) ? "src/$_.hash" : ''; } sort keys %pkgs) ."\n\n.PHONY: all build_all download hash\n\n";
 close OUT;
 
 print "\nCreated build/Makefile\n\nUse make -C build <recipe> to build and install a recipe\n\n";
