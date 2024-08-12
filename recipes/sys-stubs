@@ -1,3 +1,4 @@
 Package: sys-stubs
 Version: 1.0
-Source.URL: https://mac.r-project.org/pkgconfig-sys-stubs-${ver}.tar.gz
+Source-URL: https://mac.r-project.org/pkgconfig-sys-stubs-${ver}.tar.gz
+Source-SHA256: 2e057f1274a0dbfffe3bbe89c8200930d170ac5b8b97c4bdfd43cbaa7ad122a3

@@ -1,3 +1,4 @@
 Package: texinfo
 Version: 7.1
-Source.URL: https://ftp.gnu.org/gnu/texinfo/texinfo-${ver}.tar.gz
+Source-URL: https://ftp.gnu.org/gnu/texinfo/texinfo-${ver}.tar.gz
+Source-SHA256: dd5710b3a53ac002644677a06145748e260592a35be182dc830ebebb79c5d5a0

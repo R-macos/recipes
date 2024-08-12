@@ -1,5 +1,6 @@
 Package: icu
 Version: 71.1
-Source.URL: https://github.com/unicode-org/icu/releases/download/release-71-1/icu4c-71_1-src.tgz
+Source-URL: https://github.com/unicode-org/icu/releases/download/release-71-1/icu4c-71_1-src.tgz
+Source-SHA256: 67a7e6e51f61faf1306b6935333e13b2c48abd8da6d2f46ce6adca24b1e21ebf
 Configure: --disable-renaming
 Configure.subdir: source

@@ -1,6 +1,7 @@
 Package: proj
 Version: 9.1.0
 Depends: pkgconfig, tiff, libpng, jpeg, sqlite3
-Source.URL: https://github.com/OSGeo/PROJ/releases/download/${ver}/proj-${ver}.tar.gz
+Source-URL: https://github.com/OSGeo/PROJ/releases/download/${ver}/proj-${ver}.tar.gz
+Source-SHA256: 81b2239b94cad0886222cde4f53cb49d34905aad2a1317244a0c30a553db2315
 Build-system: cmake
 Configure: -DCMAKE_EXE_LINKER_FLAGS="`pkg-config --static --libs libtiff-4`" -DCMAKE_C_FLAGS="`pkg-config --cflags libtiff-4`"

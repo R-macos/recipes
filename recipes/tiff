@@ -1,4 +1,5 @@
 Package: tiff
 Version: 4.5.0
-Source.URL: http://download.osgeo.org/libtiff/tiff-${ver}.tar.gz
+Source-URL: http://download.osgeo.org/libtiff/tiff-${ver}.tar.gz
+Source-SHA256: c7a1d9296649233979fa3eacffef3fa024d73d05d589cb622727b5b08c423464
 Depends: jpeg, xz, libwebp

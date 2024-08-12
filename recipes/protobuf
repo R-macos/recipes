@@ -1,3 +1,4 @@
 Package: protobuf
 Version: 3.20.2
-Source.URL: https://github.com/protocolbuffers/protobuf/releases/download/v${ver}/protobuf-cpp-${ver}.tar.gz
+Source-URL: https://github.com/protocolbuffers/protobuf/releases/download/v${ver}/protobuf-cpp-${ver}.tar.gz
+Source-SHA256: a0167e2ba24bba0a180fbc9392f3a43e749d7a26e630fe9c1a1ba32a53675ac3

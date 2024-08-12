@@ -1,4 +1,5 @@
 Package: libsndfile
 Version: 1.1.0
 Depends: pkgconfig
-Source.URL: https://github.com/libsndfile/libsndfile/releases/download/${ver}/libsndfile-${ver}.tar.xz
+Source-URL: https://github.com/libsndfile/libsndfile/releases/download/${ver}/libsndfile-${ver}.tar.xz
+Source-SHA256: 0f98e101c0f7c850a71225fb5feaf33b106227b3d331333ddc9bacee190bcf41

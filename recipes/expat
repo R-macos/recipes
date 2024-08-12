@@ -1,3 +1,4 @@
 Package: expat
 Version: 2.6.2
-Source.URL: https://github.com/libexpat/libexpat/releases/download/R_2_6_2/expat-${ver}.tar.bz2
+Source-URL: https://github.com/libexpat/libexpat/releases/download/R_2_6_2/expat-${ver}.tar.bz2
+Source-SHA256: 9c7c1b5dcbc3c237c500a8fb1493e14d9582146dd9b42aa8d3ffb856a3b927e0

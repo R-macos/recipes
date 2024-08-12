@@ -1,4 +1,5 @@
 Package: autoconf
 Version: 2.72
 Depends: m4
-Source.URL: https://ftp.gnu.org/gnu/autoconf/autoconf-${ver}.tar.gz
+Source-URL: https://ftp.gnu.org/gnu/autoconf/autoconf-${ver}.tar.gz
+Source-SHA256: afb181a76e1ee72832f6581c0eddf8df032b83e2e0239ef79ebedc4467d92d6e

@@ -1,5 +1,6 @@
 Package: emacs
 Version: 28.2
 Depends: pkgconfig
-Source.URL: http://ftp.gnu.org/gnu/emacs/emacs-${ver}.tar.xz
+Source-URL: http://ftp.gnu.org/gnu/emacs/emacs-${ver}.tar.xz
+Source-SHA256: ee21182233ef3232dc97b486af2d86e14042dbb65bbc535df562c3a858232488
 Configure.darwin: --with-x-toolkit=no --without-all --without-x --without-toolkit-scroll-bars --without-ns --with-threads --with-modules

@@ -1,3 +1,4 @@
 Package: readline5
 Version: 5.2-014
-Source.URL: https://mac.r-project.org/src/readline-${ver}.tar.gz
+Source-URL: https://mac.r-project.org/src/readline-${ver}.tar.gz
+Source-SHA256: afe3579d32afa23bd601b5ac1e4a494cb4996efc8eb843369c3eb6a07cbd8b0c

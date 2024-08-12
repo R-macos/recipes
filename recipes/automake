@@ -1,4 +1,5 @@
 Package: automake
 Version: 1.17
 Depends: autoconf (>= 2.69)
-Source.URL: https://ftp.gnu.org/gnu/automake/automake-${ver}.tar.gz
+Source-URL: https://ftp.gnu.org/gnu/automake/automake-${ver}.tar.gz
+Source-SHA256: 397767d4db3018dd4440825b60c64258b636eaf6bf99ac8b0897f06c89310acd

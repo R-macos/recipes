@@ -1,5 +1,6 @@
 Package: qpdf
 Version: 11.1.1
-Source.URL: https://github.com/qpdf/qpdf/releases/download/v${ver}/qpdf-${ver}.tar.gz
+Source-URL: https://github.com/qpdf/qpdf/releases/download/v${ver}/qpdf-${ver}.tar.gz
+Source-SHA256: 25e8ec60e290cd134405a51920015b6d351d4e0b93b7b736d257f10725f74b5a
 Depends: jpeg, pkgconfig
 Build-system: cmake

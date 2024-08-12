@@ -1,5 +1,6 @@
 Package: hwloc
 Version: 2.11.1
 Build-Depends: automake (>= 1.17)
-Source.URL: https://download.open-mpi.org/release/hwloc/v2.11/hwloc-${ver}.tar.gz
+Source-URL: https://download.open-mpi.org/release/hwloc/v2.11/hwloc-${ver}.tar.gz
+Source-SHA256: 9f320925cfd0daeaf3a3d724c93e127ecac63750c623654dca0298504aac4c2c
 Configure: --disable-cairo --disable-libxml2 --disable-plugin-dlopen --disable-plugin-ltdl

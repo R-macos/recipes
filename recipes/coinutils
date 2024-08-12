@@ -1,3 +1,4 @@
 Package: coinutils
 Version: 2.11.6
-Source.URL: https://github.com/coin-or/CoinUtils/archive/refs/tags/releases/${ver}.tar.gz
+Source-URL: https://github.com/coin-or/CoinUtils/archive/refs/tags/releases/${ver}.tar.gz
+Source-SHA256: 6ea31d5214f7eb27fa3ffb2bdad7ec96499dd2aaaeb4a7d0abd90ef852fc79ca

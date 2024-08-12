@@ -1,4 +1,5 @@
 Package: cgl
 Version: 0.60.6
 Depends: clp
-Source.URL: https://github.com/coin-or/Cgl/archive/refs/tags/releases/${ver}.tar.gz
+Source-URL: https://github.com/coin-or/Cgl/archive/refs/tags/releases/${ver}.tar.gz
+Source-SHA256: 9e2c51ffad816ab408763d6b931e2a3060482ee4bf1983148969de96d4b2c9ce

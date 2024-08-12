@@ -1,5 +1,6 @@
 Package: apr-util
 Version: 1.6.3
 Depends: apr, pkgconfig, openssl
-Source.URL: https://archive.apache.org/dist/apr/apr-util-${ver}.tar.bz2
+Source-URL: https://archive.apache.org/dist/apr/apr-util-${ver}.tar.bz2
+Source-SHA256: a41076e3710746326c3945042994ad9a4fcac0ce0277dd8fea076fec3c9772b5
 Configure: --with-apr=/${PREFIX} --with-crypto --with-openssl=/${PREFIX}

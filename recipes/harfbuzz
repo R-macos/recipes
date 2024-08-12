@@ -2,4 +2,5 @@ Package: harfbuzz
 Version: 8.5.0
 Depends: icu, fribidi, pkgconfig
 Suggests: freetype
-Source.URL: https://github.com/harfbuzz/harfbuzz/releases/download/${ver}/harfbuzz-${ver}.tar.xz
+Source-URL: https://github.com/harfbuzz/harfbuzz/releases/download/${ver}/harfbuzz-${ver}.tar.xz
+Source-SHA256: 77e4f7f98f3d86bf8788b53e6832fb96279956e1c3961988ea3d4b7ca41ddc27

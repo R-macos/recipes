@@ -1,4 +1,5 @@
 Package: mpfr
 Version: 4.2.0
-Source.URL: https://ftp.gnu.org/gnu/mpfr/mpfr-${ver}.tar.gz
+Source-URL: https://ftp.gnu.org/gnu/mpfr/mpfr-${ver}.tar.gz
+Source-SHA256: f1cc1c6bb14d18f0c61cc416e083f5e697b6e0e3cf9630b9b33e8e483fc960f0
 Depends: gmp (>= 4.1.0)

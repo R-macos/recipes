@@ -1,5 +1,6 @@
 Package: glpk
 Version: 5.0
-Source.URL: http://ftp.gnu.org/gnu/glpk/glpk-${ver}.tar.gz
+Source-URL: http://ftp.gnu.org/gnu/glpk/glpk-${ver}.tar.gz
+Source-SHA256: 4a1013eebb50f728fc601bdd833b0b2870333c3b3e5a816eeba921d95bec6f15
 Depends: gmp
 Configure: --with-gmp

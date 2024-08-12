@@ -1,4 +1,5 @@
 Package: udunits
 Version: 2.2.28
 Was.Source.URL: https://artifacts.unidata.ucar.edu/repository/downloads-udunits/${ver}/udunits-${ver}.tar.gz
-Source.URL: https://github.com/s-u/UDUNITS-2/releases/download/v${ver}/udunits-${ver}.tar.gz
+Source-URL: https://github.com/s-u/UDUNITS-2/releases/download/v${ver}/udunits-${ver}.tar.gz
+Source-SHA256: 590baec83161a3fd62c00efa66f6113cec8a7c461e3f61a5182167e0cc5d579e

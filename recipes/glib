@@ -2,6 +2,7 @@ Package: glib
 Version: 2.76.1
 Depends: pixman, pcre, xz, libpng, ffi, gettext
 Build-system: meson-ninja
-Source.URL: https://download.gnome.org/sources/glib/2.76/glib-${ver}.tar.xz
+Source-URL: https://download.gnome.org/sources/glib/2.76/glib-${ver}.tar.xz
+Source-SHA256: 43dc0f6a126958f5b454136c4398eab420249c16171a769784486e25f2fda19f
 Configure.darwin: LDFLAGS='-framework Foundation -L/${prefix}/lib -lbz2 -lpng -lz -lpixman-1 -lxml2 -llzma -liconv'
 

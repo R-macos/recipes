@@ -1,3 +1,4 @@
 Package: szip
 Version: 2.1.1
-Source.URL: https://support.hdfgroup.org/ftp/lib-external/szip/2.1.1/src/szip-2.1.1.tar.gz
+Source-URL: https://support.hdfgroup.org/ftp/lib-external/szip/2.1.1/src/szip-2.1.1.tar.gz
+Source-SHA256: 21ee958b4f2d4be2c9cabfa5e1a94877043609ce86fde5f286f105f7ff84d412

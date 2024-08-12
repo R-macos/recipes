@@ -1,6 +1,7 @@
 Package: hdf4
 Version: 4.3.0
-Source.URL: https://github.com/HDFGroup/hdf4/releases/download/hdf${ver}/hdf${ver}.tar.gz
+Source-URL: https://github.com/HDFGroup/hdf4/releases/download/hdf${ver}/hdf${ver}.tar.gz
+Source-SHA256: 282b244a819790590950f772095abcaeef405b0f17d2ee1eb5039da698cf938b
 Depends: jpeg, szip
 Configure: --enable-build-mode=production --enable-hdf4-xdr --with-szip --disable-netcdf --disable-fortran LIBS=-L/${prefix}/lib
 Configure.darwin.20: CFLAGS='-Wno-implicit-function-declaration'

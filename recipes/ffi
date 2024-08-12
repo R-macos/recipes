@@ -1,3 +1,4 @@
 Package: ffi
 Version: 3.4.2
-Source.URL: https://github.com/libffi/libffi/releases/download/v${ver}/libffi-${ver}.tar.gz
+Source-URL: https://github.com/libffi/libffi/releases/download/v${ver}/libffi-${ver}.tar.gz
+Source-SHA256: 540fb721619a6aba3bdeef7d940d8e9e0e6d2c193595bc243241b77ff9e93620
