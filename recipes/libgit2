@@ -1,0 +1,7 @@
+Package: libgit2
+Version: 1.8.2
+Depends: openssl, libssh2
+Source-URL: https://github.com/libgit2/libgit2/archive/refs/tags/v${ver}.tar.gz
+Source-SHA256: 184699f0d9773f96eeeb5cb245ba2304400f5b74671f313240410f594c566a28
+Configure: -DBUILD_SHARED_LIBS=OFF -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DBUILD_EXAMPLES=OFF -DBUILD_TESTS=OFF -DUSE_SSH=ON
+Build-system: cmake
