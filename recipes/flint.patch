@@ -1,0 +1,11 @@
+diff -ruN flint-3.1.3-p1/src/double_interval.h flint-3.1.3-p1-patched/src/double_interval.h
+--- flint-3.1.3-p1/src/double_interval.h	2024-04-25 17:00:25
++++ flint-3.1.3-p1-patched/src/double_interval.h	2024-08-28 10:47:50
+@@ -183,6 +183,7 @@
+ di_t arb_get_di(const arb_t x);
+ void arb_set_di(arb_t res, di_t x, slong prec);
+ 
++static
+ DOUBLE_INTERVAL_INLINE
+ double d_randtest2(flint_rand_t state)
+ {
