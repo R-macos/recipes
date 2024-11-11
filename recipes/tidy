@@ -1,0 +1,4 @@
+Package: tidy
+Version: 5.8.0
+Source-URL: https://github.com/htacg/tidy-html5/archive/refs/tags/${ver}.tar.gz
+Build-system: cmake
