@@ -1,0 +1,8 @@
+#NOTE: this is a copy of fftw compiled in single-precision and --enable-type-prefix, see http://www.fftw.org/fftw2_doc/fftw_6.html#SEC69 -- it registers as "fftw3f" for cmake and pkgconfig
+Package: fftw-s
+Version: 3.3.10
+Depends: fftw
+Source-URL: http://www.fftw.org/fftw-${ver}.tar.gz
+Source-SHA256: 56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467
+Configure: --enable-type-prefix --enable-float
+Distribution-files: ${prefix}/lib
