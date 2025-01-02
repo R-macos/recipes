@@ -1,4 +1,4 @@
-#NOTE: this is a copy of fftw compiled in single-precision and --enable-type-prefix, see http://www.fftw.org/fftw2_doc/fftw_6.html#SEC69 -- it registers as "fftw3f" for cmake and pkgconfig
+#NOTE: this is a copy of fftw compiled in single-precision and --enable-type-prefix, see http://www.fftw.org/fftw3_doc/Precision.html -- it registers as "fftw3f" for cmake and pkgconfig
 Package: fftw-s
 Version: 3.3.10
 Depends: fftw
