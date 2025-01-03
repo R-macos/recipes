@@ -1,4 +1,4 @@
 Package: xz
-Version: 5.6.2
-Source-URL: https://github.com/tukaani-project/xz/releases/download/v${ver}/xz-${ver}.tar.xz
-Source-SHA256: a9db3bb3d64e248a0fae963f8fb6ba851a26ba1822e504dc0efd18a80c626caf
+Version: 5.6.3
+Source-URL: https://github.com/tukaani-project/xz/releases/download/v${ver}/xz-${ver}.tar.gz
+Source-SHA256: b1d45295d3f71f25a4c9101bd7c8d16cb56348bbef3bbc738da0351e17c73317
