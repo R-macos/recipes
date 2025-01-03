@@ -295,8 +295,8 @@ foreach my $name (sort keys %pkgs) {
         }
         $do_patch = ($pkg{patch} ne '') ? "&& patch -p1 < ".shQuote($pkg{patch}) : '';
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');
+	print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
 	if ($srcused{$tar} < 1) {
-	    print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
 	    push @srctars, "src/$tar";
 	    $srcused{$tar}++;
 	    print OUT "src/$tar:\n\t$curl -fL -o \$\@ '$pkg{src}'".chkhash($pkg{d})."\n";
