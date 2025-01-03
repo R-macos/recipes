@@ -255,6 +255,7 @@ sub shQuote {
 }
 
 my @srctars; ## list of all source tar balls
+my %srcused; ## count how often each src is used
 
 foreach my $name (sort keys %pkgs) {
     my %pkg = %{$pkgs{$name}};
@@ -294,10 +295,13 @@ foreach my $name (sort keys %pkgs) {
         }
         $do_patch = ($pkg{patch} ne '') ? "&& patch -p1 < ".shQuote($pkg{patch}) : '';
 	$do_patch = "$do_patch && cp ". shQuote($bsys) ." configure" if ($bsys ne '');
-	print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
-	push @srctars, "src/$tar";
-        print OUT "src/$tar:\n\t$curl -fL -o \$\@ '$pkg{src}'".chkhash($pkg{d})."\n";
-        print OUT "src/$tar.sha256: src/$tar\n\topenssl sha256 \$^ > \$\@\n";
+	if ($srcused{$tar} < 1) {
+	    print OUT "src/$pv: src/$tar\n\tmkdir -p src/$pv && (cd src/$pv && \$(TAR) fxj ../$tar && mv */* . $do_patch)\n";
+	    push @srctars, "src/$tar";
+	    $srcused{$tar}++;
+	    print OUT "src/$tar:\n\t$curl -fL -o \$\@ '$pkg{src}'".chkhash($pkg{d})."\n";
+	    print OUT "src/$tar.sha256: src/$tar\n\topenssl sha256 \$^ > \$\@\n";
+	}
 	print OUT "src/$name.hash: src/$tar.sha256\n\tsed -e 's:.* ::' -e 's/^/Source-SHA256: /' \$^ > \$\@\n";
         print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\t\$(TAR) fcz '\$\@' $tarflags -C '\$^' $dist\n";
     } else {
