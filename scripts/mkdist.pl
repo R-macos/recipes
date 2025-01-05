@@ -53,6 +53,7 @@ foreach $fn (@b, @a) {
 	while (<IN>) { ## fill in those from the recipe, not the receipt
             $dep .= $_ if (/^(Depends|Suggest|Build[-.]Dep)/i);
 	}
+	my $sha = '';
 	if (!$bundle) {
 	    my $xfn = $fn;
 	    $xfn =~ s/.*\//dist\//;
@@ -69,13 +70,17 @@ foreach $fn (@b, @a) {
 		utime($atime, $mtime, $xfn);
 		system("ls -l $xfn");
 	    }
+	    $sha = `openssl sha256 $xfn | sed 's:.*= ::'`;
+	    chomp $sha;
+	    $sha="Binary-SHA256: $sha\n" if ($sha ne '');
 	}
 	$out = '';
 	open IN, "build/$pkg";
 	while (<IN>) {
-            s/\.tar\.gz/.tar.xz/g;
-            $_ = '' if (/^BuiltWith: *$/);
-            $out .= (/^Depend/) ? $dep : $_;
+	    s/\.tar\.gz/.tar.xz/g;
+	    $_ = '' if (/^BuiltWith: *$/);
+	    $out .= (/^Depend/) ? $dep : $_;
+	    $out .= $sha if (/^Binary/);
 	}
 	close IN;
 	print OUT $out;
