@@ -1,6 +1,6 @@
 Package: gmp
 Version: 6.3.0
-Source-URL: https://gmplib.org/download/gmp/gmp-${ver}.tar.xz
+Source-URL: https://ftp.gnu.org/gnu/gmp/gmp-${ver}.tar.xz
 Source-SHA256: a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898
 Depends: m4
 Configure: --enable-cxx
