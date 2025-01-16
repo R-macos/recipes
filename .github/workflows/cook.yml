@@ -1,0 +1,114 @@
+name: Cook from Recipes
+
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target of the final "make". Use "all" to build everything (takes a long time!)'
+        required: false
+        default: 'r-base-dev'
+      sdkurl:
+        description: 'URL of the MacOSX*.sdk.tar.xz tar ball to use. It also determines the `MACOSX_DEPLOYMENT_TARGET`. If not specified, defaults to SDKURL set in the repo.'
+        required: false
+        default: ''
+      bootstrap:
+        description: 'If "true" bootstraps freetype/harfbuzz circular dependency and r-base-dev - required for real distribution. Set to "false" if you are testing a specific recipe and want to save time.'
+        required: false
+        default: 'true'
+
+jobs:
+  cook:
+    runs-on: ${{ matrix.os }}
+
+    name: ${{ matrix.os }} build
+
+    env:
+      CC: clang
+      CXX: clang++
+      OBJC: clang
+      OBJCXX: clang++
+      SDKURL: ${{ github.event.inputs.sdkurl }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ 'macOS-13', 'macos-14' ]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Remove local stuff
+        run: |
+          ## Remove unwanted local files
+          sudo mkdir /usr/local/.disabled && sudo mkdir -p /opt/R/`uname -m`/bin && sudo chown -R $USER /opt/R
+          sudo mv /usr/local/* /usr/local/.disabled/ && sudo rm -rf /opt/homebrew
+          echo /opt/R/`uname -m`/bin: > .PATH && cat $GITHUB_PATH >> .PATH && cat .PATH > $GITHUB_PATH && rm .PATH
+          echo "ARCH=$(uname -m)" > $GITHUB_ENV
+
+      - name: Setup toolchain
+        run: |
+          ## Setup SDK
+          if [ -z "$SDKURL" ]; then SDKURL="${{ secrets.SDKURL }}"; fi
+          if [ -n "$SDKURL" ]; then
+            echo Installing SDK..
+            sdkname=$(curl -sfSL "$SDKURL" | sudo tar vxz -C /Library/Developer/CommandLineTools/SDKs 2>&1 | sed -n '1s:^x ::p' | sed -E 's:/*$::' )
+            if ! echo $sdkname | grep ^MacOSX; then echo "::error:: SDKURL is not valid, the tar ball must contain MacOSX*.sdk directory" >&2; exit 1; fi
+            SDKROOT="/Library/Developer/CommandLineTools/SDKs/$sdkname"
+            MACOSX_DEPLOYMENT_TARGET="$(echo $sdkname | sed 's:MacOSX::' | sed 's:[.]sdk$::')"
+            OS_VER=$(echo $MACOSX_DEPLOYMENT_TARGET | awk '{ if ($1 >= 11) print int($1+9); else print int(substr($1,4))+4 }')
+            echo "SDKROOT=$SDKROOT" >> $GITHUB_ENV
+            echo "MACOSX_DEPLOYMENT_TARGET=$MACOSX_DEPLOYMENT_TARGET" >> $GITHUB_ENV
+            echo "OS_VER=$OS_VER" >> $GITHUB_ENV
+            echo "=== Using SDK: $SDKROOT"
+            echo "=== Target: macOS $MACOSX_DEPLOYMENT_TARGET"
+            echo "=== Build: darwin$OS_VER"
+            sudo xcode-select -s /Library/Developer/CommandLineTools && xcode-select -p
+          else
+            echo "::warning::NOTE: no SDKURL provided, so Target/SDK are undefined!"
+          fi
+          pip3 install --user cmake ninja meson
+          PYLIB=$(ls -d ~/Library/Python/3.*/bin | head -n1)
+          echo $PYLIB >> $GITHUB_PATH
+          PATH="$PATH:$PYLIB"
+          echo "Compiler: "
+          clang --version
+          cmake --version
+          echo -n "ninja: "
+          ninja --version
+          echo -n "meson: "
+          meson --version
+
+      - name: Setup XQuartz
+        run: |
+          ## Install XQuartz
+          curl -sSL https://github.com/R-macos/XQuartz/releases/download/XQuartz-2.8.1/XQuartz-2.8.1.tar.xz \
+           | sudo tar fxj - -C / && sudo sh /opt/X11/libexec/postinstall
+
+      - name: Build pkg-config
+        run: ./build.sh -f pkgconfig xz
+
+      - name: Bootstrap freetype/harfbuzz circular dependency
+        if: ${{ github.event.inputs.bootstrap }} == 'true'
+        run: |
+          ./build.sh freetype
+          ./build.sh harfbuzz
+          rm -rf build/freetype*
+          ./build.sh harfbuzz
+
+      - name: Build r-base-dev
+        if: ${{ github.event.inputs.bootstrap }} == 'true'
+        run: ./build.sh r-base-dev
+
+      - name: Build ${{ github.event.inputs.target }}
+        run: ./build.sh ${{ github.event.inputs.target }}
+
+      - name: Make distribution
+        run: perl scripts/mkdist.pl
+
+      - name: Upload distribution as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-darwin${{ env.OS_VER }}-${{ env.ARCH }}
+          path: dist
+          compression-level: 0
+          retention-days: 3
