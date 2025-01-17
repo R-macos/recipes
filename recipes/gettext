@@ -2,3 +2,4 @@ Package: gettext
 Version: 0.22.5
 Source-URL: https://ftp.gnu.org/pub/gnu/gettext/gettext-${ver}.tar.gz
 Source-SHA256: ec1705b1e969b83a9f073144ec806151db88127f5e40fe5a94cb6c8fa48996a0
+Configure: --disable-java
