@@ -303,7 +303,7 @@ foreach my $name (sort keys %pkgs) {
 	    print OUT "src/$tar.sha256: src/$tar\n\topenssl sha256 \$^ > \$\@\n";
 	}
 	print OUT "src/$name.hash: src/$tar.sha256\n\tsed -e 's:.* ::' -e 's/^/Source-SHA256: /' \$^ > \$\@\n";
-        print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $prefix > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\t\$(TAR) fcz '\$\@' $tarflags -C '\$^' $dist\n";
+        print OUT "$pv-$os_maj-$arch.tar.gz: $pv-dst\n\tif [ ! -e \$^/$prefix/pkg ]; then mkdir \$^/$prefix/pkg; fi\n\t(cd \$^ && find $dist > $prefix/pkg/$pv-$os_maj-$arch.list )\n$chown\t\$(TAR) fcz '\$\@' $tarflags -C '\$^' $dist $prefix/pkg\n";
     } else {
         print OUT "$pv-$os_maj-$arch.tar.gz:\n\t$curl -LO $binary_url/\$\@\n";
     }
