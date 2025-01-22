@@ -1,0 +1,26 @@
+diff -ru libarchive-3.7.2/configure libarchive-3.7.2-1/configure
+--- libarchive-3.7.2/configure	2023-09-11 18:05:34
++++ libarchive-3.7.2-1/configure	2023-10-15 23:08:49
+@@ -16279,7 +16279,8 @@
+     am_save_LIBS="$LIBS"
+     LIBS="${LIBS} ${LIBICONV}"
+     if test -n "$LIBICONV"; then
+-      LIBSREQUIRED="$LIBSREQUIRED${LIBSREQUIRED:+ }iconv"
++      # FIXME: there is no iconv.pc in iconv # LIBSREQUIRED="$LIBSREQUIRED${LIBSREQUIRED:+ }iconv"
++      am_save_LIBS="$LIBS"
+     fi
+     ac_fn_c_check_func "$LINENO" "locale_charset" "ac_cv_func_locale_charset"
+ if test "x$ac_cv_func_locale_charset" = xyes
+diff -ru libarchive-3.7.2/configure.ac libarchive-3.7.2-1/configure.ac
+--- libarchive-3.7.2/configure.ac	2023-09-11 18:05:32
++++ libarchive-3.7.2-1/configure.ac	2023-10-15 23:09:02
+@@ -435,7 +435,8 @@
+     am_save_LIBS="$LIBS"
+     LIBS="${LIBS} ${LIBICONV}"
+     if test -n "$LIBICONV"; then
+-      LIBSREQUIRED="$LIBSREQUIRED${LIBSREQUIRED:+ }iconv"
++      # FIXME: there is no iconv.pc in iconv # LIBSREQUIRED="$LIBSREQUIRED${LIBSREQUIRED:+ }iconv"
++      am_save_LIBS="$LIBS"
+     fi
+     AC_CHECK_FUNCS([locale_charset])
+     LIBS="${am_save_LIBS}"
