@@ -1,0 +1,4 @@
+Package: libtool
+Version: 2.5.4
+Source-URL: https://ftp.gnu.org/gnu/libtool/libtool-${ver}.tar.xz
+Source-SHA256: f81f5860666b0bc7d84baddefa60d1cb9fa6fceb2398cc3baca6afaa60266675

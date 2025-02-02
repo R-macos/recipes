@@ -1,0 +1,5 @@
+Package: lame
+Version: 3.100
+Source-URL: ttps://downloads.sourceforge.net/project/lame/lame/${ver}/lame-${ver}.tar.gz
+Source-SHA256: ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e
+

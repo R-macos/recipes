@@ -1,5 +1,6 @@
 Package: libsndfile
-Version: 1.1.0
-Depends: pkgconfig
+Version: 1.2.2
 Source-URL: https://github.com/libsndfile/libsndfile/releases/download/${ver}/libsndfile-${ver}.tar.xz
-Source-SHA256: 0f98e101c0f7c850a71225fb5feaf33b106227b3d331333ddc9bacee190bcf41
+Source-SHA256: 3799ca9924d3125038880367bf1468e53a1b7e3686a934f098b7e1d286cdb80e
+Depends: flac, lame, libogg, libvorbis, mpg123, opus
+
