@@ -8,7 +8,7 @@ are available at https://mac.R-project.org/bin/.
 
 The idea is for package authors to submit pull requests for
 dependencies their packages require such that they can be
-automatically installed on the build VMs.
+automatically installed on the build VMs (see below).
 
 The dependency descriptions are simple DCF files. The format should be
 self-explanatory, it follows the same conventions as `DESCRIPTION`
@@ -27,7 +27,7 @@ needed to build R use:
     ./build.sh r-base-dev
 
 You can replace `r-base-dev` with any recipe or use `all` to build 
-all recipes. See `./build.sh -h` for a little help page. 
+all recipes (takes hours!). See `./build.sh -h` for a little help page. 
 Each library is built, packaged and installed. The
 default locations used by the above script are `/opt/R/$arch` and
 `/usr/local`. The former will be used if present where `$arch` is
@@ -37,6 +37,21 @@ fall-back (not recommended).
 For a more fine-grained control you can run
 `scripts/mkmk.pl` yourself and see the list of environment
 variables at the bottom of this page for possible configurations.
+
+### Contributing recipes
+
+To contribute a recipe simply raise a pull request. Please make sure you
+test the recipe changes first. As a final check, you should use the 
+[Cook from Recipes](https://github.com/R-macos/recipes/actions/workflows/cook.yml)
+action in your fork which can be triggered manually and builds both on arm64 and x86_64.
+You can specify the target recipe you want to test. It will also build all dependencies.
+Note that there is a circular depencency between `freetype` and `harfbuzz` which requires
+bootstrapping, but unless your recipe involves those two packages you can disable
+that step. It is recommended to develop recipes locally first as you can iterate more
+quickly, but the action helps finding issues masked by already installed files.
+
+When writing recipes, please make sure you determine the correct dependencies so the build
+order is correct. Do not write recipes for libraries or tools provided by Apple.
 
 ### Reference
 
