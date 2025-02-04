@@ -109,6 +109,16 @@ foreach $fn (@f) {
     my $bdep = $d{"build-depends"};
     my $sug = $d{"suggests"};
 
+    ## we can't check everything, but at least pkg/ver are used in names so should be sane
+    if ($pkg !~ /^[A-Za-z0-9.+-]+$/) {
+	print STDERR "ERROR: Invalid package name in $fn: \"$pkg\"\n";
+	exit 1;
+    }
+    if ($ver ne '' && $ver !~ /^[A-Za-z0-9.+-]+$/) {
+	print STDERR "ERROR: Invalid version in $fn: \"$ver\"\n";
+	exit 1;
+    }
+
 #    print "=== $fn:\n";
 #    foreach (sort(keys(%d))) { print "$_: $d{$_}\n"; }
 
