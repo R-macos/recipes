@@ -40,7 +40,7 @@ $tarspec = "$prefix/*" if ($prefix eq 'usr/local');
 
 sub read_dcf {
     my %h;
-    my $fn = $_[0], $key, $par = 1;
+    my $fn = $_[0], $key, $par = 1, $section = 1;
     open IN, $fn || die "Cannot open $fn";
     while (<IN>) {
 	chomp;
