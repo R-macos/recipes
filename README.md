@@ -156,15 +156,15 @@ Currently the build steps are
 
  * download source tar ball
  * unpack the tar ball
- * move the contents to a directory with fixed naming scheme
- * if a `<recipe>.patch` file exists, it will be applied with -p1
- * create a build object directory
+ * move the contents to a directory with fixed naming scheme `<package>-<version>`
+ * if a `<recipe>.patch` file exists, it will be applied with `-p1`
+ * create a build object directory `<package>-<version>-obj`
  * configure in the object directory using all the accumulated flags
    from the recipe
  * run `make -j12`
- * run `make install` with `DESTDIR` set
+ * run `make install` with `DESTDIR` set to `<package>-<version>-dst`
  * change the ownership of content inside `DESTDIR` to 0:0
-   (unless `tar` supports `--uid`/`--gid` flags)
+   (unless `tar` supports `--uid`/`--gid` flags - bsdtar does)
  * package `${prefix}` inside the destination into a tar ball
  * unpack the tar ball in the system location
 
@@ -183,7 +183,7 @@ To ensure compatibility the
 [sys-stubs](https://github.com/R-macos/recipes/blob/master/recipes/sys-stubs)
 recipe provides a package which installs the system stubs (see
 [pkgconfig-sys-stubs](https://github.com/R-macos/pkgconfig-sys-stubs)
-for the soruce).
+for the source).
 
 ### Environment Variables
 
@@ -191,7 +191,9 @@ The `mkmk.R` script will respect the following environment variables:
 
  * `TAR` path to the `tar` program. Note that the build system assumes
    a tar version that is smart enough to handle all common compression
-   formats (`gzip`, `bzip2`, `xz`) automatically.
+   formats (`gzip`, `bzip2`, `xz`) automatically (i.e., GNU tar does
+   __not__ work -- if in doubt, download the `bsdtar` binary from
+   https://mac.r-project.org/bin).
 
  * `PREFIX` defaults to `usr/local` and is the prefix for all builds.
    Note that no special effort is made for packages to respect that
@@ -208,5 +210,5 @@ The `mkmk.R` script will respect the following environment variables:
    installations when setting `PREFIX` to a location owned by the
    user.
 
- * `PERL` command to run `perl` interprerted. Defaults to `perl`.
+ * `PERL` command to run `perl` interprerter. Defaults to `perl`.
  
