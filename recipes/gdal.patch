@@ -1,6 +1,24 @@
-diff -ru gdal-3.10.1/frmts/hdf5/CMakeLists.txt gdal-3.10.1-1/frmts/hdf5/CMakeLists.txt
+diff -ru gdal-3.10.1/cmake/template/gdal-config.in gdal-3.10.1-2/cmake/template/gdal-config.in
+--- gdal-3.10.1/cmake/template/gdal-config.in	2025-01-09 03:54:05
++++ gdal-3.10.1-2/cmake/template/gdal-config.in	2025-02-08 23:28:02
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-CONFIG_LIBS="@CONFIG_LIBS@"
++CONFIG_LIBS="`pkg-config --libs gdal`"
+ CONFIG_DEP_LIBS="@CONFIG_DEP_LIBS@"
+ CONFIG_PREFIX="@CONFIG_PREFIX@"
+ CONFIG_CFLAGS="@CONFIG_CFLAGS@"
+diff -ru gdal-3.10.1/cmake/template/gdal.pc.in gdal-3.10.1-2/cmake/template/gdal.pc.in
+--- gdal-3.10.1/cmake/template/gdal.pc.in	2025-01-09 03:54:05
++++ gdal-3.10.1-2/cmake/template/gdal.pc.in	2025-02-08 23:27:09
+@@ -15,3 +15,4 @@
+ Libs: ${CONFIG_INST_LIBS}
+ Libs.private: @CONFIG_DEP_LIBS@
+ Cflags: ${CONFIG_INST_CFLAGS}
++Requires.private: libpq libtiff-4 netcdf
+diff -ru gdal-3.10.1/frmts/hdf5/CMakeLists.txt gdal-3.10.1-2/frmts/hdf5/CMakeLists.txt
 --- gdal-3.10.1/frmts/hdf5/CMakeLists.txt	2025-01-09 03:54:06
-+++ gdal-3.10.1-1/frmts/hdf5/CMakeLists.txt	2025-02-08 16:48:03
++++ gdal-3.10.1-2/frmts/hdf5/CMakeLists.txt	2025-02-08 22:45:07
 @@ -94,7 +94,9 @@
    target_compile_definitions(gdal_HDF5 PRIVATE -DWIN32)
  endif ()
