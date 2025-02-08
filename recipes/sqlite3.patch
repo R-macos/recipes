@@ -1,0 +1,10 @@
+diff -Nru sqlite-autoconf-3480000-orig/sqlite3.pc.in sqlite-autoconf-3480000-patched/sqlite3.pc.in
+--- sqlite-autoconf-3480000-orig/sqlite3.pc.in	2025-01-14 06:22:34.000000000 -0500
++++ sqlite-autoconf-3480000-patched/sqlite3.pc.in	2025-01-20 13:24:09.316242726 -0500
+@@ -9,5 +9,5 @@
+ Description: SQL database engine
+ Version: @PACKAGE_VERSION@
+ Libs: -L${libdir} -lsqlite3
+-Libs.private: @LDFLAGS_MATH@ @LDFLAGS_ZLIB@ @LDFLAGS_ICU@
++Libs.private: @LIBS@
+ Cflags: -I${includedir}
