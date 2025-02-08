@@ -1,0 +1,14 @@
+diff -ru gdal-3.10.1/frmts/hdf5/CMakeLists.txt gdal-3.10.1-1/frmts/hdf5/CMakeLists.txt
+--- gdal-3.10.1/frmts/hdf5/CMakeLists.txt	2025-01-09 03:54:06
++++ gdal-3.10.1-1/frmts/hdf5/CMakeLists.txt	2025-02-08 16:48:03
+@@ -94,7 +94,9 @@
+   target_compile_definitions(gdal_HDF5 PRIVATE -DWIN32)
+ endif ()
+ target_include_directories(gdal_HDF5 SYSTEM PRIVATE ${HDF5_INCLUDE_DIRS})
+-gdal_target_link_libraries(gdal_HDF5 PRIVATE ${HDF5_C_LIBRARIES})
++if (DEFINED HDF5_C_LIBRARIES)
++  gdal_target_link_libraries(gdal_HDF5 PRIVATE ${HDF5_C_LIBRARIES})
++endif ()
+ 
+ if (HDF5_BUILD_SHARED_LIBS)
+   target_compile_definitions(gdal_HDF5 PRIVATE -DH5_BUILT_AS_DYNAMIC_LIB)
