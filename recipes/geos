@@ -1,6 +1,6 @@
 Package: geos
-Version: 3.11.0
+Version: 3.13.0
 Depends: pkgconfig
 Source-URL: http://download.osgeo.org/geos/geos-${ver}.tar.bz2
-Source-SHA256: 79ab8cabf4aa8604d161557b52e3e4d84575acdc0d08cb09ab3f7aaefa4d858a
+Source-SHA256: 47ec83ff334d672b9e4426695f15da6e6368244214971fabf386ff8ef6df39e4
 Build-system: cmake
