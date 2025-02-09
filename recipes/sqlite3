@@ -1,4 +1,8 @@
 Package: sqlite3
-Version: 3.39.3
-Source-URL: https://www.sqlite.org/2022/sqlite-autoconf-3390300.tar.gz
-Source-SHA256: 7868fb3082be3f2cf4491c6fba6de2bddcbc293a35fefb0624ee3c13f01422b9
+Version: 3.48.0
+#FWIW: 3.49.0 is broken do NOT upgrade
+Source-URL: https://www.sqlite.org/2025/sqlite-autoconf-3480000.tar.gz
+Source-SHA256: ac992f7fca3989de7ed1fe99c16363f848794c8c32a158dafd4eb927a2e02fd5
+#Note: this is needed because their script is broken and fails with standard flags; extra flags from MXE
+Configure-script: configure
+Configure: --prefix=/${prefix} --disable-shared --enable-static --enable-threadsafe CFLAGS="-fPIC -DSQLITE_ENABLE_COLUMN_METADATA"

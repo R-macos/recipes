@@ -138,6 +138,12 @@ Most of the following entries are optional:
    they will not be included in the binary manifest as dependency.
    This is used only for build tools like `automake`.
 
+ * `Postinstall:` optional (avoid if possible), command to run
+   after `make install` to patch the destination content. The
+   command is pasted as-is into the `Makefile` after `cd` to the
+   `<package>-<version>-dst` directory so it can use `${prefix}`
+   to refer to the payload locations before they are `tar`ed up.
+
 (*) - virtual packages are packages that are only used to trigger
 installation of other packages, they only create a target in the
 `Makefile`, but don't create any output themselves.

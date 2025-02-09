@@ -1,8 +1,6 @@
 Package: hdf5
-Version: 1.12.2
-Source-URL: https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-${ver}/src/hdf5-${ver}.tar.bz2
-Source-SHA256: 1a88bbe36213a2cea0c8397201a459643e7155c9dc91e062675b3fb07ee38afe
+Version: 1.14.5
+Source-URL: https://support.hdfgroup.org/releases/hdf5/v1_14/v1_14_5/downloads/hdf5-${ver}.tar.gz
+Source-SHA256: ec2e13c52e60f9a01491bb3158cb3778c985697131fc6a342262d32a26e58e44
 Depends: szip, jpeg
-Configure: --enable-build-mode=production --with-szlib
-#Note: there is a bug in install-examples of hdf5 1.12.0 so have to skip those by uisng install-recursive only
-Install: make install-recursive
+Configure: --enable-build-mode=production --with-szlib --enable-cxx

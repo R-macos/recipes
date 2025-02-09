@@ -1,7 +1,9 @@
 Package: gdal
-Version: 3.5.3
-Depends: pkgconfig, xz, libpq, proj, openjpeg, libwebp, libgeotiff, freexl, sqlite3, expat, hdf4, hdf5, szip, netcdf, geos, unixodbc
+Version: 3.10.1
+Depends: pkgconfig, xz, libpq, proj, openjpeg, libwebp, libgeotiff, freexl, sqlite3, expat, hdf4, hdf5, szip, netcdf, geos, unixodbc, blosc, zstd, openssl, pcre2
 Source-URL: https://github.com/OSGeo/gdal/releases/download/v${ver}/gdal-${ver}.tar.gz
-Source-SHA256: a9ea0300d17e35bab71df4f16e62bb2fb8081caf994ab3ee0502ce4cf0d4e593
-Configure: --with-proj-extra-lib-for-test="`pkg-config --static --libs proj` -lsz" --with-freexl=/${prefix} --with-expat=/${prefix} --with-liblzma --with-sqlite3=/${prefix}
-Special: in-sources
+Source-SHA256: b1c739256d074be42d67c6c3d33eee94c90a490ebb02fcb7fc21c569a6fc78bd
+Build-system: cmake
+#Note: their CFLAGS/LIBS detection is broken as usual, requires flags to be manually passed from pkg-config
+Configure: -DCMAKE_EXE_LINKER_FLAGS="`pkg-config --static --libs libpq libwebp blosc netcdf`" -DCMAKE_C_FLAGS="`pkg-config --cflags libpq libwebp blosc netcdf`" -DCMAKE_CXX_FLAGS="`pkg-config --cflags libpq libwebp blosc netcdf`" -DGDAL_ENABLE_HDF5_GLOBAL_LOCK=NO -DGDAL_USE_OPENCL=NO -DIconv_LIBRARY=-liconv
+Postinstall: sed -E 's:[^ ]+/lib([^ ]+)[.]tbd:-l\1:g' < ${prefix}/lib/pkgconfig/gdal.pc > ${prefix}/lib/pkgconfig/gdal.pc.1 && mv ${prefix}/lib/pkgconfig/gdal.pc.1 ${prefix}/lib/pkgconfig/gdal.pc

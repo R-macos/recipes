@@ -1,21 +1,32 @@
-diff -ru gdal-3.5.2/configure gdal-3.5.2-fix/configure
---- gdal-3.5.2/configure	2022-09-03 00:20:11
-+++ gdal-3.5.2-fix/configure	2022-11-13 21:27:54
-@@ -35342,7 +35342,7 @@
-   $as_echo_n "(cached) " >&6
- else
-   ac_check_lib_save_LIBS=$LIBS
--LIBS="-lodbc  $LIBS"
-+LIBS="-lodbc -liconv $LIBS"
- cat confdefs.h - <<_ACEOF >conftest.$ac_ext
- /* end confdefs.h.  */
+diff -ru gdal-3.10.1/cmake/template/gdal-config.in gdal-3.10.1-2/cmake/template/gdal-config.in
+--- gdal-3.10.1/cmake/template/gdal-config.in	2025-01-09 03:54:05
++++ gdal-3.10.1-2/cmake/template/gdal-config.in	2025-02-08 23:28:02
+@@ -1,5 +1,5 @@
+ #!/bin/sh
+-CONFIG_LIBS="@CONFIG_LIBS@"
++CONFIG_LIBS="`pkg-config --libs gdal`"
+ CONFIG_DEP_LIBS="@CONFIG_DEP_LIBS@"
+ CONFIG_PREFIX="@CONFIG_PREFIX@"
+ CONFIG_CFLAGS="@CONFIG_CFLAGS@"
+diff -ru gdal-3.10.1/cmake/template/gdal.pc.in gdal-3.10.1-2/cmake/template/gdal.pc.in
+--- gdal-3.10.1/cmake/template/gdal.pc.in	2025-01-09 03:54:05
++++ gdal-3.10.1-2/cmake/template/gdal.pc.in	2025-02-08 23:27:09
+@@ -15,3 +15,4 @@
+ Libs: ${CONFIG_INST_LIBS}
+ Libs.private: @CONFIG_DEP_LIBS@
+ Cflags: ${CONFIG_INST_CFLAGS}
++Requires.private: libpq libtiff-4 netcdf
+diff -ru gdal-3.10.1/frmts/hdf5/CMakeLists.txt gdal-3.10.1-2/frmts/hdf5/CMakeLists.txt
+--- gdal-3.10.1/frmts/hdf5/CMakeLists.txt	2025-01-09 03:54:06
++++ gdal-3.10.1-2/frmts/hdf5/CMakeLists.txt	2025-02-08 22:45:07
+@@ -94,7 +94,9 @@
+   target_compile_definitions(gdal_HDF5 PRIVATE -DWIN32)
+ endif ()
+ target_include_directories(gdal_HDF5 SYSTEM PRIVATE ${HDF5_INCLUDE_DIRS})
+-gdal_target_link_libraries(gdal_HDF5 PRIVATE ${HDF5_C_LIBRARIES})
++if (DEFINED HDF5_C_LIBRARIES)
++  gdal_target_link_libraries(gdal_HDF5 PRIVATE ${HDF5_C_LIBRARIES})
++endif ()
  
-@@ -37142,7 +37142,7 @@
- 
-       HAVE_GEOS="no"
- 
--      GEOS_LIBS="`${GEOS_CONFIG} --ldflags` -lgeos_c"
-+      GEOS_LIBS="`${GEOS_CONFIG} --static-clibs` -lstdc++"
-       GEOS_CFLAGS="`${GEOS_CONFIG} --cflags`"
-       GEOS_VERSION="`${GEOS_CONFIG} --version`"
- 
+ if (HDF5_BUILD_SHARED_LIBS)
+   target_compile_definitions(gdal_HDF5 PRIVATE -DH5_BUILT_AS_DYNAMIC_LIB)
