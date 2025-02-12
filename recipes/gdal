@@ -1,8 +1,8 @@
 Package: gdal
-Version: 3.10.1
+Version: 3.8.5
 Depends: pkgconfig, xz, libpq, proj, openjpeg, libwebp, libgeotiff, freexl, sqlite3, expat, hdf4, hdf5, szip, netcdf, geos, unixodbc, blosc, zstd, openssl, pcre2
 Source-URL: https://github.com/OSGeo/gdal/releases/download/v${ver}/gdal-${ver}.tar.gz
-Source-SHA256: b1c739256d074be42d67c6c3d33eee94c90a490ebb02fcb7fc21c569a6fc78bd
+Source-SHA256: 0c865c7931c7e9bb4832f50fb53aec8676cbbaccd6e55945011b737fb89a49c2
 Build-system: cmake
 #Note: their CFLAGS/LIBS detection is broken as usual, requires flags to be manually passed from pkg-config
 Configure: -DCMAKE_EXE_LINKER_FLAGS="`pkg-config --static --libs libpq libwebp blosc netcdf`" -DCMAKE_C_FLAGS="`pkg-config --cflags libpq libwebp blosc netcdf`" -DCMAKE_CXX_FLAGS="`pkg-config --cflags libpq libwebp blosc netcdf`" -DGDAL_ENABLE_HDF5_GLOBAL_LOCK=NO -DGDAL_USE_OPENCL=NO -DIconv_LIBRARY=-liconv
