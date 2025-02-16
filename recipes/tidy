@@ -3,3 +3,5 @@ Version: 5.8.0
 Source-URL: https://github.com/htacg/tidy-html5/archive/refs/tags/${ver}.tar.gz
 Source-SHA256: 59c86d5b2e452f63c5cdb29c866a12a4c55b1741d7025cf2f3ce0cde99b0660e
 Build-system: cmake
+Note: there is a typo in tidy's CMakeLists.txt (they mistyped BUILD_SHARED_LIBS as BUILD_SHARED_LIB)
+Configure: -DBUILD_SHARED_LIB=OFF
