@@ -1,0 +1,5 @@
+Package: onetbb
+Version: 2022.0.0
+Source-URL: https://github.com/uxlfoundation/oneTBB/archive/refs/tags/v${ver}.tar.gz
+Build-system: cmake
+Configure: --prefix=/${prefix}
