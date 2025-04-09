@@ -1,0 +1,4 @@
+Package: mpg123
+Version: 1.32.10
+Source-URL: https://www.mpg123.de/download/mpg123-${ver}.tar.bz2
+Source-SHA256: 87b2c17fe0c979d3ef38eeceff6362b35b28ac8589fbf1854b5be75c9ab6557c
