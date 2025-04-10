@@ -2,3 +2,4 @@ Package: speexdsp
 Version: 1.2.1
 Source-URL: https://github.com/xiph/speexdsp/archive/refs/tags/SpeexDSP-${ver}.tar.gz
 Source-SHA256: d17ca363654556a4ff1d02cc13d9eb1fc5a8642c90b40bd54ce266c3807b91a7
+Configure-Script: configure.ac
