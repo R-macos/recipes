@@ -1,7 +1,0 @@
-Package: blosc
-Version: 1.21.6
-Source-URL: https://github.com/Blosc/c-blosc/archive/refs/tags/v${ver}.tar.gz
-Source-SHA256: 9fcd60301aae28f97f1301b735f966cc19e7c49b6b4321b839b4579a0c156f38
-Depends: lz4, zstd
-Build-system: cmake
-Configure: -DBUILD_STATIC=ON -DBUILD_SHARED=OFF -DCMAKE_BUILD_TYPE="Release" -DPREFER_EXTERNAL_LZ4=ON -DPREFER_EXTERNAL_ZLIB=ON -DPREFER_EXTERNAL_ZSTD=ON -DBUILD_TESTS=OFF -DBUILD_BENCHMARKS=OFF

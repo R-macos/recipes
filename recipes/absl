@@ -1,5 +1,7 @@
-Package: absl-cpp
-Version: 20250127.1
-Source-URL: https://github.com/abseil/abseil-cpp/archive/refs/tags/${ver}.tar.gz
+Package: absl
+Version: 20250127.1 
+Source.URL: https://github.com/abseil/abseil-cpp/releases/download/${ver}/abseil-cpp-${ver}.tar.gz
 Source-SHA256: b396401fd29e2e679cace77867481d388c807671dc2acc602a0259eeb79b7811
 Build-system: cmake
+Configure: -DABSL_BUILD_TESTING=ON -DABSL_USE_GOOGLETEST_HEAD=ON -DCMAKE_CXX_STANDARD=17
+
