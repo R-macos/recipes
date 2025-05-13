@@ -10,4 +10,4 @@ Comment: cmake doesn't detect any flags correctly so we have to pass
   Note that the library itself doesn't use dependencies, but the tools
   do so for now we opt to build the tools and thus need the libraries.
 Depends: tiff, libpng
-Configure: --prefix=/${prefix} -DCMAKE_EXE_LINKER_FLAGS="`pkg-config --static --libs libtiff-4`" -DCMAKE_C_FLAGS="`pkg-config --cflags libtiff-4`"
+Configure: --prefix=/${prefix} -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_EXE_LINKER_FLAGS="`pkg-config --static --libs libtiff-4`" -DCMAKE_C_FLAGS="`pkg-config --cflags libtiff-4`"
