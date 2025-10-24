@@ -1,0 +1,14 @@
+diff -ru zeromq-4.3.5/src/proxy.cpp zeromq-4.3.5-fix/src/proxy.cpp
+--- zeromq-4.3.5/src/proxy.cpp	2023-10-09 22:37:00
++++ zeromq-4.3.5-fix/src/proxy.cpp	2025-10-25 10:57:43
+@@ -499,7 +499,10 @@
+     zmq_pollitem_t itemsout[] = {{frontend_, 0, ZMQ_POLLOUT, 0},
+                                  {backend_, 0, ZMQ_POLLOUT, 0}};
+ 
++#pragma clang diagnostic push
++#pragma clang diagnostic ignored "-Wmissing-braces"
+     stats_proxy stats = {0};
++#pragma clang diagnostic pop
+ 
+     //  Proxy can be in these three states
+     proxy_state_t state = active;
