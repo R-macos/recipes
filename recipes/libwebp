@@ -1,6 +1,6 @@
 Package: libwebp
-Version: 1.4.0
+Version: 1.6.0
 Depends: libpng, jpeg
 Source-URL: https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${ver}.tar.gz
-Source-SHA256: 61f873ec69e3be1b99535634340d5bde750b2e4447caa1db9f61be3fd49ab1e5
+Source-SHA256: e4ab7009bf0629fd11982d4c2aa83964cf244cffba7347ecd39019a9e38c4564
 Configure: LIBS=-lz --disable-tiff
