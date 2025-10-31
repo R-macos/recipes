@@ -38,6 +38,11 @@ For a more fine-grained control you can run
 `scripts/mkmk.pl` yourself and see the list of environment
 variables at the bottom of this page for possible configurations.
 
+**Important note:** Several recipes require [CMake](https://cmake.org/download/),
+but `cmake` version 4 has broken many projects by removing required features and
+thus cannot be used. Please make sure you install cmake 3 (cmake 3.31.9 is
+the current stable version) and NOT cmake 4.
+
 ### Contributing recipes
 
 To contribute a recipe simply raise a pull request. Please make sure you
