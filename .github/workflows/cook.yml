@@ -67,7 +67,7 @@ jobs:
           else
             echo "::warning::NOTE: no SDKURL provided, so Target/SDK are undefined!"
           fi
-          pip3 install --user cmake ninja meson
+          pip3 install --user 'cmake<4.0.0' ninja meson
           PYLIB=$(ls -d ~/Library/Python/3.*/bin | head -n1)
           echo $PYLIB >> $GITHUB_PATH
           PATH="$PATH:$PYLIB"
