@@ -1,0 +1,5 @@
+Package: ginac
+Version: 1.8.10
+Source-URL: https://www.ginac.de/ginac-${ver}.tar.bz2
+Source-SHA256: 6cac1973a5325de0b9bcb8e392988ae95fbc37aa66c0f1f1d3b8e64c08cec1b9
+Depends: cln, gmp

@@ -1,0 +1,5 @@
+Package: cln
+Version: 1.3.7
+Source-URL: https://www.ginac.de/CLN/cln-${ver}.tar.bz2
+Source-SHA256: 7c7ed8474958337e4df5bb57ea5176ad0365004cbb98b621765bc4606a10d86b
+Depends: gmp
