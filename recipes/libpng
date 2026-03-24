@@ -1,5 +1,5 @@
 Package: libpng
-Version: 1.6.44
+Version: 1.6.50
 Depends: pkgconfig
 Source-URL: https://downloads.sourceforge.net/project/libpng/libpng16/${ver}/libpng-${ver}.tar.xz
-Source-SHA256: 60c4da1d5b7f0aa8d158da48e8f8afa9773c1c8baa5d21974df61f1886b8ce8e
+Source-SHA256: 4df396518620a7aa3651443e87d1b2862e4e88cad135a8b93423e01706232307

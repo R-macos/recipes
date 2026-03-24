@@ -1,8 +1,8 @@
 Package: openjpeg
-Version: 2.5.0
+Version: 2.5.4
 Build-system: cmake
 Source-URL: https://github.com/uclouvain/openjpeg/archive/v${ver}.tar.gz
-Source-SHA256: 0333806d6adecc6f7a91243b2b839ff4d2053823634d4f6ed7a59bc87409122a
+Source-SHA256: a695fbe19c0165f295a8531b1e4e855cd94d0875d2f88ec4b61080677e27188a
 Comment: cmake doesn't detect any flags correctly so we have to pass
   the flags from pkg-config by hand.
   Also openjpeg's internal library sources are broken so we cannot

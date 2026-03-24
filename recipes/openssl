@@ -1,7 +1,7 @@
 Package: openssl
-Version: 3.3.2
+Version: 3.5.4
 Source-URL: https://github.com/openssl/openssl/releases/download/openssl-${ver}/openssl-${ver}.tar.gz
-Source-SHA256: 2e8a40b01979afe8be0bbfb3de5dc1c6709fedb46d6c89c10da114ab5fc3d281
+Source-SHA256: 967311f84955316969bdb1d8d4b983718ef42338639c621ec4c34fddef355e99
 Configure.script: Configure
 Configure: no-shared no-module
 Configure.darwin: --prefix=/${prefix} --openssldir=/private/etc/ssl

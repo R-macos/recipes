@@ -1,0 +1,11 @@
+diff -ru jpeg-9f/jpeglib.h jpeg-9f-fix/jpeglib.h
+--- jpeg-9f/jpeglib.h	2022-05-05 02:15:26
++++ jpeg-9f-fix/jpeglib.h	2025-10-25 11:11:46
+@@ -26,6 +26,7 @@
+ #endif
+ #include "jmorecfg.h"		/* seldom changed options */
+ 
++#include <stdio.h>  /* required for FILE */
+ 
+ #ifdef __cplusplus
+ #ifndef DONT_USE_EXTERN_C
