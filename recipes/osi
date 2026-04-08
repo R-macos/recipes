@@ -1,5 +1,5 @@
 Package: osi
-Version: 0.108.7
+Version: 0.108.12
 Depends: coinutils
 Source-URL: https://github.com/coin-or/Osi/archive/refs/tags/releases/${ver}.tar.gz
-Source-SHA256: f1bc53a498585f508d3f8d74792440a30a83c8bc934d0c8ecf8cd8bc0e486228
+Source-SHA256: 1d80d0b4275f2e1ceefc6dda66b8616e3a8c8b07a926ef4456db4a0d55249333
