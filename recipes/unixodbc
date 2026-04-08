@@ -1,4 +1,4 @@
 Package: unixodbc
-Version: 2.3.11
-Source-URL: http://www.unixodbc.org/unixODBC-${ver}.tar.gz
-Source-SHA256: d9e55c8e7118347e3c66c87338856dad1516b490fb7c756c1562a2c267c73b5c
+Version: 2.3.14
+Source-URL: https://www.unixodbc.org/unixODBC-${ver}.tar.gz
+Source-SHA256: 4e2814de3e01fc30b0b9f75e83bb5aba91ab0384ee951286504bb70205524771
