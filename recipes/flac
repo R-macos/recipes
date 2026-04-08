@@ -1,5 +1,5 @@
 Package: flac
-Version: 1.4.3
+Version: 1.5.0
 Source-URL: https://downloads.xiph.org/releases/flac/flac-${ver}.tar.xz
-Source-SHA256: 6c58e69cd22348f441b861092b825e591d0b822e106de6eb0ee4d05d27205b70
+Source-SHA256: f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920
 Depends: libogg
