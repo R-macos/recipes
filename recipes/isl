@@ -1,5 +1,5 @@
 Package: isl
-Version: 0.25
+Version: 0.27
 Depends: gmp
 Source-URL: https://libisl.sourceforge.io/isl-${ver}.tar.xz
-Source-SHA256: be7b210647ccadf90a2f0b000fca11a4d40546374a850db67adb32fad4b230d9
+Source-SHA256: 6d8babb59e7b672e8cb7870e874f3f7b813b6e00e6af3f8b04f7579965643d5c
