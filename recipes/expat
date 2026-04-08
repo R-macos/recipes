@@ -1,5 +1,5 @@
 Package: expat
-Version: 2.6.4
-Source-URL: https://github.com/libexpat/libexpat/releases/download/R_2_6_4/expat-${ver}.tar.bz2
-Source-SHA256: 8dc480b796163d4436e6f1352e71800a774f73dbae213f1860b60607d2a83ada
+Version: 2.7.5
+Source-URL: https://github.com/libexpat/libexpat/releases/download/R_2_7_5/expat-${ver}.tar.gz
+Source-SHA256: 9931f9860d18e6cf72d183eb8f309bfb96196c00e1d40caa978e95bc9aa978b6
 Build-system: cmake
