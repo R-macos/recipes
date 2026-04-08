@@ -1,5 +1,5 @@
 Package: nlopt
-Version: 2.7.1
+Version: 2.10.1
 Source-URL: https://github.com/stevengj/nlopt/archive/v${ver}.tar.gz
-Source-SHA256: db88232fa5cef0ff6e39943fc63ab6074208831dc0031cf1545f6ecd31ae2a1a
+Source-SHA256: 30d13ce16da119db3e987784f7864e35a562ec62c186352fae55cd003e6c58ff
 Build-system: cmake
