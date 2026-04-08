@@ -1,0 +1,6 @@
+Package: libuv
+Version: 1.52.1
+Source-URL: https://dist.libuv.org/dist/v${ver}/libuv-v${ver}.tar.gz
+Source-SHA256: 66d511b9e6e334c0e62279eb234fbfb2b3110b1479c09b95b44c7afca8cff9e7
+Build-system: cmake
+Configure: -DLIBUV_BUILD_SHARED=OFF
