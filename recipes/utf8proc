@@ -1,6 +1,6 @@
 Package: utf8proc
-Version: 2.7.0
+Version: 2.11.3
 Source-URL: https://github.com/JuliaStrings/utf8proc/archive/v${ver}.tar.gz
-Source-SHA256: 4bb121e297293c0fd55f08f83afab6d35d48f0af4ecc07523ad8ec99aa2b12a1
+Source-SHA256: abfed50b6d4da51345713661370290f4f4747263ee73dc90356299dfc7990c78
 Configure.driver: true
 Special: in-sources
