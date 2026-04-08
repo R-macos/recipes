@@ -1,7 +1,7 @@
 Package: libpq
-Version: 14.17
+Version: 14.22
 Source-URL: https://ftp.postgresql.org/pub/source/v${ver}/postgresql-${ver}.tar.bz2
-Source-SHA256: 6ce0ccd6403bf7f0f2eddd333e2ee9ba02edfa977c66660ed9b4b1057e7630a1
+Source-SHA256: f57938ad30067077720277f6d7db05aafc07d1545efd2ed82f199ba828a7ad34
 Configure.x86_64: CFLAGS=-fPIC
 Make: make MAKELEVEL=0 -j12
 #: we only pick libpq from the entire PostgeSQL installation...
