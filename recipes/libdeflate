@@ -1,6 +1,6 @@
 Package: libdeflate
-Version: 1.23
+Version: 1.25
 Source-URL: https://github.com/ebiggers/libdeflate/archive/refs/tags/v${ver}.tar.gz
-Source-SHA256: 1ab18349b9fb0ce8a0ca4116bded725be7dcbfa709e19f6f983d99df1fb8b25f
+Source-SHA256: d11473c1ad4c57d874695e8026865e38b47116bbcb872bfc622ec8f37a86017d
 Build-system: cmake
 Configure: -DLIBDEFLATE_BUILD_SHARED_LIB=OFF
