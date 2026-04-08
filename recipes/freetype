@@ -1,7 +1,7 @@
 Package: freetype
 Depends: libpng, pkgconfig
-Version: 2.13.2
+Version: 2.14.3
 Suggests: harfbuzz
 Source-URL: https://download.savannah.gnu.org/releases/freetype/freetype-${ver}.tar.xz
-Source-SHA256: 12991c4e55c506dd7f9b765933e62fd2be2e06d421505d7950a132e4f1bb484d
+Source-SHA256: 36bc4f1cc413335368ee656c42afca65c5a3987e8768cc28cf11ba775e785a5f
 Configure.darwin: --without-old-mac-fonts --without-fsspec --without-fsref --without--quickdraw-toolbox --without-quickdraw-carbon --without-ats
