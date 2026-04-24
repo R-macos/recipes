@@ -1,0 +1,7 @@
+Package: svt-av1
+Version: 4.1.0
+Build-Depends: nasm (>= 2.14)
+Source-URL: https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${ver}/SVT-AV1-v${ver}.tar.bz2
+Source-SHA256: 184162d3db3a4448882b17230413b4938ca252eef6b3c5e2f1236b2fcf497881
+Build-system: cmake
+Configure: -DBUILD_TESTING=OFF -DBUILD_APPS=OFF -DEXCLUDE_HASH=ON -DREPRODUCIBLE_BUILDS=ON
