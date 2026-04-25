@@ -1,0 +1,4 @@
+Package: nasm
+Version: 3.01
+Source-URL: https://www.nasm.us/pub/nasm/releasebuilds/${ver}/nasm-${ver}.tar.xz
+Source-SHA256: b7324cbe86e767b65f26f467ed8b12ad80e124e3ccb89076855c98e43a9eddd4
