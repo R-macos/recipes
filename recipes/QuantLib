@@ -1,5 +1,5 @@
 Package: QuantLib
 Depends: boost
-Version: 1.35
+Version: 1.43
 Source-URL: https://github.com/lballabio/QuantLib/releases/download/v${ver}/QuantLib-${ver}.tar.gz
-Source-SHA256: fd83657bbc69d8692065256699b7424d5a606dff03e7136a820b6e9675016c89
+Source-SHA256: b41206ccc4ba39b5e86bdc940d51138222b352f79d2c6fc68649f9c9bbe58701

@@ -1,0 +1,11 @@
+diff -ru QuantLib-1.43/ql/time/calendars/islamicholidays.cpp QuantLib-1.43-1/ql/time/calendars/islamicholidays.cpp
+--- QuantLib-1.43/ql/time/calendars/islamicholidays.cpp 2026-07-14 19:17:52
++++ QuantLib-1.43-1/ql/time/calendars/islamicholidays.cpp       2026-07-24 14:38:32
+@@ -19,6 +19,7 @@
+ 
+ #include <ql/time/calendars/islamicholidays.hpp>
+ #include <algorithm>
++#include <vector>
+ 
+ namespace QuantLib {
+ 
