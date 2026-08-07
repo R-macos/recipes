@@ -1,0 +1,7 @@
+Package: aom
+Version: 3.14.1
+Build-Depends: nasm (>= 2.14)
+Source-URL: https://storage.googleapis.com/aom-releases/libaom-${ver}.tar.gz
+Source-SHA256: 44bf90dbd23e734d50e70a8c41c285193922938bd0d3bc2ee56764d181d55ef5
+Build-system: cmake
+Configure: -DENABLE_DOCS=0 -DENABLE_TESTS=0 -DENABLE_EXAMPLES=0 -DENABLE_TOOLS=0
