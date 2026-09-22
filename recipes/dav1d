@@ -1,0 +1,7 @@
+Package: dav1d
+Version: 1.5.4
+Build-Depends: nasm (>= 2.14)
+Source-URL: https://downloads.videolan.org/pub/videolan/dav1d/${ver}/dav1d-${ver}.tar.xz
+Source-SHA256: 686616b7c69eb88d44459391ab25cac13b6647a3b288835c5784e71c1514a5c5
+Build-system: meson-ninja
+Configure: -Denable_tools=false -Denable_tests=false
