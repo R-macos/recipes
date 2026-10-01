@@ -1,0 +1,7 @@
+Package: grpc
+Version: 1.48.4
+Source-URL: https://github.com/grpc/grpc/archive/refs/tags/v${ver}.tar.gz
+Source-SHA256: 0c3faa83e39d4f1ab55fe1476362b9ac3b81632a46dce7fd4d50271bce816b53
+Depends: absl, protobuf, re2, c-ares, openssl, zlib-stub, pkgconfig
+Build-system: cmake
+Configure: -DCMAKE_CXX_STANDARD=17 -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DgRPC_BUILD_CODEGEN=OFF -DgRPC_BUILD_CSHARP_EXT=OFF -DgRPC_DOWNLOAD_ARCHIVES=OFF -DgRPC_ABSL_PROVIDER=package -DgRPC_CARES_PROVIDER=package -DgRPC_PROTOBUF_PROVIDER=package -DgRPC_PROTOBUF_PACKAGE_TYPE=MODULE -DgRPC_RE2_PROVIDER=package -DgRPC_SSL_PROVIDER=package -DgRPC_ZLIB_PROVIDER=package -DOPENSSL_ROOT_DIR=/${prefix} -DCMAKE_PREFIX_PATH=/${prefix}

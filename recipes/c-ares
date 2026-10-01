@@ -1,0 +1,6 @@
+Package: c-ares
+Version: 1.34.5
+Source-URL: https://github.com/c-ares/c-ares/releases/download/v${ver}/c-ares-${ver}.tar.gz
+Source-SHA256: 7d935790e9af081c25c495fd13c2cfcda4792983418e96358ef6e7320ee06346
+Build-system: cmake
+Configure: -DCARES_STATIC=ON -DCARES_SHARED=OFF -DCARES_BUILD_TOOLS=OFF -DCARES_BUILD_TESTS=OFF

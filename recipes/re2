@@ -1,0 +1,6 @@
+Package: re2
+Version: 2022-06-01
+Source-URL: https://github.com/google/re2/archive/refs/tags/${ver}.tar.gz
+Source-SHA256: f89c61410a072e5cbcf8c27e3a778da7d6fd2f2b5b1445cd4f4508bee946ab0f
+Build-system: cmake
+Configure: -DRE2_BUILD_TESTING=OFF
